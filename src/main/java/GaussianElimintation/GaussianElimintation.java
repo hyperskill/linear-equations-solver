@@ -1,11 +1,19 @@
 package GaussianElimintation;
 
 public class GaussianElimintation {
-    private double matrix[][];
+    private Matrix matrix;
     private double result[];
     private int N;
 
     public GaussianElimintation(double[][] matrix) {
+        setMatrix(matrix);
+    }
+
+    public GaussianElimintation(Double[][] matrix) {
+        setMatrix(matrix);
+    }
+
+    public GaussianElimintation(Matrix matrix) {
         setMatrix(matrix);
     }
 
@@ -14,62 +22,66 @@ public class GaussianElimintation {
         result = new double[N--];
         for (int counter = 0; counter < N; counter++) {
             for (int next = counter + 1; next <= N; next++) {
-                coefficient = matrix[next][counter] / matrix[counter][counter] * -1;
-                add(coefficient, matrix[counter], matrix[next], counter);
+                coefficient = matrix.getElement(next, counter) / matrix.getElement(counter, counter) * -1;
+                matrix.addRow(coefficient, counter, next, counter);
             }
         }
         for (int counter = N; counter >= 0; counter--) {
-            result[counter] = (matrix[counter][N + 1] - calculate(counter)) / matrix[counter][counter];
+            result[counter] = (matrix.getElement(counter, N + 1) - calculate(counter)) / matrix.getElement(counter, counter);
         }
         return result;
     }
 
-    private double[] add(double[] what, double[] to, int skipFirst) {
-        return add(1, what, to, skipFirst);
-    }
-
-    private double[] add(double[] what, double[] to) {
-        return add(1, what, to, 0);
-    }
-
-    private double[] add(double coefficient, double[] what, double[] to, int skipFirst) {
-        for (int counter = skipFirst; counter <= N + 1; counter++) {
-            to[counter] += what[counter] * coefficient;
-        }
-        return to;
-    }
-
-    public static boolean isSquareMatrix(double[][] matrix) {
+    /**
+     * Проверяет является ли матрица квадратной. Вектор значение после знака равенства не учитывается.
+     *
+     * @param matrix Матрица для проверки, включая столбец значений после знака раменства.
+     * @return true - матрица квадратная, false - нет
+     */
+    public static boolean isSquareMatrix(Matrix matrix) {
         boolean result = true;
-        int N = matrix.length;
-        for (double[] line : matrix) {
-            result &= line.length == N + 1;
+        int N = matrix.getN();
+        for (Row row : matrix.getRows()) {
+            result &= row.getDoubleList().size() == N + 1;
         }
         return result;
     }
 
+    /**
+     * Вычисление известной части уравнения
+     * @param stage индекс после которого происходит расчёт
+     * @return сумма известных частей полинома
+     */
     private double calculate(int stage) {
         double result = 0.0;
         if (stage != N) {
             for (int counter = stage + 1; counter <= N; counter++) {
-                result += matrix[stage][counter] * this.result[counter];
+                result += matrix.getElement(stage, counter) * this.result[counter];
             }
         }
         return result;
     }
 
     public void setMatrix(double[][] matrix) {
+        setMatrix(new Matrix(matrix));
+    }
+
+    public void setMatrix(Double[][] matrix) {
+        setMatrix(new Matrix(matrix));
+    }
+
+    public void setMatrix(Matrix matrix) {
         try {
             if (!isSquareMatrix(matrix)) throw new RuntimeException("This matrix is not square matrix.");
         } catch (RuntimeException re) {
             re.printStackTrace();
         }
         this.matrix = matrix;
-        N = this.matrix.length;
+        N = this.matrix.getN();
         result = null;
     }
 
-    public double[][] getMatrix() {
+    public Matrix getMatrix() {
         return matrix;
     }
 

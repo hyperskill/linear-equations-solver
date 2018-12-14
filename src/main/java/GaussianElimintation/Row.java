@@ -5,8 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Row {
-    protected List<Double> doubleList;
+    private List<Double> doubleList;
 
+    public Row(double... array) {
+        doubleList = new ArrayList<Double>();
+        for (double one : array) {
+            doubleList.add(one);
+        }
+    }
     public Row(Double... array) {
         doubleList = new ArrayList<>(Arrays.asList(array));
     }
@@ -25,12 +31,18 @@ public class Row {
     }
 
     public void add(Row row, double coefficient, int skipFirst) {
-        Double[] to = (Double[]) doubleList.toArray(),
-                what = (Double[]) row.doubleList.toArray();
+        Double[] to = new Double[doubleList.size()],
+                what = new Double[row.doubleList.size()];
+        to = doubleList.toArray(to);
+        what = row.doubleList.toArray(what);
         for (int counter = skipFirst; counter < doubleList.size(); counter++) {
             to[counter] += what[counter] * coefficient;
         }
         doubleList = new ArrayList<>(Arrays.asList(to));
+    }
+
+    public Double getDouble(int index) {
+        return doubleList.get(index);
     }
 
     public LinearEquation toLinearEquation() {
