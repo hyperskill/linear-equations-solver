@@ -17,7 +17,7 @@ public class GaussianElimintation {
         setMatrix(matrix);
     }
 
-    private double[] findAnswer() {
+    public double[] findAnswer() {
         double coefficient;
         result = new double[N--];
         for (int counter = 0; counter < N; counter++) {
