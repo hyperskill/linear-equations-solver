@@ -78,6 +78,9 @@ fabric.properties
 # .idea/misc.xml
 # *.ipr
 
+# IntelliJ IDEA folder
+.idea/
+
 # Sonarlint plugin
 .idea/sonarlint
 
