@@ -81,6 +81,9 @@ fabric.properties
 # IntelliJ IDEA folder
 .idea/
 
+#module
+rujnster.iml
+
 # Sonarlint plugin
 .idea/sonarlint
 
