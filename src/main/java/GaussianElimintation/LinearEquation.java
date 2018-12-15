@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class LinearEquation {
+/**
+ * Класс линейного уравнения
+ */
+
+public abstract class LinearEquation {
     protected List<Double> coefficients = new ArrayList<Double>();
     protected Double rightSide;
 

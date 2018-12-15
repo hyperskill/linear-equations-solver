@@ -2,6 +2,11 @@ package GaussianElimintation;
 
 import java.io.*;
 
+/**
+ * Обязательные аргументы запуска это флаги "-in" и "-out", после которых следует имя файла с исходными данными или
+ * имя файла для вывода значения сооттветственно.
+ */
+
 public class Main {
     public static void main(String[] args) {
         BufferedReader in = null;
@@ -42,6 +47,7 @@ public class Main {
                 out.append(Double.toString(result[counter]) + " ");
             }
             out.close();
+            System.out.println("Completed!");
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Класс строки матрицы или же представление линейного уравнения через вектор коэффициентов
+ */
+
 public class Row {
     private List<Double> doubleList;
 
@@ -13,6 +17,7 @@ public class Row {
             doubleList.add(one);
         }
     }
+
     public Row(Double... array) {
         doubleList = new ArrayList<>(Arrays.asList(array));
     }

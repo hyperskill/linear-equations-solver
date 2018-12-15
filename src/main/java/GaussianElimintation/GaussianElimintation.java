@@ -1,5 +1,9 @@
 package GaussianElimintation;
 
+/**
+ * Класс для нахлждения вектора решений системы уравнений методом Гаусса
+ */
+
 public class GaussianElimintation {
     private Matrix matrix;
     private double result[];

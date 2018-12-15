@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Класс матрицы, поддерживающий только элементарные преобразования умножения и складывания только со строками матрицы.
+ */
+
 public class Matrix {
     private List<Row> rows;
     private int N;
-    //TODO: Столбцы ?
 
     public Matrix(double[][] matrix) {
         rows = new ArrayList<Row>();
@@ -62,6 +65,7 @@ public class Matrix {
         to.add(what, coefficient, skipFirst);
         return this;
     }
+
     public List<Row> getRows() {
         return rows;
     }
