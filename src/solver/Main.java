@@ -14,10 +14,10 @@ public class Main {
         m.fileNameAnswer = args[1];
         m.matrix = new Matrix(m.fileNameSource);
         m.solver = new Solver();
-        m.answer = new Answer();
+        m.answer = new Answer(m.fileNameAnswer);
 
         double[][] gaussJordanMatrix = m.solver.calcGausJordan(m.matrix.getMatrix());
-        m.answer.writeAnswer(m.fileNameAnswer, gaussJordanMatrix);
+        m.answer.writeAnswer(gaussJordanMatrix);
 
 
 

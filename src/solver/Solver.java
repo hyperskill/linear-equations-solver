@@ -1,5 +1,8 @@
 package solver;
 
+import solver.specialCases.Searcher;
+import solver.specialCases.Special;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -15,18 +18,23 @@ class Solver {
         }
         for(int row = 1; row < matrix.length; row++){
             //nulling columns [0, row)
-            for(int column = 0; column < row; column++){
-                double multifactorXi = matrix[row][column];
-                //  -multiFactorXi * matrix[column] + matrix[row]
-                for(int k = 0; k < matrix[row].length; k++){
-                    double oldValue = matrix[column][k];
-                    double newValue = -oldValue*multifactorXi + matrix[row][k];
-                    matrix[row][k] = newValue;
-                }
-            }
+            matrix = calcGaussianOneRow(row, matrix);
             //1*xi
             if(matrix[row][row] != 1){
                 divideRowToOne(row, matrix[row][row], matrix);
+            }
+        }
+        return matrix;
+    }
+
+    private double[][] calcGaussianOneRow (int row, double[][] matrix){
+        for(int column = 0; column < row; column++){
+            double multifactorXi = matrix[row][column];
+            //  -multiFactorXi * matrix[column] + matrix[row]
+            for(int k = 0; k < matrix[row].length; k++){
+                double oldValue = matrix[column][k];
+                double newValue = -oldValue*multifactorXi + matrix[row][k];
+                matrix[row][k] = newValue;
             }
         }
         return matrix;
@@ -52,22 +60,25 @@ class Solver {
         return matrixGausJordan;
     }
 
+    private double[][] calcSpecialGaussian(double[][] matrix){
+        //first row
+
+
+
+
+        if(matrix[0][0] != 1){
+            divideRowToOne(0, matrix[0][0], matrix);
+        }
+        return matrix;
+    }
+
+
 
     private void divideRowToOne(int row, double devide, double[][] matrix){
         for(int column = 0; column < matrix[row].length; column++){
             double item = matrix[row][column];
             matrix[row][column] = item/devide;
         }
-    }
-
-    void print(double matrix[][]){
-        String s = Arrays.stream(matrix)
-                .map(i -> Arrays.stream(i).boxed()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(" ")))
-                .collect(Collectors.joining("\n"));
-
-        System.out.println(s);
     }
 
 
