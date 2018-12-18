@@ -27,12 +27,29 @@ public class Solver {
         }
     }
 
+    private void subtractKRow1FromRow2(double k, int row1, int row2) {
+        final int n = matrix[row1].length;
+        for (int i = 0; i < n; ++i) {
+            matrix[row2][i] -= k*matrix[row1][i];
+        }
+    }
+
     public void solve() {
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {
             if (matrix[i][i] != 1.0) {
                 final double k = 1.0 / matrix[i][i];
                 multiplyRow(i, k);
+            }
+            for (int j = i + 1; j < n; ++j) {
+                final double k = matrix[j][i];
+                subtractKRow1FromRow2(k, i, j);
+            }
+        }
+        for (int i = n-1; i >= 0; --i) {
+            for (int j = i - 1; j >= 0; --j) {
+                final double k = matrix[j][i];
+                subtractKRow1FromRow2(k, i, j);
             }
         }
         for (int i = 0; i < n; ++i) {
