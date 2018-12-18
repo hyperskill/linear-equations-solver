@@ -1,5 +1,10 @@
 package solver;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -12,7 +17,7 @@ public class Solver {
         this(sc, false);
     }
 
-    public Solver(Scanner sc, boolean verbose) {
+    public Solver(@NotNull Scanner sc, boolean verbose) {
         final int n = sc.nextInt();
         matrix = new double[n][n+1];
         for (int i = 0; i < n; ++i) {
@@ -22,6 +27,10 @@ public class Solver {
         }
         solution = new double[n];
         this.verbose = verbose;
+    }
+
+    public Solver(String in, boolean verbose) throws FileNotFoundException {
+        this(new Scanner(new File(in)), verbose);
     }
 
     public int getSize() {
@@ -49,8 +58,10 @@ public class Solver {
     }
 
     public void solve() {
-        System.out.println("Start solving the equation.");
-        System.out.println("Rows manipulation:");
+        if (verbose) {
+            System.out.println("Start solving the equation.");
+            System.out.println("Rows manipulation:");
+        }
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {
             if (matrix[i][i] != 1.0) {
@@ -78,5 +89,16 @@ public class Solver {
 
     public double[] getSolution() {
         return solution;
+    }
+
+    public void writeSolutionToFile(String out) throws FileNotFoundException {
+        File file = new File(out);
+        PrintWriter printWriter = new PrintWriter(file);
+        printWriter.printf("(%f", solution[0]);
+        for (int i = 1; i < solution.length; ++i) {
+            printWriter.printf(", %f", solution[i]);
+        }
+        printWriter.println(")");
+        printWriter.close();
     }
 }
