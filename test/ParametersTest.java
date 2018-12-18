@@ -8,6 +8,7 @@ public class ParametersTest {
         final Parameters p = new Parameters(new String[]{});
         Assert.assertEquals("input.txt", p.in);
         Assert.assertEquals("output.txt", p.out);
+        Assert.assertEquals(false, p.verbose);
     }
 
     @Test
@@ -20,5 +21,11 @@ public class ParametersTest {
     public void out() {
         final Parameters p = new Parameters(new String[]{"-out", "out2.txt"});
         Assert.assertEquals("out2.txt", p.out);
+    }
+
+    @Test
+    public void verbose() {
+        final Parameters p = new Parameters(new String[]{"-verbose"});
+        Assert.assertEquals(true, p.verbose);
     }
 }
