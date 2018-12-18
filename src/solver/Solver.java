@@ -38,7 +38,7 @@ public class Solver {
         }
     }
 
-    private void subtractKRow1FromRow2(double k, int row1, int row2) {
+    private void addKRow1ToRow2(double k, int row1, int row2) {
         if (verbose) {
             System.out.printf("%f * R%d +R%d -> R%d\n", k, row1+1, row2+1, row2+1);
         }
@@ -59,13 +59,13 @@ public class Solver {
             }
             for (int j = i + 1; j < n; ++j) {
                 final double k = -matrix[j][i];
-                subtractKRow1FromRow2(k, i, j);
+                addKRow1ToRow2(k, i, j);
             }
         }
         for (int i = n-1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
                 final double k = -matrix[j][i];
-                subtractKRow1FromRow2(k, i, j);
+                addKRow1ToRow2(k, i, j);
             }
         }
         for (int i = 0; i < n; ++i) {
