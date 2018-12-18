@@ -1,11 +1,18 @@
 package solver;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Solver {
     private double[][] matrix;
     private double[] solution;
-    public Solver(Scanner sc) {
+    private boolean verbose;
+
+    public Solver(Scanner sc){
+        this(sc, false);
+    }
+
+    public Solver(Scanner sc, boolean verbose) {
         final int n = sc.nextInt();
         matrix = new double[n][n+1];
         for (int i = 0; i < n; ++i) {
@@ -14,6 +21,7 @@ public class Solver {
             }
         }
         solution = new double[n];
+        this.verbose = verbose;
     }
 
     public int getSize() {
@@ -21,6 +29,9 @@ public class Solver {
     }
 
     private void multiplyRow(int row, double k) {
+        if (verbose) {
+            System.out.printf("%f * R%d -> R%d\n", k, row+1, row+1);
+        }
         final int n = matrix[row].length;
         for (int i = 0; i < n; ++i) {
             matrix[row][i] *= k;
@@ -28,13 +39,18 @@ public class Solver {
     }
 
     private void subtractKRow1FromRow2(double k, int row1, int row2) {
+        if (verbose) {
+            System.out.printf("%f * R%d +R%d -> R%d\n", k, row1+1, row2+1, row2+1);
+        }
         final int n = matrix[row1].length;
         for (int i = 0; i < n; ++i) {
-            matrix[row2][i] -= k*matrix[row1][i];
+            matrix[row2][i] += k*matrix[row1][i];
         }
     }
 
     public void solve() {
+        System.out.println("Start solving the equation.");
+        System.out.println("Rows manipulation:");
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {
             if (matrix[i][i] != 1.0) {
@@ -42,18 +58,21 @@ public class Solver {
                 multiplyRow(i, k);
             }
             for (int j = i + 1; j < n; ++j) {
-                final double k = matrix[j][i];
+                final double k = -matrix[j][i];
                 subtractKRow1FromRow2(k, i, j);
             }
         }
         for (int i = n-1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
-                final double k = matrix[j][i];
+                final double k = -matrix[j][i];
                 subtractKRow1FromRow2(k, i, j);
             }
         }
         for (int i = 0; i < n; ++i) {
             solution[i] = matrix[i][n];
+        }
+        if (verbose) {
+            System.out.println("The solution is: " + Arrays.toString(solution));
         }
     }
 
