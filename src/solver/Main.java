@@ -1,48 +1,36 @@
-/**
-я тут еще не допилил считывание с файла (и считывание В файл ответов) 
-и не допилил текстовый вид преобразований над строками
-но хотел бы отправить, т.к. понимаю что мой код совершенно ужасен, я уже в нем немного путаюсь
-
-*/
-package solver;
 import java.util.*;
-
-public class Main {
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+/**
+i - неизвестная, j - уравнение
+*/
+public class fourth {
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		int n = in.nextInt();
-		double[] line = new double[n + 1];
-/*
-Я не уверен, правильно ли я передаю параметры.
-Т.е. у меня есть класс Row, сначала я хотел зашить получение всей информации 
-о строке внутрь конструктора Row, но проблема, с которой я столкнулся:
-dimension mismatch.
-т.е. мне нужно было в классе Row как-то сделать массив даблов,
-и как-то подгадать его размерность, но размерность я сразу не мог установить
-в итоге получился такой (костыль?), что я в main считываю строку, а потом
-уже полученную строку отправляю в конструктор Row.
-В таком случае, вероятно, мне не нужно передавать параметр N, но я решил
-его пока оставить, не знаю зачем.
-P.s. как минимум мне нужен параметр N для copyOf, в джаве, оказывается, arr1 = arr2 - приравнивание ссылок
-*/		
-		Row[] row = new Row[n];
-		for (int j = 0; j < n; j++) 
-		{	
-			for (int i = 0; i <= n; i++){line[i] = in.nextDouble();}
-			row[j] = new Row(n, line);
+		File file = new File("in.txt");
+		try(Scanner scanner = new Scanner(file)) {
+			int n = scanner.nextInt();
+			int m = scanner.nextInt();
+			// n - число неизвестных, m - число уравнений
+			double[] line = new double[n + 1];
+			Row[] row = new Row[m];
+			for (int j = 0; j < m; j++) 
+			{	
+				for (int i = 0; i <= n; i++){line[i] = scanner.nextDouble();}
+				row[j] = new Row(n, line);
+			}
+			Matrix matrix = new Matrix(row, n, m);
+			matrix.steppedViewDown();
+		} catch (FileNotFoundException e) {
+			System.out.println("I hope that never happen");
 		}
-		Matrix matrix = new Matrix(row, n);
-		System.out.println(matrix.getString());
-		matrix.diagonalizable();
-		System.out.println(matrix.getString());
 	}
 }
-/*
-Я думаю, класс Row (по крайней мере в моей реализации) тут излишен и можно было хранить все
-в массива даблов, но я его написал для набивания руки
-*/
-class Row { // N на 1 больше, чем вход, т.к. тут я учитываю и ответ (то, что справа от равно)
+
+class Row {
 	int N;
+	// N - число неизвестных
 	double[] line = new double[N];
 	public Row(int N, double[] row) {
 		this.line = Arrays.copyOf(row, N + 1);
@@ -53,12 +41,12 @@ class Row { // N на 1 больше, чем вход, т.к. тут я учит
 		return this.line[i];
 	}
 
-	void add(Row other) { //поидее можно сделать private?
+	void add(Row other) {
 		for (int i = 0; i <= this.N; i++) {
 			this.line[i] += other.line[i];
 		}
 	}
-	void mul(double num) { //умножение строки на константу
+	void mul(double num) {
 		for (int i = 0; i <= this.N; i++) {
 			this.line[i] = this.line[i] * num;
 		}
@@ -70,77 +58,120 @@ class Row { // N на 1 больше, чем вход, т.к. тут я учит
 }
 
 class Matrix {
-/*
-это очередным грабли (с инт Н), т.к. у меня не получилось найти длину массива Row, то я передавал длину из мэина,
-не уверен, что это хорошая практика
-*/
 	int N;
+	int M;
 	Row[] rows = new Row[1];
-	public Matrix(Row[] row, int n) {
+	public Matrix(Row[] row, int n, int m) {
 		this.rows = row;
 		this.N = n;
+		this.M = m;
 	}
-
-	boolean checkValue(int i, int j) { // true - значит этот элемент не 0; j строка i столбец 
+// true - ненулевое
+	boolean checkValue(int i, int j) {  
 		return (this.rows[j].getValue(i) == 0 ? false: true);
 	}
 
-	void diagonalizable() {	
-		this.diagonalizable_down();
-		this.diagonalizable_up();
-	}
 
-	void diagonalizable_down() {
-		for (int i = 0; i < this.N; i++) { 
-			if(!this.checkValue(i, i)) { 
-				for (int k = (i < this.N - 1) ? i + 1: this.N; k < this.N; k++) {
-					if (this.checkValue(i, k)) {
-						this.swap(i, k); 
-					}
-				}
-			}
-			else {
-				double coef = this.rows[i].getValue(i);
-				this.rows[i].mul(1 / coef);
-				for (int j = (i < this.N - 1) ? i + 1: this.N; j < this.N; j++) {
-					coef = (-1) * this.rows[j].getValue(i);
-					//тут самое худшее место, но я не знаю как переписать лучше, сначала решу, а потом оптимизирую
-					this.rows[i].mul(coef);
-					this.rows[j].add(this.rows[i]);
-					this.rows[i].mul(1 / coef);
-				}
-				
+	String resetAllDown(int i, int j) {
+		String s = "";
+		double coef = this.rows[j].getValue(i);		
+		this.rows[j].mul(1 / coef);
+		s = (1 / coef) +  "*R" + (j + 1) + " -> R" + (j + 1) + "\n";
+		for (int k = j + 1; k < this.M; k++) {
+			coef = this.rows[k].getValue(i);
+			if (coef != 0) {
+				this.rows[k].mul( (-1) / coef);
+				this.rows[k].add(this.rows[j]);
+				s = s + (-1) / coef + "*R" + (k + 1) + " + R" + (j + 1) + " -> R" + (k + 1) + "\n";
 			}
 		}
+		return s;
 	}
 
-	void diagonalizable_up() {
-		for (int i = this.N - 1; i >= 0; i--) {
-			if(!this.checkValue(i, i)) {
-				for (int k = (i > 0) ? i - 1: -1; k >= 0; k--) {
+	String resetAllUp(int i, int j) {
+		String s = "";
+		double coef = this.rows[j].getValue(i);
+		this.rows[j].mul(1 / coef);
+		s = (1 / coef) +  "*R" + (j + 1) + " -> R" + (j + 1) + "\n";
+		for (int k = j - 1; k >= 0; k--) {
+			coef = this.rows[k].getValue(i);
+			if (coef != 0) {
+				this.rows[k].mul( (-1) / coef);
+				this.rows[k].add(this.rows[j]); 
+				s = s + (-1) / coef + "*R" + (k + 1) + " + R" + (j + 1) + " -> R" + (k + 1) + "\n";
+			}
+		}
+		return s;
+	}
+
+	void steppedViewDown () {
+		int j = 0;
+		int i = 0;
+		String s = "";
+		s += "start solving the equation\n";
+		s += "Rows manipulation\n";
+		for (; i <= this.N && j < this.M; i++) {
+			if (this.checkValue(i, j)) {
+				s += this.resetAllDown(i, j);
+				j += 1;
+			}
+			else { //пробегаю вниз. Если есть ненулевой - свапаю, если нет - перехожу к след i и j;
+				for (int k = j + 1; k < this.M; k++) {
 					if (this.checkValue(i, k)) {
 						this.swap(i, k);
+						s = s + "Swap R" + (i + 1) + " with R" + (k + 1) + "\n";
 					}
 				}
+				if (!this.checkValue(i, j)) {
+					i += 1;
+				}
+				i -= 1;
+			}
+		}
+
+		if (j == 0) {
+			s += "infinity solutions\n";
+		}
+
+		else {
+			if (!this.checkNonzero(0, j - 1)) {
+				s += "no solutions\n";
 			}
 			else {
-				double coef = this.rows[i].getValue(i);
-				this.rows[i].mul(1 / coef);
-				for (int j = (i > 0) ? i - 1: -1; j >= 0; j--) {
-					coef = (-1) * this.rows[j].getValue(i);
-					//тут самое худшее место, но я не знаю как переписать лучше, сначала решу, а потом оптимизирую
-					this.rows[i].mul(coef);
-					this.rows[j].add(this.rows[i]);
-					this.rows[i].mul(1 / coef);
+				if (j != this.N) {
+					s += "infinity solutions\n";
+				}
+				else {
+					s += this.steppedViewUp();
 				}
 			}
 		}
+		File file = new File("out.txt");
+		try (FileWriter writer = new FileWriter(file)) {
+			writer.write(s);
+		} catch (IOException e) {
+			System.out.printf("Exception");
+		}
 	}
-/*
-тут свап работает так, как бы я этого хотел, но не так, как я думаю, что он должен работать ((
-т.е. когда я пробовал так манипулировать с arrays, я увидел, что массивы записываются по ссылке
-а тут происходит что-то в стиле arr1.copyOf(arr2), не совсем понимаю почему так
-*/
+
+	String steppedViewUp () {
+		String s = "";
+		for (int j = this.N - 1; j > 0; j--) {
+			s += this.resetAllUp(j, j);
+		}
+		s += this.solve();
+		return s;
+	}
+// true - есть ненулевой элемент помимо ответа
+	boolean checkNonzero(int i, int j) {
+		if (i < this.N - 1) {
+			return (this.checkNonzero(i + 1, j) || this.checkValue(i, j));
+		}
+		else {
+			return this.checkValue(i, j);
+		}
+	}
+
 	void swap(int i, int j) { 
 		Row row = this.rows[i];
 		this.rows[i] = this.rows[j];
@@ -148,9 +179,19 @@ class Matrix {
 	}
 	String getString() {
 		String s = "";
-		for (int i = 0; i < this.N; i++) {
+		for (int i = 0; i < this.M; i++) {
 			s += this.rows[i].getString();
 		}
 		return s;
 	}
+	String solve () {
+		String s = "";
+		s += "The solution is: (";
+		for (int i = 0; i < this.N - 1; i++) {
+			s = s + this.rows[i].getValue(this.N) + ", ";
+		}
+		s = s + this.rows[this.N - 1].getValue(this.N) + ")\n";
+		return s;
+	}
+
 }
