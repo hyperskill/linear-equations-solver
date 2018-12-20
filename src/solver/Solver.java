@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -179,11 +178,11 @@ public class Solver {
 
     private void printSolution() {
         if (verbose) {
-            printSolutionInternal(new PrintWriter(System.out), false);
+            printSolutionInternal(new PrintWriter(System.out, true));
         }
     }
 
-    private void printSolutionInternal(PrintWriter printWriter, boolean shouldClose) {
+    private void printSolutionInternal(PrintWriter printWriter) {
         if (numberSolutions == NumberSolutions.NONE) {
             printWriter.println("There are no solutions");
         } else if (numberSolutions == NumberSolutions.ONE){
@@ -200,9 +199,6 @@ public class Solver {
             printWriter.println(")");
         }
         printWriter.flush();
-        if (shouldClose) {
-            printWriter.close();
-        }
     }
 
     private void swapColumns(int column1, int column2) {
@@ -234,7 +230,11 @@ public class Solver {
     public void writeSolutionToFile(String out) throws FileNotFoundException {
         File file = new File(out);
         PrintWriter printWriter = new PrintWriter(file);
-        printSolutionInternal(printWriter, true);
+        printSolutionInternal(printWriter);
+        printWriter.close();
+        if (verbose) {
+            System.out.printf("Saved to file %s", out);
+        }
     }
 
     public String[] getGeneralSolution() {
