@@ -5,12 +5,13 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Solver {
     private double[][] matrix;
     private double[] solution;
+    private int[] soltionIndexes;
     private boolean verbose;
 
     public Solver(Scanner sc){
@@ -26,6 +27,7 @@ public class Solver {
             }
         }
         solution = new double[n];
+        soltionIndexes = IntStream.range(0, n).toArray();
         this.verbose = verbose;
     }
 
@@ -83,7 +85,12 @@ public class Solver {
             solution[i] = matrix[i][n];
         }
         if (verbose) {
-            System.out.println("The solution is: " + Arrays.toString(solution));
+            System.out.print("The solution is: ");
+            System.out.printf("(%f", solution[soltionIndexes[0]]);
+            for (int i = 1; i < solution.length; ++i) {
+                System.out.printf(", %f", solution[soltionIndexes[i]]);
+            }
+            System.out.println(")");
         }
     }
 
@@ -94,9 +101,9 @@ public class Solver {
     public void writeSolutionToFile(String out) throws FileNotFoundException {
         File file = new File(out);
         PrintWriter printWriter = new PrintWriter(file);
-        printWriter.printf("(%f", solution[0]);
+        printWriter.printf("(%f", solution[soltionIndexes[0]]);
         for (int i = 1; i < solution.length; ++i) {
-            printWriter.printf(", %f", solution[i]);
+            printWriter.printf(", %f", solution[soltionIndexes[i]]);
         }
         printWriter.println(")");
         printWriter.close();
