@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -15,6 +16,7 @@ public class Solver {
     private int numberVariables;
     private double[][] matrix;
     private double[] solution;
+    private String[] solutionGeneral;
     private int[] solutionIndexes;
     private boolean verbose;
     private NumberSolutions numberSolutions = NumberSolutions.ONE;
@@ -34,6 +36,7 @@ public class Solver {
             }
         }
         solution = new double[numberVariables];
+        solutionGeneral = new String[numberVariables];
         solutionIndexes = IntStream.range(0, numberVariables).toArray();
         this.verbose = verbose;
     }
@@ -88,7 +91,6 @@ public class Solver {
                 for (int j = i+1; j < numberEquations; ++j) {
                     if (Math.abs(matrix[j][i]) > epsilon) {
                         swapRows(i, j);
-                        notFound = false;
                         break;
                     }
                 }
@@ -101,6 +103,20 @@ public class Solver {
                         }
                     }
                 }
+
+                if (notFound) {
+                    for (int k = i+1; notFound && k < numberVariables; ++k) {
+                        for (int j = i+1; j < numberEquations; ++j) {
+                            if (Math.abs(matrix[j][k]) > epsilon) {
+                                swapColumns(k, i);
+                                swapRows(j, i);
+                                notFound = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+
                 if (notFound) {
                     if (Math.abs(matrix[i][numberEquations]) < epsilon) {
                         numberSolutions = NumberSolutions.MANY;
@@ -134,6 +150,17 @@ public class Solver {
         }
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
             solution[solutionIndexes[i]] = matrix[i][numberVariables];
+            if (Math.abs(matrix[i][i]) < epsilon ) {
+                solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i]+1);
+            } else {
+                solutionGeneral[solutionIndexes[i]] = String.format("%.4f", matrix[i][numberVariables]);
+                for (int j = i + 1; j < numberVariables; ++j) {
+                    if (Math.abs(matrix[i][j]) > epsilon) {
+                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
+                                (solutionIndexes[j]+1) + " * (" + String.format("%.4f",matrix[i][j]) + ")" ;
+                    }
+                }
+            }
         }
         for (int i = numberVariables; i < numberEquations; ++i) {
             double sum = 0.0;
@@ -152,22 +179,30 @@ public class Solver {
 
     private void printSolution() {
         if (verbose) {
-            printSolutionInternal(new PrintWriter(System.out));
+            printSolutionInternal(new PrintWriter(System.out), false);
         }
     }
 
-    private void printSolutionInternal(PrintWriter printWriter) {
+    private void printSolutionInternal(PrintWriter printWriter, boolean shouldClose) {
         if (numberSolutions == NumberSolutions.NONE) {
             printWriter.println("There are no solutions");
-        } else {
-            printWriter.printf("(%f", solution[solutionIndexes[0]]);
+        } else if (numberSolutions == NumberSolutions.ONE){
+            printWriter.printf("(%f", solution[0]);
             for (int i = 1; i < solution.length; ++i) {
-                printWriter.printf(", %f", solution[solutionIndexes[i]]);
+                printWriter.printf(", %f", solution[i]);
+            }
+            printWriter.println(")");
+        } else {
+            printWriter.printf("(%s", solutionGeneral[0]);
+            for (int i = 1; i < solution.length; ++i) {
+                printWriter.printf(", %s", solutionGeneral[i]);
             }
             printWriter.println(")");
         }
         printWriter.flush();
-        printWriter.close();
+        if (shouldClose) {
+            printWriter.close();
+        }
     }
 
     private void swapColumns(int column1, int column2) {
@@ -185,7 +220,7 @@ public class Solver {
         solutionIndexes[column2] = temp;
     }
 
-    public double[] getSolution() {
+    public double[] getParticularSolution() {
         if (numberSolutions == NumberSolutions.NONE) {
             return null;
         }
@@ -199,6 +234,13 @@ public class Solver {
     public void writeSolutionToFile(String out) throws FileNotFoundException {
         File file = new File(out);
         PrintWriter printWriter = new PrintWriter(file);
-        printSolutionInternal(printWriter);
+        printSolutionInternal(printWriter, true);
+    }
+
+    public String[] getGeneralSolution() {
+        if (numberSolutions != NumberSolutions.MANY) {
+            return null;
+        }
+        return solutionGeneral;
     }
 }
