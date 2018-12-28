@@ -10,11 +10,13 @@ import java.util.stream.IntStream;
 
 public class Solver {
     private static final double epsilon = 0.0000001;
+    private static final Complex one = new Complex(1.0, 0.0);
+    private static final Complex minusOne = new Complex(-1.0, 0.0);
 
     private int numberEquations;
     private int numberVariables;
-    private double[][] matrix;
-    private double[] solution;
+    private Complex[][] matrix;
+    private Complex[] solution;
     private String[] solutionGeneral;
     private int[] solutionIndexes;
     private boolean verbose;
@@ -28,13 +30,18 @@ public class Solver {
         numberVariables = sc.nextInt();
         final int realNumberEquations = sc.nextInt();
         numberEquations = (realNumberEquations < numberVariables) ? numberVariables : realNumberEquations;
-        matrix = new double[numberEquations][numberVariables +1];
+        matrix = new Complex[numberEquations][numberVariables +1];
         for (int i = 0; i < realNumberEquations; ++i) {
             for (int j = 0; j < numberVariables +1; ++j) {
-                matrix[i][j] = sc.nextDouble();
+                matrix[i][j] = new Complex(sc.next());
             }
         }
-        solution = new double[numberVariables];
+        for (int i = realNumberEquations; i < numberEquations; ++i) {
+            for (int j = 0; j < numberVariables +1; ++j) {
+                matrix[i][j] = new Complex();
+            }
+        }
+        solution = new Complex[numberVariables];
         solutionGeneral = new String[numberVariables];
         solutionIndexes = IntStream.range(0, numberVariables).toArray();
         this.verbose = verbose;
@@ -48,22 +55,23 @@ public class Solver {
         return matrix.length;
     }
 
-    private void multiplyRow(int row, double k) {
+    private void divideRow(int row, @NotNull Complex k) {
         if (verbose) {
-            System.out.printf("%f * R%d -> R%d\n", k, row+1, row+1);
+            System.out.printf("R%d / %s -> R%d\n", row+1, k.toString(), row+1);
         }
         final int n = matrix[row].length;
         for (int i = 0; i < n; ++i) {
-            matrix[row][i] *= k;
+            matrix[row][i] = Complex.divide(matrix[row][i], k);
         }
     }
 
-    private void addKRow1ToRow2(double k, int row1, int row2) {
+    private void addKRow1ToRow2(@NotNull Complex k, int row1, int row2) {
         if (verbose) {
-            System.out.printf("%f * R%d +R%d -> R%d\n", k, row1+1, row2+1, row2+1);
+            System.out.printf("%s * R%d +R%d -> R%d\n", k.toString(), row1+1, row2+1, row2+1);
         }
         for (int i = 0; i < numberVariables +1; ++i) {
-            matrix[row2][i] += k*matrix[row1][i];
+            final Complex temp = Complex.multiply(k, matrix[row1][i]);
+            matrix[row2][i] = Complex.add(temp, matrix[row2][i]);
         }
     }
 
@@ -72,7 +80,7 @@ public class Solver {
             System.out.printf("R%d <-> R%d\n", row1+1, row2+1);
         }
         for (int i = 0; i < numberVariables +1; ++i) {
-            final double temp = matrix[row1][i];
+            final Complex temp = matrix[row1][i];
             matrix[row1][i] = matrix[row2][i];
             matrix[row2][i] = temp;
         }
@@ -85,17 +93,17 @@ public class Solver {
             System.out.println("Rows manipulation:");
         }
         for (int i = 0; i < numberVariables; ++i) {
-            if (Math.abs(matrix[i][i]) < epsilon) {
+            if (Math.abs(matrix[i][i].getReal()) < epsilon && Math.abs(matrix[i][i].getImag()) < epsilon) {
                 boolean notFound = true;
                 for (int j = i+1; j < numberEquations; ++j) {
-                    if (Math.abs(matrix[j][i]) > epsilon) {
+                    if (Math.abs(matrix[j][i].getReal()) > epsilon || Math.abs(matrix[j][i].getImag()) > epsilon) {
                         swapRows(i, j);
                         break;
                     }
                 }
                 if (notFound) {
                     for (int j = i+1; j < numberEquations; ++j) {
-                        if (Math.abs(matrix[i][j]) > epsilon) {
+                        if (Math.abs(matrix[i][j].getReal()) > epsilon || Math.abs(matrix[i][j].getImag()) > epsilon) {
                             swapColumns(i, j);
                             notFound = false;
                             break;
@@ -106,7 +114,7 @@ public class Solver {
                 if (notFound) {
                     for (int k = i+1; notFound && k < numberVariables; ++k) {
                         for (int j = i+1; j < numberEquations; ++j) {
-                            if (Math.abs(matrix[j][k]) > epsilon) {
+                            if (Math.abs(matrix[j][k].getReal()) > epsilon || Math.abs(matrix[j][k].getImag()) > epsilon) {
                                 swapColumns(k, i);
                                 swapRows(j, i);
                                 notFound = false;
@@ -117,7 +125,7 @@ public class Solver {
                 }
 
                 if (notFound) {
-                    if (Math.abs(matrix[i][numberEquations]) < epsilon) {
+                    if (Math.abs(matrix[i][numberEquations].getReal()) < epsilon && Math.abs(matrix[i][numberEquations].getImag()) < epsilon) {
                         numberSolutions = NumberSolutions.MANY;
                         continue;
                     } else {
@@ -128,45 +136,45 @@ public class Solver {
                 }
             }
 
-            if (Math.abs(matrix[i][i] - 1.0) > epsilon) {
-                final double k = 1.0 / matrix[i][i];
-                multiplyRow(i, k);
+            if (Math.abs(matrix[i][i].getImag()) > epsilon || Math.abs(matrix[i][i].getReal() - 1.0) > epsilon) {
+                divideRow(i, matrix[i][i]);
             }
             for (int j = i + 1; j < numberEquations && j < numberVariables; ++j) {
-                final double k = -matrix[j][i];
-                if (Math.abs(k) >= epsilon) {
+                final Complex k = Complex.multiply(minusOne,matrix[j][i]);
+                if (Math.abs(k.getReal()) >= epsilon || Math.abs(k.getImag()) >= epsilon) {
                     addKRow1ToRow2(k, i, j);
                 }
             }
         }
         for (int i = numberVariables - 1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
-                final double k = -matrix[j][i];
-                if (Math.abs(k) >= epsilon) {
+                final Complex k = Complex.multiply(minusOne,matrix[j][i]);
+                if (Math.abs(k.getReal()) >= epsilon || Math.abs(k.getImag()) >= epsilon) {
                     addKRow1ToRow2(k, i, j);
                 }
             }
         }
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
             solution[solutionIndexes[i]] = matrix[i][numberVariables];
-            if (Math.abs(matrix[i][i]) < epsilon ) {
+            if (Math.abs(matrix[i][i].getReal()) < epsilon && Math.abs(matrix[i][i].getImag()) < epsilon) {
                 solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i]+1);
             } else {
-                solutionGeneral[solutionIndexes[i]] = String.format("%.4f", matrix[i][numberVariables]);
+                solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
                 for (int j = i + 1; j < numberVariables; ++j) {
-                    if (Math.abs(matrix[i][j]) > epsilon) {
+                    if (Math.abs(matrix[i][j].getReal()) > epsilon || Math.abs(matrix[i][j].getImag()) > epsilon ) {
                         solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
-                                (solutionIndexes[j]+1) + " * (" + String.format("%.4f",matrix[i][j]) + ")" ;
+                                (solutionIndexes[j]+1) + " * (" + matrix[i][j].toString() + ")" ;
                     }
                 }
             }
         }
         for (int i = numberVariables; i < numberEquations; ++i) {
-            double sum = 0.0;
+            Complex sum = new Complex(0.0, 0.0);
             for (int j = 0; j < numberVariables; ++j) {
-                sum += solution[solutionIndexes[j]] * matrix[i][solutionIndexes[j]];
+                Complex temp = Complex.multiply(solution[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
+                sum = Complex.add(sum, temp);
             }
-            if (Math.abs(sum - matrix[i][numberVariables]) >= epsilon) {
+            if (!sum.equals(matrix[i][numberVariables])) {
                 numberSolutions = NumberSolutions.NONE;
                 printSolution();
                 return;
@@ -186,9 +194,9 @@ public class Solver {
         if (numberSolutions == NumberSolutions.NONE) {
             printWriter.println("There are no solutions");
         } else if (numberSolutions == NumberSolutions.ONE){
-            printWriter.printf("(%f", solution[0]);
+            printWriter.printf("(%s", solution[0].toString());
             for (int i = 1; i < solution.length; ++i) {
-                printWriter.printf(", %f", solution[i]);
+                printWriter.printf(", %s", solution[i].toString());
             }
             printWriter.println(")");
         } else {
@@ -207,7 +215,7 @@ public class Solver {
         }
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {
-            final double temp = matrix[i][column1];
+            final Complex temp = matrix[i][column1];
             matrix[i][column1] = matrix[i][column2];
             matrix[i][column2] = temp;
         }
@@ -216,7 +224,7 @@ public class Solver {
         solutionIndexes[column2] = temp;
     }
 
-    public double[] getParticularSolution() {
+    public Complex[] getParticularSolution() {
         if (numberSolutions == NumberSolutions.NONE) {
             return null;
         }

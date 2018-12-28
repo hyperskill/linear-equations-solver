@@ -1,5 +1,6 @@
 import org.junit.Assert;
 import org.junit.Test;
+import solver.Complex;
 import solver.NumberSolutions;
 import solver.Solver;
 
@@ -19,7 +20,7 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{2.0}, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(new Complex[]{new Complex(2.0, 0)}, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -29,7 +30,7 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{-1.0, 2.0}, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(new Complex[]{new Complex(-1.0,0), new Complex(2.0,0)}, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -39,7 +40,7 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{0.85714, 0.71429}, p.getParticularSolution(), 0.00001);
+        Assert.assertArrayEquals(new Complex[]{new Complex(0.85714,0), new Complex(0.71429,0)}, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -49,17 +50,16 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{1.0, 2.0, 3.0}, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(new Complex[]{new Complex(1.0,0), new Complex(2.0,0),new Complex(3.0,0)}, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
-
     @Test
     public void solve5() {
         final Scanner sc = new Scanner("2 2\n0 1 1\n1 0 1");
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{1.0, 1.0}, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(new Complex[]{new Complex(1.0,0),new Complex( 1.0,0)}, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -69,8 +69,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{0.0, 1.0}, p.getParticularSolution(), 0.0000001);
-        Assert.assertArrayEquals(new String[]{"x1", "1,0000"}, p.getGeneralSolution());
+        Assert.assertArrayEquals(new Complex[]{new Complex(0.0,0), new Complex(1.0,0)}, p.getParticularSolution());
+        Assert.assertArrayEquals(new String[]{"x1", "1"}, p.getGeneralSolution());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.NONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(null, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(null, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -89,7 +89,7 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.NONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(null, p.getParticularSolution(), 0.0000001);
+        Assert.assertArrayEquals(null, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 
@@ -99,8 +99,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{9.0, 0.0, 0.0}, p.getParticularSolution(), 0.0000001);
-        Assert.assertArrayEquals(new String[]{"9,0000 - x2 * (1,0000) - x3 * (2,0000)", "x2", "x3"}, p.getGeneralSolution());
+        Assert.assertArrayEquals(new Complex[]{new Complex(9.0,0),new Complex(0,0),new Complex(0,0)}, p.getParticularSolution());
+        Assert.assertArrayEquals(new String[]{"9 - x2 * (1) - x3 * (2)", "x2", "x3"}, p.getGeneralSolution());
     }
 
     @Test
@@ -109,8 +109,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{-8.3333333, 0.0, -0.6666667, 1.6666667}, p.getParticularSolution(), 0.0000001);
-        Assert.assertArrayEquals(new String[]{"-8,3333", "x2",  "-0,6667", "1,6667"}, p.getGeneralSolution());
+        Assert.assertArrayEquals(new Complex[]{new Complex(-8.3333333,0), new Complex(0,0),new Complex(-0.6666667,0),new Complex(1.6666667, 0)}, p.getParticularSolution());
+        Assert.assertArrayEquals(new String[]{"-8.3333", "x2",  "-0.6667", "1.6667"}, p.getGeneralSolution());
     }
 
     @Test
@@ -119,7 +119,17 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(new double[]{0.6, 0.0, 0.2, 0.0}, p.getParticularSolution(), 0.0000001);
-        Assert.assertArrayEquals(new String[]{"0,6000 - x2 * (1,5000) - x4 * (0,1000)", "x2",  "0,2000 - x4 * (-0,8000)", "x4"}, p.getGeneralSolution());
+        Assert.assertArrayEquals(new Complex[]{new Complex(0.6,0), new Complex(0,0), new Complex(0.2,0), new Complex(0,0)}, p.getParticularSolution());
+        Assert.assertArrayEquals(new String[]{"0.6 - x2 * (1.5) - x4 * (0.1)", "x2",  "0.2 - x4 * (-0.8)", "x4"}, p.getGeneralSolution());
+    }
+
+    @Test
+    public void solve12() {
+        final Scanner sc = new Scanner("3 3\n1+2i -1.5-1.1i 2.12 91+5i\n-1+3i 1.2+3.5i -3.3 1+15i\n12.31 1.3-5i 12.3i -78.3i");
+        final Solver p = new Solver(sc);
+        p.solve();
+        Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
+        Assert.assertArrayEquals(new Complex[]{new Complex(6.73335286,-22.99754223), new Complex(-1.7976071,2.08404919), new Complex(15.69938581,7.3960106)}, p.getParticularSolution());
+        Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
 }
