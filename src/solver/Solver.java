@@ -86,7 +86,6 @@ public class Solver {
         }
     }
 
-
     public void solve() {
         if (verbose) {
             System.out.println("Start solving the equation.");
