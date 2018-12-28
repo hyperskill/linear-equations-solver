@@ -246,8 +246,8 @@ public class Solver {
     }
 
     public void writeSolutionToFile(String out) throws FileNotFoundException {
-        File file = new File(out);
-        PrintWriter printWriter = new PrintWriter(file);
+        final File file = new File(out);
+        final PrintWriter printWriter = new PrintWriter(file);
         printSolutionInternal(printWriter);
         printWriter.close();
         if (verbose) {
