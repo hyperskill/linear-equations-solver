@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Solver {
-    private static final double epsilon = 0.0000001;
+    private static final Complex zero = new Complex(0.0, 0.0);
     private static final Complex one = new Complex(1.0, 0.0);
     private static final Complex minusOne = new Complex(-1.0, 0.0);
 
@@ -92,17 +92,17 @@ public class Solver {
             System.out.println("Rows manipulation:");
         }
         for (int i = 0; i < numberVariables; ++i) {
-            if (Math.abs(matrix[i][i].getReal()) < epsilon && Math.abs(matrix[i][i].getImag()) < epsilon) {
+            if (matrix[i][i].equals(zero)) {
                 boolean notFound = true;
                 for (int j = i+1; j < numberEquations; ++j) {
-                    if (Math.abs(matrix[j][i].getReal()) > epsilon || Math.abs(matrix[j][i].getImag()) > epsilon) {
+                    if (!matrix[j][i].equals(zero)) {
                         swapRows(i, j);
                         break;
                     }
                 }
                 if (notFound) {
                     for (int j = i+1; j < numberEquations; ++j) {
-                        if (Math.abs(matrix[i][j].getReal()) > epsilon || Math.abs(matrix[i][j].getImag()) > epsilon) {
+                        if (!matrix[i][j].equals(zero)) {
                             swapColumns(i, j);
                             notFound = false;
                             break;
@@ -113,7 +113,7 @@ public class Solver {
                 if (notFound) {
                     for (int k = i+1; notFound && k < numberVariables; ++k) {
                         for (int j = i+1; j < numberEquations; ++j) {
-                            if (Math.abs(matrix[j][k].getReal()) > epsilon || Math.abs(matrix[j][k].getImag()) > epsilon) {
+                            if (!matrix[j][k].equals(zero)) {
                                 swapColumns(k, i);
                                 swapRows(j, i);
                                 notFound = false;
@@ -124,7 +124,7 @@ public class Solver {
                 }
 
                 if (notFound) {
-                    if (Math.abs(matrix[i][numberEquations].getReal()) < epsilon && Math.abs(matrix[i][numberEquations].getImag()) < epsilon) {
+                    if (matrix[i][numberEquations].equals(zero)) {
                         numberSolutions = NumberSolutions.MANY;
                         continue;
                     } else {
@@ -135,12 +135,12 @@ public class Solver {
                 }
             }
 
-            if (Math.abs(matrix[i][i].getImag()) > epsilon || Math.abs(matrix[i][i].getReal() - 1.0) > epsilon) {
+            if (!matrix[i][i].equals(one)) {
                 divideRow(i, matrix[i][i]);
             }
             for (int j = i + 1; j < numberEquations && j < numberVariables; ++j) {
                 final Complex k = Complex.multiply(minusOne,matrix[j][i]);
-                if (Math.abs(k.getReal()) >= epsilon || Math.abs(k.getImag()) >= epsilon) {
+                if (!k.equals(zero)) {
                     addKRow1ToRow2(k, i, j);
                 }
             }
@@ -148,19 +148,19 @@ public class Solver {
         for (int i = numberVariables - 1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
                 final Complex k = Complex.multiply(minusOne,matrix[j][i]);
-                if (Math.abs(k.getReal()) >= epsilon || Math.abs(k.getImag()) >= epsilon) {
+                if (!k.equals(zero)) {
                     addKRow1ToRow2(k, i, j);
                 }
             }
         }
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
             solution[solutionIndexes[i]] = matrix[i][numberVariables];
-            if (Math.abs(matrix[i][i].getReal()) < epsilon && Math.abs(matrix[i][i].getImag()) < epsilon) {
+            if (matrix[i][i].equals(zero)) {
                 solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i]+1);
             } else {
                 solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
                 for (int j = i + 1; j < numberVariables; ++j) {
-                    if (Math.abs(matrix[i][j].getReal()) > epsilon || Math.abs(matrix[i][j].getImag()) > epsilon ) {
+                    if (!matrix[i][j].equals(zero)) {
                         solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
                                 (solutionIndexes[j]+1) + " * (" + matrix[i][j].toString() + ")" ;
                     }
