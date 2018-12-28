@@ -34,8 +34,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(-1.0,0),
-                new Complex(2.0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(-1.0, 0),
+                new Complex(2.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());
@@ -48,8 +48,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.85714,0),
-                new Complex(0.71429,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.85714, 0),
+                new Complex(0.71429, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());
@@ -62,21 +62,22 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(1.0,0),
-                new Complex(2.0,0),new Complex(3.0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(1.0, 0),
+                new Complex(2.0, 0), new Complex(3.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());
         Assert.assertArrayEquals(null, p.getGeneralSolution());
     }
+
     @Test
     public void solve5() {
         final Scanner sc = new Scanner("2 2\n0 1 1\n1 0 1");
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(1.0,0),
-                new Complex( 1.0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(1.0, 0),
+                new Complex(1.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());
@@ -89,8 +90,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.0,0),
-                new Complex(1.0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.0, 0),
+                new Complex(1.0, 0)};
         final String[] expectedGeneralSolution = new String[]{"x1", "1"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
@@ -126,8 +127,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(9.0,0),
-                new Complex(0,0),new Complex(0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(9.0, 0),
+                new Complex(0, 0), new Complex(0, 0)};
         final String[] expectedGeneralSolution = new String[]{"9 - x2 * (1) - x3 * (2)", "x2", "x3"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
@@ -141,9 +142,9 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(-8.3333333,0),
-                new Complex(0,0),new Complex(-0.6666667,0),new Complex(1.6666667, 0)};
-        final String[] expectedGeneralSolution = new String[]{"-8.3333", "x2",  "-0.6667", "1.6667"};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(-8.3333333, 0),
+                new Complex(0, 0), new Complex(-0.6666667, 0), new Complex(1.6666667, 0)};
+        final String[] expectedGeneralSolution = new String[]{"-8.3333", "x2", "-0.6667", "1.6667"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());
@@ -156,8 +157,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.6,0),
-                new Complex(0,0), new Complex(0.2,0), new Complex(0,0)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(0.6, 0),
+                new Complex(0, 0), new Complex(0.2, 0), new Complex(0, 0)};
         final String[] expectedGeneralSolution = new String[]{"0.6 - x2 * (1.5) - x4 * (0.1)", "x2",
                 "0.2 - x4 * (-0.8)", "x4"};
 
@@ -172,8 +173,8 @@ public class SolverTest {
         final Solver p = new Solver(sc);
         p.solve();
 
-        final Complex[] expectedParticialSolution = new Complex[]{new Complex(6.73335286,-22.99754223),
-                new Complex(-1.7976071,2.08404919), new Complex(15.69938581,7.3960106)};
+        final Complex[] expectedParticialSolution = new Complex[]{new Complex(6.73335286, -22.99754223),
+                new Complex(-1.7976071, 2.08404919), new Complex(15.69938581, 7.3960106)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getParticularSolution());

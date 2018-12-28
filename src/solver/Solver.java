@@ -22,7 +22,7 @@ public class Solver {
     private boolean verbose;
     private NumberSolutions numberSolutions = NumberSolutions.ONE;
 
-    public Solver(Scanner sc){
+    public Solver(Scanner sc) {
         this(sc, false);
     }
 
@@ -30,14 +30,14 @@ public class Solver {
         numberVariables = sc.nextInt();
         final int realNumberEquations = sc.nextInt();
         numberEquations = (realNumberEquations < numberVariables) ? numberVariables : realNumberEquations;
-        matrix = new Complex[numberEquations][numberVariables +1];
+        matrix = new Complex[numberEquations][numberVariables + 1];
         for (int i = 0; i < realNumberEquations; ++i) {
-            for (int j = 0; j < numberVariables +1; ++j) {
+            for (int j = 0; j < numberVariables + 1; ++j) {
                 matrix[i][j] = new Complex(sc.next());
             }
         }
         for (int i = realNumberEquations; i < numberEquations; ++i) {
-            for (int j = 0; j < numberVariables +1; ++j) {
+            for (int j = 0; j < numberVariables + 1; ++j) {
                 matrix[i][j] = new Complex();
             }
         }
@@ -57,7 +57,7 @@ public class Solver {
 
     private void divideRow(int row, @NotNull Complex k) {
         if (verbose) {
-            System.out.printf("R%d / %s -> R%d\n", row+1, k.toString(), row+1);
+            System.out.printf("R%d / %s -> R%d\n", row + 1, k.toString(), row + 1);
         }
         final int n = matrix[row].length;
         for (int i = 0; i < n; ++i) {
@@ -67,9 +67,9 @@ public class Solver {
 
     private void addKRow1ToRow2(@NotNull Complex k, int row1, int row2) {
         if (verbose) {
-            System.out.printf("%s * R%d +R%d -> R%d\n", k.toString(), row1+1, row2+1, row2+1);
+            System.out.printf("%s * R%d +R%d -> R%d\n", k.toString(), row1 + 1, row2 + 1, row2 + 1);
         }
-        for (int i = 0; i < numberVariables +1; ++i) {
+        for (int i = 0; i < numberVariables + 1; ++i) {
             final Complex temp = Complex.multiply(k, matrix[row1][i]);
             matrix[row2][i] = Complex.add(temp, matrix[row2][i]);
         }
@@ -77,9 +77,9 @@ public class Solver {
 
     private void swapRows(int row1, int row2) {
         if (verbose) {
-            System.out.printf("R%d <-> R%d\n", row1+1, row2+1);
+            System.out.printf("R%d <-> R%d\n", row1 + 1, row2 + 1);
         }
-        for (int i = 0; i < numberVariables +1; ++i) {
+        for (int i = 0; i < numberVariables + 1; ++i) {
             final Complex temp = matrix[row1][i];
             matrix[row1][i] = matrix[row2][i];
             matrix[row2][i] = temp;
@@ -94,14 +94,14 @@ public class Solver {
         for (int i = 0; i < numberVariables; ++i) {
             if (matrix[i][i].equals(zero)) {
                 boolean notFound = true;
-                for (int j = i+1; j < numberEquations; ++j) {
+                for (int j = i + 1; j < numberEquations; ++j) {
                     if (!matrix[j][i].equals(zero)) {
                         swapRows(i, j);
                         break;
                     }
                 }
                 if (notFound) {
-                    for (int j = i+1; j < numberEquations; ++j) {
+                    for (int j = i + 1; j < numberEquations; ++j) {
                         if (!matrix[i][j].equals(zero)) {
                             swapColumns(i, j);
                             notFound = false;
@@ -111,8 +111,8 @@ public class Solver {
                 }
 
                 if (notFound) {
-                    for (int k = i+1; notFound && k < numberVariables; ++k) {
-                        for (int j = i+1; j < numberEquations; ++j) {
+                    for (int k = i + 1; notFound && k < numberVariables; ++k) {
+                        for (int j = i + 1; j < numberEquations; ++j) {
                             if (!matrix[j][k].equals(zero)) {
                                 swapColumns(k, i);
                                 swapRows(j, i);
@@ -139,7 +139,7 @@ public class Solver {
                 divideRow(i, matrix[i][i]);
             }
             for (int j = i + 1; j < numberEquations && j < numberVariables; ++j) {
-                final Complex k = Complex.multiply(minusOne,matrix[j][i]);
+                final Complex k = Complex.multiply(minusOne, matrix[j][i]);
                 if (!k.equals(zero)) {
                     addKRow1ToRow2(k, i, j);
                 }
@@ -147,7 +147,7 @@ public class Solver {
         }
         for (int i = numberVariables - 1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
-                final Complex k = Complex.multiply(minusOne,matrix[j][i]);
+                final Complex k = Complex.multiply(minusOne, matrix[j][i]);
                 if (!k.equals(zero)) {
                     addKRow1ToRow2(k, i, j);
                 }
@@ -156,13 +156,13 @@ public class Solver {
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
             solution[solutionIndexes[i]] = matrix[i][numberVariables];
             if (matrix[i][i].equals(zero)) {
-                solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i]+1);
+                solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i] + 1);
             } else {
                 solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
                 for (int j = i + 1; j < numberVariables; ++j) {
                     if (!matrix[i][j].equals(zero)) {
                         solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
-                                (solutionIndexes[j]+1) + " * (" + matrix[i][j].toString() + ")" ;
+                                (solutionIndexes[j] + 1) + " * (" + matrix[i][j].toString() + ")";
                     }
                 }
             }
@@ -192,7 +192,7 @@ public class Solver {
     private void printSolutionInternal(PrintWriter printWriter) {
         if (numberSolutions == NumberSolutions.NONE) {
             printWriter.println("There are no solutions");
-        } else if (numberSolutions == NumberSolutions.ONE){
+        } else if (numberSolutions == NumberSolutions.ONE) {
             printWriter.printf("(%s", solution[0].toString());
             for (int i = 1; i < solution.length; ++i) {
                 printWriter.printf(", %s", solution[i].toString());
@@ -210,7 +210,7 @@ public class Solver {
 
     private void swapColumns(int column1, int column2) {
         if (verbose) {
-            System.out.printf("C%d <-> C%d\n", column1+1, column2+1);
+            System.out.printf("C%d <-> C%d\n", column1 + 1, column2 + 1);
         }
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {

@@ -60,7 +60,7 @@ public class ComplexTest {
     public void add() {
         final Complex a = new Complex(3.0, -5.0);
         final Complex b = new Complex(4.0, 2.0);
-        final Complex c = Complex.add(a,b);
+        final Complex c = Complex.add(a, b);
         Assert.assertEquals(7.0, c.getReal(), epsilon);
         Assert.assertEquals(-3.0, c.getImag(), epsilon);
     }
@@ -69,7 +69,7 @@ public class ComplexTest {
     public void multiply() {
         final Complex a = new Complex(3.0, 2.0);
         final Complex b = new Complex(1.0, 7.0);
-        final Complex c = Complex.multiply(a,b);
+        final Complex c = Complex.multiply(a, b);
         Assert.assertEquals(-11.0, c.getReal(), epsilon);
         Assert.assertEquals(23.0, c.getImag(), epsilon);
     }
@@ -86,9 +86,9 @@ public class ComplexTest {
     public void divide() {
         final Complex a = new Complex(2.0, 3.0);
         final Complex b = new Complex(4.0, -5.0);
-        final Complex c = Complex.divide(a,b);
-        Assert.assertEquals(-7.0/41.0, c.getReal(), epsilon);
-        Assert.assertEquals(22.0/41.0, c.getImag(), epsilon);
+        final Complex c = Complex.divide(a, b);
+        Assert.assertEquals(-7.0 / 41.0, c.getReal(), epsilon);
+        Assert.assertEquals(22.0 / 41.0, c.getImag(), epsilon);
     }
 
     @Test
