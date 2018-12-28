@@ -205,20 +205,27 @@ public class Solver {
     }
 
     private void printSolutionInternal(PrintWriter printWriter) {
-        if (numberSolutions == NumberSolutions.NONE) {
-            printWriter.println("There are no solutions");
-        } else if (numberSolutions == NumberSolutions.ONE) {
-            printWriter.printf("(%s", solutionParticular[0].toString());
-            for (int i = 1; i < solutionParticular.length; ++i) {
-                printWriter.printf(", %s", solutionParticular[i].toString());
-            }
-            printWriter.println(")");
-        } else {
-            printWriter.printf("(%s", solutionGeneral[0]);
-            for (int i = 1; i < solutionParticular.length; ++i) {
-                printWriter.printf(", %s", solutionGeneral[i]);
-            }
-            printWriter.println(")");
+        switch(numberSolutions) {
+            case NONE:
+                printWriter.println("There are no solutions");
+                break;
+            case ONE:
+                printWriter.printf("(%s", solutionParticular[0].toString());
+                for (int i = 1; i < solutionParticular.length; ++i) {
+                    printWriter.printf(", %s", solutionParticular[i].toString());
+                }
+                printWriter.println(")");
+                break;
+            case MANY:
+                printWriter.printf("(%s", solutionGeneral[0]);
+                for (int i = 1; i < solutionParticular.length; ++i) {
+                    printWriter.printf(", %s", solutionGeneral[i]);
+                }
+                printWriter.println(")");
+                break;
+            default:
+                assert (false);
+                break;
         }
         printWriter.flush();
     }
