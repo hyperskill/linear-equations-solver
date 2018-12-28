@@ -125,7 +125,6 @@ public class Solver {
                         continue;
                     } else {
                         numberSolutions = NumberSolutions.NONE;
-                        printSolution();
                         return;
                     }
                 }
@@ -191,9 +190,11 @@ public class Solver {
             System.out.println("Rows manipulation:");
         }
         gausFirstStep();
-        gausSecondStep();
-        generateSolutions();
-        checkThatSolutionIsSane();
+        if (numberSolutions != NumberSolutions.NONE) {
+            gausSecondStep();
+            generateSolutions();
+            checkThatSolutionIsSane();
+        }
         printSolution();
     }
 
