@@ -6,11 +6,18 @@ public class ComplexTest {
     private final static double epsilon = 0.000001;
 
     @Test
-    public void equals() {
+    public void equals1() {
         final Complex a = new Complex(1.0, 2.0);
         final Complex b = new Complex(1.0, 2.0);
         Assert.assertTrue(a.equals(b));
     }
+
+    @Test
+    public void equals2() {
+        final Complex a = new Complex(1.0, 2.0);
+        Assert.assertFalse(a.equals("Hello"));
+    }
+
 
     @Test
     public void toString1() {

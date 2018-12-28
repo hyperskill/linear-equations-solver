@@ -42,6 +42,11 @@ public class Complex {
         if (other == null) {
             return false;
         }
+
+        if (!(other instanceof Complex)) {
+            return false;
+        }
+
         Complex o = (Complex) other;
         if (Math.abs(o.imag - imag) < epsilon && Math.abs(o.real - real) < epsilon) {
             return true;
