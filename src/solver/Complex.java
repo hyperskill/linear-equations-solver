@@ -73,7 +73,7 @@ public class Complex {
 
     @NotNull
     @Contract("_ -> new")
-    private String[] parse(@NotNull String s) {
+    private String[] split(@NotNull String s) {
         String realString = "0";
         String imagString = "0";
         int i = 1;
@@ -95,7 +95,7 @@ public class Complex {
     }
 
     public Complex(String s) {
-        String[] strs = parse(s);
+        String[] strs = split(s);
         this.real = Double.parseDouble(strs[0]);
         this.imag = Double.parseDouble(strs[1]);;
     }
