@@ -16,7 +16,7 @@ public class Solver {
     private int numberEquations;
     private int numberVariables;
     private Complex[][] matrix;
-    private Complex[] solution;
+    private Complex[] solutionParticular;
     private String[] solutionGeneral;
     private int[] solutionIndexes;
     private boolean verbose;
@@ -41,7 +41,7 @@ public class Solver {
                 matrix[i][j] = new Complex();
             }
         }
-        solution = new Complex[numberVariables];
+        solutionParticular = new Complex[numberVariables];
         solutionGeneral = new String[numberVariables];
         solutionIndexes = IntStream.range(0, numberVariables).toArray();
         this.verbose = verbose;
@@ -86,11 +86,7 @@ public class Solver {
         }
     }
 
-    public void solve() {
-        if (verbose) {
-            System.out.println("Start solving the equation.");
-            System.out.println("Rows manipulation:");
-        }
+    private void gausFirstStep() {
         for (int i = 0; i < numberVariables; ++i) {
             if (matrix[i][i].equals(zero)) {
                 boolean notFound = true;
@@ -145,6 +141,9 @@ public class Solver {
                 }
             }
         }
+    }
+
+    private void gausSecondStep() {
         for (int i = numberVariables - 1; i >= 0; --i) {
             for (int j = i - 1; j >= 0; --j) {
                 final Complex k = Complex.multiply(minusOne, matrix[j][i]);
@@ -153,8 +152,11 @@ public class Solver {
                 }
             }
         }
+    }
+
+    private void generateSolutions() {
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
-            solution[solutionIndexes[i]] = matrix[i][numberVariables];
+            solutionParticular[solutionIndexes[i]] = matrix[i][numberVariables];
             if (matrix[i][i].equals(zero)) {
                 solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i] + 1);
             } else {
@@ -167,19 +169,31 @@ public class Solver {
                 }
             }
         }
+    }
+
+    private void checkThatSolutionIsSane() {
         for (int i = numberVariables; i < numberEquations; ++i) {
             Complex sum = new Complex(0.0, 0.0);
             for (int j = 0; j < numberVariables; ++j) {
-                Complex temp = Complex.multiply(solution[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
+                Complex temp = Complex.multiply(solutionParticular[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
                 sum = Complex.add(sum, temp);
             }
             if (!sum.equals(matrix[i][numberVariables])) {
                 numberSolutions = NumberSolutions.NONE;
-                printSolution();
                 return;
             }
         }
+    }
 
+    public void solve() {
+        if (verbose) {
+            System.out.println("Start solving the equation.");
+            System.out.println("Rows manipulation:");
+        }
+        gausFirstStep();
+        gausSecondStep();
+        generateSolutions();
+        checkThatSolutionIsSane();
         printSolution();
     }
 
@@ -193,14 +207,14 @@ public class Solver {
         if (numberSolutions == NumberSolutions.NONE) {
             printWriter.println("There are no solutions");
         } else if (numberSolutions == NumberSolutions.ONE) {
-            printWriter.printf("(%s", solution[0].toString());
-            for (int i = 1; i < solution.length; ++i) {
-                printWriter.printf(", %s", solution[i].toString());
+            printWriter.printf("(%s", solutionParticular[0].toString());
+            for (int i = 1; i < solutionParticular.length; ++i) {
+                printWriter.printf(", %s", solutionParticular[i].toString());
             }
             printWriter.println(")");
         } else {
             printWriter.printf("(%s", solutionGeneral[0]);
-            for (int i = 1; i < solution.length; ++i) {
+            for (int i = 1; i < solutionParticular.length; ++i) {
                 printWriter.printf(", %s", solutionGeneral[i]);
             }
             printWriter.println(")");
@@ -223,17 +237,6 @@ public class Solver {
         solutionIndexes[column2] = temp;
     }
 
-    public Complex[] getParticularSolution() {
-        if (numberSolutions == NumberSolutions.NONE) {
-            return null;
-        }
-        return solution;
-    }
-
-    public NumberSolutions getNumberSolutions() {
-        return numberSolutions;
-    }
-
     public void writeSolutionToFile(String out) throws FileNotFoundException {
         File file = new File(out);
         PrintWriter printWriter = new PrintWriter(file);
@@ -244,7 +247,18 @@ public class Solver {
         }
     }
 
-    public String[] getGeneralSolution() {
+    public Complex[] getSolutionParticular() {
+        if (numberSolutions == NumberSolutions.NONE) {
+            return null;
+        }
+        return solutionParticular;
+    }
+
+    public NumberSolutions getNumberSolutions() {
+        return numberSolutions;
+    }
+
+    public String[] getSolutionGeneral() {
         if (numberSolutions != NumberSolutions.MANY) {
             return null;
         }
