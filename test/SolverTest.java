@@ -169,7 +169,8 @@ public class SolverTest {
 
     @Test
     public void solve12() {
-        final Scanner sc = new Scanner("3 3\n1+2i -1.5-1.1i 2.12 91+5i\n-1+3i 1.2+3.5i -3.3 1+15i\n12.31 1.3-5i 12.3i -78.3i");
+        final String source = "3 3\n1+2i -1.5-1.1i 2.12 91+5i\n-1+3i 1.2+3.5i -3.3 1+15i\n12.31 1.3-5i 12.3i -78.3i";
+        final Scanner sc = new Scanner(source);
         final Solver p = new Solver(sc);
         p.solve();
 
