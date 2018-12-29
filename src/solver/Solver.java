@@ -90,38 +90,38 @@ public class Solver {
     private void gausFirstStep() {
         for (int i = 0; i < numberVariables; ++i) {
             if (matrix[i][i].equals(zero)) {
-                boolean notFound = true;
+                boolean foundNonZeroElement = false;
                 for (int j = i + 1; j < numberEquations; ++j) {
                     if (!matrix[j][i].equals(zero)) {
                         swapRows(i, j);
-                        notFound = false;
+                        foundNonZeroElement = true;
                         break;
                     }
                 }
-                if (notFound) {
+                if (!foundNonZeroElement) {
                     for (int j = i + 1; j < numberEquations; ++j) {
                         if (!matrix[i][j].equals(zero)) {
                             swapColumns(i, j);
-                            notFound = false;
+                            foundNonZeroElement = true;
                             break;
                         }
                     }
                 }
 
-                if (notFound) {
-                    for (int k = i + 1; notFound && k < numberVariables; ++k) {
+                if (!foundNonZeroElement) {
+                    for (int k = i + 1; !foundNonZeroElement && k < numberVariables; ++k) {
                         for (int j = i + 1; j < numberEquations; ++j) {
                             if (!matrix[j][k].equals(zero)) {
                                 swapColumns(k, i);
                                 swapRows(j, i);
-                                notFound = false;
+                                foundNonZeroElement = true;
                                 break;
                             }
                         }
                     }
                 }
 
-                if (notFound) {
+                if (!foundNonZeroElement) {
                     if (matrix[i][numberEquations].equals(zero)) {
                         numberSolutions = NumberSolutions.MANY;
                         continue;
