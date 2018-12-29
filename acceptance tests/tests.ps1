@@ -11,7 +11,7 @@ Describe JavaAcceptanceTests {
         "R2 / 2 -> R2", "-3 * R2 +R3 -> R3", "R3 / -0.5 -> R3",
         "3.5 * R3 +R2 -> R2", "-2 * R3 +R1 -> R1", "-1 * R2 +R1 -> R1",
         "(1, 2, 3)", "Saved to file out.txt")
-        $areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
+        [bool]$areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
         $areEqual | Should Be $true
     }
 
@@ -31,7 +31,7 @@ Describe JavaAcceptanceTests {
         "-3 * R1 +R2 -> R2", "-2 * R1 +R3 -> R3", "-1 * R2 +R3 -> R3",
         "R3 / 0.1667 -> R3", "0.5 * R3 +R2 -> R2", "-0.1667 * R3 +R1 -> R1",
         "There are no solutions", "Saved to file out1.txt")
-        $areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
+        [bool]$areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
         $areEqual | Should Be $true
     }
 
@@ -50,7 +50,7 @@ Describe JavaAcceptanceTests {
         "Rows manipulation:", "C3 <-> C2", "R3 <-> R2", "-5 * R2 +R4 -> R4",
         "C4 <-> C3", "R4 <-> R3", "R3 / -15 -> R3", "-4 * R3 +R2 -> R2",
         "-5 * R3 +R1 -> R1", "(-8.3333, x2, -0.6667, 1.6667)","Saved to file out2.txt")
-        $areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
+        [bool]$areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
         $areEqual | Should Be $true
     }
 
@@ -70,7 +70,7 @@ Describe JavaAcceptanceTests {
         "R2 / 1.6+6.1i -> R2", "-10.4094+9.6778i * R2 +R3 -> R3", "R3 / -6.7848+9.7158i -> R3",
         "0.5432-0.746i * R3 +R2 -> R2", "-0.424+0.848i * R3 +R1 -> R1", "0.74-0.38i * R2 +R1 -> R1",
         "(6.7334-22.9975i, -1.7976+2.084i, 15.6994+7.396i)", "Saved to file out3.txt")
-        $areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
+        [bool]$areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
         $areEqual | Should Be $true
     }
 
