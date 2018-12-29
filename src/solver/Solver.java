@@ -22,7 +22,7 @@ public class Solver {
     private boolean verbose;
     private NumberSolutions numberSolutions = NumberSolutions.ONE;
 
-    public Solver(Scanner sc) {
+    public Solver(@NotNull Scanner sc) {
         this(sc, false);
     }
 
@@ -161,7 +161,10 @@ public class Solver {
             } else {
                 solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
                 for (int j = i + 1; j < numberVariables; ++j) {
-                    if (!matrix[i][j].equals(zero)) {
+                    if (matrix[i][j].equals(one)) {
+                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
+                                (solutionIndexes[j] + 1);
+                    } else if (!matrix[i][j].equals(zero)) {
                         solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
                                 (solutionIndexes[j] + 1) + " * (" + matrix[i][j].toString() + ")";
                     }

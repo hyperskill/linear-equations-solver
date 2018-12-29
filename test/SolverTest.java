@@ -129,7 +129,7 @@ public class SolverTest {
 
         final Complex[] expectedParticialSolution = new Complex[]{new Complex(9.0, 0),
                 new Complex(0, 0), new Complex(0, 0)};
-        final String[] expectedGeneralSolution = new String[]{"9 - x2 * (1) - x3 * (2)", "x2", "x3"};
+        final String[] expectedGeneralSolution = new String[]{"9 - x2 - x3 * (2)", "x2", "x3"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
         Assert.assertArrayEquals(expectedParticialSolution, p.getSolutionParticular());
