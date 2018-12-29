@@ -13,19 +13,20 @@ public class Solver {
     private static final Complex one = new Complex(1.0, 0.0);
     private static final Complex minusOne = new Complex(-1.0, 0.0);
 
-    private int numberEquations;
-    private int numberVariables;
-    private Complex[][] matrix;
-    private Complex[] solutionParticular;
-    private String[] solutionGeneral;
-    private int[] solutionIndexes;
-    private boolean verbose;
+    private final int numberEquations;
+    private final int numberVariables;
+    private final Complex[][] matrix;
+    private final Complex[] solutionParticular;
+    private final String[] solutionGeneral;
+    private final int[] solutionIndexes;
+    private final boolean verbose;
     private NumberSolutions numberSolutions = NumberSolutions.ONE;
 
     public Solver(@NotNull Scanner sc) throws NumberFormatException {
         this(sc, false);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Solver(@NotNull Scanner sc, boolean verbose) throws NumberFormatException {
         numberVariables = sc.nextInt();
         final int realNumberEquations = sc.nextInt();
@@ -93,6 +94,7 @@ public class Solver {
                 for (int j = i + 1; j < numberEquations; ++j) {
                     if (!matrix[j][i].equals(zero)) {
                         swapRows(i, j);
+                        notFound = false;
                         break;
                     }
                 }

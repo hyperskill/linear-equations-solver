@@ -28,10 +28,8 @@ Describe JavaAcceptanceTests {
 
         [String[]]$stdoutLines = [System.IO.File]::ReadLines("stdout1.txt")
         [String[]]$expectedOutput = [String[]]("Start solving the equation.",
-        "Rows manipulation:", "R1 <-> R3", "C1 <-> C3", "R1 / 6 -> R1",
-        "-3 * R1 +R2 -> R2", "-2 * R1 +R3 -> R3", "-1 * R2 +R3 -> R3",
-        "R3 / 0.1667 -> R3", "0.5 * R3 +R2 -> R2", "-0.1667 * R3 +R1 -> R1",
-        "There are no solutions", "Saved to file out1.txt")
+        "Rows manipulation:", "R1 <-> R3", "-1 * R2 +R3 -> R3", "R3 / -1 -> R3",
+        "-3 * R3 +R2 -> R2", "-6 * R3 +R1 -> R1", "There are no solutions", "Saved to file out1.txt")
         [bool]$areEqual = @(Compare-Object $expectedOutput $stdoutLines -SyncWindow 0).Length -eq 0
         $areEqual | Should Be $true
     }

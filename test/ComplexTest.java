@@ -9,13 +9,13 @@ public class ComplexTest {
     public void equals1() {
         final Complex a = new Complex(1.0, 2.0);
         final Complex b = new Complex(1.0, 2.0);
-        Assert.assertTrue(a.equals(b));
+        Assert.assertEquals(a, b);
     }
 
     @Test
     public void equals2() {
         final Complex a = new Complex(1.0, 2.0);
-        Assert.assertFalse(a.equals("Hello"));
+        Assert.assertNotEquals("Hello", a);
     }
 
 
@@ -60,7 +60,7 @@ public class ComplexTest {
     public void constructor2() {
         boolean ok = false;
         try {
-            final Complex c = new Complex("gbc");
+            @SuppressWarnings("unused") final Complex c = new Complex("gbc");
         } catch (Exception e) {
             ok = true;
         }

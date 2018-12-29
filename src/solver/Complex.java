@@ -9,8 +9,8 @@ import java.util.Locale;
 
 public class Complex {
     private static final double epsilon = 0.00001;
-    private double real;
-    private double imag;
+    private final double real;
+    private final double imag;
 
     public Complex(double real, double imag) {
         this.real = real;
@@ -48,10 +48,7 @@ public class Complex {
         }
 
         Complex o = (Complex) other;
-        if (Math.abs(o.imag - imag) < epsilon && Math.abs(o.real - real) < epsilon) {
-            return true;
-        }
-        return false;
+        return Math.abs(o.imag - imag) < epsilon && Math.abs(o.real - real) < epsilon;
     }
 
     @NotNull
