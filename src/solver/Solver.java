@@ -22,11 +22,11 @@ public class Solver {
     private boolean verbose;
     private NumberSolutions numberSolutions = NumberSolutions.ONE;
 
-    public Solver(@NotNull Scanner sc) {
+    public Solver(@NotNull Scanner sc) throws NumberFormatException {
         this(sc, false);
     }
 
-    public Solver(@NotNull Scanner sc, boolean verbose) {
+    public Solver(@NotNull Scanner sc, boolean verbose) throws NumberFormatException {
         numberVariables = sc.nextInt();
         final int realNumberEquations = sc.nextInt();
         numberEquations = (realNumberEquations < numberVariables) ? numberVariables : realNumberEquations;

@@ -1,7 +1,5 @@
 package solver;
 
-import java.io.FileNotFoundException;
-
 public class Main {
     public static void main(String[] args) {
         try {
@@ -9,7 +7,7 @@ public class Main {
             final Solver s = new Solver(p.in, p.verbose);
             s.solve();
             s.writeSolutionToFile(p.out);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.printf("An exception occurs %s", e.getMessage());
         }
     }

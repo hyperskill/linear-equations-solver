@@ -99,7 +99,7 @@ public class Complex {
         return new String[]{realString, imagString};
     }
 
-    public Complex(@NotNull String s) {
+    public Complex(@NotNull String s) throws NumberFormatException {
         final String[] strs = split(s);
         real = Double.parseDouble(strs[0]);
         imag = Double.parseDouble(strs[1]);

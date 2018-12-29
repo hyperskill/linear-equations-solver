@@ -8,11 +8,23 @@ import java.util.Scanner;
 
 public class SolverTest {
     @Test
-    public void constructor() {
+    public void constructor1() {
         final Scanner sc = new Scanner("1 1\n1 2");
         final Solver p = new Solver(sc);
 
         Assert.assertEquals(1, p.getSize());
+    }
+
+    @Test
+    public void constructor2() {
+        boolean ok = false;
+        try {
+            final Scanner sc = new Scanner("1 1\nab 2");
+            final Solver p = new Solver(sc);
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
     }
 
     @Test

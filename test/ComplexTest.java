@@ -50,10 +50,21 @@ public class ComplexTest {
     }
 
     @Test
-    public void constructor() {
+    public void constructor1() {
         final Complex c = new Complex(1.0, 0.0);
         Assert.assertEquals(1.0, c.getReal(), epsilon);
         Assert.assertEquals(0.0, c.getImag(), epsilon);
+    }
+
+    @Test
+    public void constructor2() {
+        boolean ok = false;
+        try {
+            final Complex c = new Complex("gbc");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
     }
 
     @Test
