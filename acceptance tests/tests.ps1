@@ -1,9 +1,10 @@
+#!/usr/bin/env pwsh
 Describe JavaAcceptanceTests { 
     It 'single solution' { 
         Remove-Item out.txt -ErrorAction SilentlyContinue
         Remove-Item stdout.txt -ErrorAction SilentlyContinue
 
-        java -classpath "..\out\production\project" solver.Main -in in.txt -out out.txt -verbose > stdout.txt
+        java -classpath "../out/production/project" solver.Main -in in.txt -out out.txt -verbose > stdout.txt
 
         [String[]]$stdoutLines = [System.IO.File]::ReadLines("stdout.txt")
         [String[]]$expectedOutput = [String[]]("Start solving the equation.",
@@ -19,7 +20,7 @@ Describe JavaAcceptanceTests {
         Remove-Item out1.txt -ErrorAction SilentlyContinue
         Remove-Item stdout1.txt -ErrorAction SilentlyContinue
 
-        java -classpath "..\out\production\project" solver.Main -in in1.txt -out out1.txt -verbose > stdout1.txt
+        java -classpath "../out/production/project" solver.Main -in in1.txt -out out1.txt -verbose > stdout1.txt
 
         [String[]]$lines = [System.IO.File]::ReadLines("out1.txt")
         $lines.Count | Should Be 1
@@ -39,7 +40,7 @@ Describe JavaAcceptanceTests {
         Remove-Item out2.txt -ErrorAction SilentlyContinue
         Remove-Item stdout2.txt -ErrorAction SilentlyContinue
 
-        java -classpath "..\out\production\project" solver.Main -in in2.txt -out out2.txt -verbose > stdout2.txt
+        java -classpath "../out/production/project" solver.Main -in in2.txt -out out2.txt -verbose > stdout2.txt
 
         [String[]]$lines = [System.IO.File]::ReadLines("out2.txt")
         $lines.Count | Should Be 1
@@ -58,7 +59,7 @@ Describe JavaAcceptanceTests {
         Remove-Item out3.txt -ErrorAction SilentlyContinue
         Remove-Item stdout3.txt -ErrorAction SilentlyContinue
 
-        java -classpath "..\out\production\project" solver.Main -in in3.txt -out out3.txt -verbose > stdout3.txt
+        java -classpath "../out/production/project" solver.Main -in in3.txt -out out3.txt -verbose > stdout3.txt
 
         [String[]]$lines = [System.IO.File]::ReadLines("out3.txt")
         $lines.Count | Should Be 1
@@ -78,7 +79,7 @@ Describe JavaAcceptanceTests {
         Remove-Item out4.txt -ErrorAction SilentlyContinue
         Remove-Item stdout4.txt -ErrorAction SilentlyContinue
 
-        java -classpath "..\out\production\project" solver.Main -in in.txt -out out4.txt > stdout4.txt
+        java -classpath "../out/production/project" solver.Main -in in.txt -out out4.txt > stdout4.txt
 
         [String[]]$stdoutLines = [System.IO.File]::ReadLines("stdout4.txt")
         $stdoutLines.Count | Should Be 0
