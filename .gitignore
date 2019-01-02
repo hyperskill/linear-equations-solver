@@ -5,6 +5,12 @@ Java/out/
 # Log file
 *.log
 
+# Javascript files
+*.js
+
+# node_modules
+Typescript/node_modules/
+
 # BlueJ files
 *.ctxt
 
