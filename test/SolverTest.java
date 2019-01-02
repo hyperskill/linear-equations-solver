@@ -36,7 +36,7 @@ public class SolverTest {
         final Complex[] expectedPartialSolution = new Complex[]{new Complex(2.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -50,7 +50,7 @@ public class SolverTest {
                 new Complex(2.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -64,7 +64,7 @@ public class SolverTest {
                 new Complex(0.71429, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -78,7 +78,7 @@ public class SolverTest {
                 new Complex(2.0, 0), new Complex(3.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -92,7 +92,7 @@ public class SolverTest {
                 new Complex(1.0, 0)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -107,7 +107,7 @@ public class SolverTest {
         final String[] expectedGeneralSolution = new String[]{"x1", "1"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(expectedGeneralSolution, p.getSolutionGeneral());
     }
 
@@ -118,7 +118,7 @@ public class SolverTest {
         p.solve();
 
         Assert.assertEquals(NumberSolutions.NONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(null, p.getSolutionParticular());
+        Assert.assertArrayEquals(null, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -129,7 +129,7 @@ public class SolverTest {
         p.solve();
 
         Assert.assertEquals(NumberSolutions.NONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(null, p.getSolutionParticular());
+        Assert.assertArrayEquals(null, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 
@@ -144,7 +144,7 @@ public class SolverTest {
         final String[] expectedGeneralSolution = new String[]{"9 - x2 - x3 * (2)", "x2", "x3"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(expectedGeneralSolution, p.getSolutionGeneral());
     }
 
@@ -159,7 +159,7 @@ public class SolverTest {
         final String[] expectedGeneralSolution = new String[]{"-8.3333", "x2", "-0.6667", "1.6667"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(expectedGeneralSolution, p.getSolutionGeneral());
     }
 
@@ -175,7 +175,7 @@ public class SolverTest {
                 "0.2 - x4 * (-0.8)", "x4"};
 
         Assert.assertEquals(NumberSolutions.MANY, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(expectedGeneralSolution, p.getSolutionGeneral());
     }
 
@@ -190,7 +190,7 @@ public class SolverTest {
                 new Complex(-1.7976071, 2.08404919), new Complex(15.69938581, 7.3960106)};
 
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
-        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionParticular());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
 }

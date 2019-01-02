@@ -8,7 +8,7 @@ class Main {
             s.solve();
             s.writeSolutionToFile(p.out);
         } catch (Exception e) {
-            System.out.printf("An exception occurs %s", e.getMessage());
+            System.out.printf("An exception occurs %s\n", e.getMessage());
         }
     }
 }

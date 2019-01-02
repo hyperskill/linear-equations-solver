@@ -3,8 +3,6 @@ import org.junit.Test;
 import solver.Complex;
 
 public class ComplexTest {
-    private final static double epsilon = 0.000001;
-
     @Test
     public void equals1() {
         final Complex a = new Complex(1.0, 2.0);
@@ -50,10 +48,17 @@ public class ComplexTest {
     }
 
     @Test
+    public void defaultConstructor() {
+        final Complex c = new Complex();
+        Assert.assertEquals(0.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(0.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
     public void constructor1() {
         final Complex c = new Complex(1.0, 0.0);
-        Assert.assertEquals(1.0, c.getReal(), epsilon);
-        Assert.assertEquals(0.0, c.getImag(), epsilon);
+        Assert.assertEquals(1.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(0.0, c.getImag(), Complex.EPSILON);
     }
 
     @Test
@@ -68,10 +73,35 @@ public class ComplexTest {
     }
 
     @Test
-    public void defaultConstructor() {
-        final Complex c = new Complex();
-        Assert.assertEquals(0.0, c.getReal(), epsilon);
-        Assert.assertEquals(0.0, c.getImag(), epsilon);
+    public void constructor3() {
+        final String s = "-1.3";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(-1.3, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(0.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor4() {
+        final String s = "2.5i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(2.5, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor5() {
+        final String s = "1.3-2.5i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(1.3, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(-2.5, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor6() {
+        final String s = "1";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(1.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(0.0, c.getImag(), Complex.EPSILON);
     }
 
     @Test
@@ -79,8 +109,8 @@ public class ComplexTest {
         final Complex a = new Complex(3.0, -5.0);
         final Complex b = new Complex(4.0, 2.0);
         final Complex c = Complex.add(a, b);
-        Assert.assertEquals(7.0, c.getReal(), epsilon);
-        Assert.assertEquals(-3.0, c.getImag(), epsilon);
+        Assert.assertEquals(7.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(-3.0, c.getImag(), Complex.EPSILON);
     }
 
     @Test
@@ -88,16 +118,16 @@ public class ComplexTest {
         final Complex a = new Complex(3.0, 2.0);
         final Complex b = new Complex(1.0, 7.0);
         final Complex c = Complex.multiply(a, b);
-        Assert.assertEquals(-11.0, c.getReal(), epsilon);
-        Assert.assertEquals(23.0, c.getImag(), epsilon);
+        Assert.assertEquals(-11.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(23.0, c.getImag(), Complex.EPSILON);
     }
 
     @Test
     public void conjugate() {
         final Complex a = new Complex(3.0, 2.0);
         final Complex c = a.conjugate();
-        Assert.assertEquals(3.0, c.getReal(), epsilon);
-        Assert.assertEquals(-2.0, c.getImag(), epsilon);
+        Assert.assertEquals(3.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(-2.0, c.getImag(), Complex.EPSILON);
     }
 
     @Test
@@ -105,39 +135,7 @@ public class ComplexTest {
         final Complex a = new Complex(2.0, 3.0);
         final Complex b = new Complex(4.0, -5.0);
         final Complex c = Complex.divide(a, b);
-        Assert.assertEquals(-7.0 / 41.0, c.getReal(), epsilon);
-        Assert.assertEquals(22.0 / 41.0, c.getImag(), epsilon);
-    }
-
-    @Test
-    public void parseComplex1() {
-        final String s = "-1.3";
-        final Complex c = new Complex(s);
-        Assert.assertEquals(-1.3, c.getReal(), epsilon);
-        Assert.assertEquals(0.0, c.getImag(), epsilon);
-    }
-
-    @Test
-    public void parseComplex2() {
-        final String s = "2.5i";
-        final Complex c = new Complex(s);
-        Assert.assertEquals(0.0, c.getReal(), epsilon);
-        Assert.assertEquals(2.5, c.getImag(), epsilon);
-    }
-
-    @Test
-    public void parseComplex3() {
-        final String s = "1.3-2.5i";
-        final Complex c = new Complex(s);
-        Assert.assertEquals(1.3, c.getReal(), epsilon);
-        Assert.assertEquals(-2.5, c.getImag(), epsilon);
-    }
-
-    @Test
-    public void parseComplex4() {
-        final String s = "1";
-        final Complex c = new Complex(s);
-        Assert.assertEquals(1.0, c.getReal(), epsilon);
-        Assert.assertEquals(0.0, c.getImag(), epsilon);
+        Assert.assertEquals(-7.0 / 41.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(22.0 / 41.0, c.getImag(), Complex.EPSILON);
     }
 }

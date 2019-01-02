@@ -9,9 +9,9 @@ import java.util.Scanner;
 import java.util.stream.IntStream;
 
 public class Solver {
-    private static final Complex zero = new Complex(0.0, 0.0);
-    private static final Complex one = new Complex(1.0, 0.0);
-    private static final Complex minusOne = new Complex(-1.0, 0.0);
+    private static final Complex ZERO = new Complex(0.0, 0.0);
+    private static final Complex ONE = new Complex(1.0, 0.0);
+    private static final Complex MINUS_ONE = new Complex(-1.0, 0.0);
 
     private final int numberEquations;
     private final int numberVariables;
@@ -52,141 +52,26 @@ public class Solver {
         this(new Scanner(new File(in)), verbose);
     }
 
+    public NumberSolutions getNumberSolutions() {
+        return numberSolutions;
+    }
+
     public int getSize() {
         return matrix.length;
     }
 
-    private void divideRow(int row, @NotNull Complex k) {
-        if (verbose) {
-            System.out.printf("R%d / %s -> R%d\n", row + 1, k.toString(), row + 1);
+    public String[] getSolutionGeneral() {
+        if (numberSolutions != NumberSolutions.MANY) {
+            return null;
         }
-        final int n = matrix[row].length;
-        for (int i = 0; i < n; ++i) {
-            matrix[row][i] = Complex.divide(matrix[row][i], k);
-        }
+        return solutionGeneral;
     }
 
-    private void addKRow1ToRow2(@NotNull Complex k, int row1, int row2) {
-        if (verbose) {
-            System.out.printf("%s * R%d +R%d -> R%d\n", k.toString(), row1 + 1, row2 + 1, row2 + 1);
+    public Complex[] getSolutionPartial() {
+        if (numberSolutions == NumberSolutions.NONE) {
+            return null;
         }
-        for (int i = 0; i < numberVariables + 1; ++i) {
-            final Complex temp = Complex.multiply(k, matrix[row1][i]);
-            matrix[row2][i] = Complex.add(temp, matrix[row2][i]);
-        }
-    }
-
-    private void swapRows(int row1, int row2) {
-        if (verbose) {
-            System.out.printf("R%d <-> R%d\n", row1 + 1, row2 + 1);
-        }
-        for (int i = 0; i < numberVariables + 1; ++i) {
-            final Complex temp = matrix[row1][i];
-            matrix[row1][i] = matrix[row2][i];
-            matrix[row2][i] = temp;
-        }
-    }
-
-    private void gausFirstStep() {
-        for (int i = 0; i < numberVariables; ++i) {
-            if (matrix[i][i].equals(zero)) {
-                boolean foundNonZeroElement = false;
-                for (int j = i + 1; j < numberEquations; ++j) {
-                    if (!matrix[j][i].equals(zero)) {
-                        swapRows(i, j);
-                        foundNonZeroElement = true;
-                        break;
-                    }
-                }
-                if (!foundNonZeroElement) {
-                    for (int j = i + 1; j < numberEquations; ++j) {
-                        if (!matrix[i][j].equals(zero)) {
-                            swapColumns(i, j);
-                            foundNonZeroElement = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!foundNonZeroElement) {
-                    for (int k = i + 1; !foundNonZeroElement && k < numberVariables; ++k) {
-                        for (int j = i + 1; j < numberEquations; ++j) {
-                            if (!matrix[j][k].equals(zero)) {
-                                swapColumns(k, i);
-                                swapRows(j, i);
-                                foundNonZeroElement = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if (!foundNonZeroElement) {
-                    if (matrix[i][numberEquations].equals(zero)) {
-                        numberSolutions = NumberSolutions.MANY;
-                        continue;
-                    } else {
-                        numberSolutions = NumberSolutions.NONE;
-                        return;
-                    }
-                }
-            }
-
-            if (!matrix[i][i].equals(one)) {
-                divideRow(i, matrix[i][i]);
-            }
-            for (int j = i + 1; j < numberEquations && j < numberVariables; ++j) {
-                final Complex k = Complex.multiply(minusOne, matrix[j][i]);
-                if (!k.equals(zero)) {
-                    addKRow1ToRow2(k, i, j);
-                }
-            }
-        }
-    }
-
-    private void gausSecondStep() {
-        for (int i = numberVariables - 1; i >= 0; --i) {
-            for (int j = i - 1; j >= 0; --j) {
-                final Complex k = Complex.multiply(minusOne, matrix[j][i]);
-                if (!k.equals(zero)) {
-                    addKRow1ToRow2(k, i, j);
-                }
-            }
-        }
-    }
-
-    private void generateSolutions() {
-        for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
-            solutionParticular[solutionIndexes[i]] = matrix[i][numberVariables];
-            if (matrix[i][i].equals(zero)) {
-                solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i] + 1);
-            } else {
-                solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
-                for (int j = i + 1; j < numberVariables; ++j) {
-                    if (matrix[i][j].equals(one)) {
-                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
-                                (solutionIndexes[j] + 1);
-                    } else if (!matrix[i][j].equals(zero)) {
-                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
-                                (solutionIndexes[j] + 1) + " * (" + matrix[i][j].toString() + ")";
-                    }
-                }
-            }
-        }
-    }
-
-    private void checkThatSolutionIsSane() {
-        for (int i = numberVariables; i < numberEquations; ++i) {
-            Complex sum = new Complex(0.0, 0.0);
-            for (int j = 0; j < numberVariables; ++j) {
-                Complex temp = Complex.multiply(solutionParticular[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
-                sum = Complex.add(sum, temp);
-            }
-            if (!sum.equals(matrix[i][numberVariables])) {
-                numberSolutions = NumberSolutions.NONE;
-                return;
-            }
-        }
+        return solutionParticular;
     }
 
     public void solve() {
@@ -203,6 +88,138 @@ public class Solver {
         printSolution();
     }
 
+    public void writeSolutionToFile(String out) throws FileNotFoundException {
+        final File file = new File(out);
+        final PrintWriter printWriter = new PrintWriter(file);
+        printSolutionInternal(printWriter);
+        printWriter.close();
+        if (verbose) {
+            System.out.printf("Saved to file %s\n", out);
+        }
+    }
+
+    private void addKRow1ToRow2(@NotNull Complex k, int row1, int row2) {
+        if (verbose) {
+            System.out.printf("%s * R%d +R%d -> R%d\n", k.toString(), row1 + 1, row2 + 1, row2 + 1);
+        }
+        for (int i = 0; i < numberVariables + 1; ++i) {
+            final Complex temp = Complex.multiply(k, matrix[row1][i]);
+            matrix[row2][i] = Complex.add(temp, matrix[row2][i]);
+        }
+    }
+
+    private void checkThatSolutionIsSane() {
+        for (int i = numberVariables; i < numberEquations; ++i) {
+            Complex sum = new Complex(0.0, 0.0);
+            for (int j = 0; j < numberVariables; ++j) {
+                final Complex temp = Complex.multiply(solutionParticular[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
+                sum = Complex.add(sum, temp);
+            }
+            if (!sum.equals(matrix[i][numberVariables])) {
+                numberSolutions = NumberSolutions.NONE;
+                return;
+            }
+        }
+    }
+
+    private void divideRow(int row, @NotNull Complex k) {
+        if (verbose) {
+            System.out.printf("R%d / %s -> R%d\n", row + 1, k.toString(), row + 1);
+        }
+        final int n = matrix[row].length;
+        for (int i = 0; i < n; ++i) {
+            matrix[row][i] = Complex.divide(matrix[row][i], k);
+        }
+    }
+
+    private void gausFirstStep() {
+        for (int i = 0; i < numberVariables; ++i) {
+            if (matrix[i][i].equals(ZERO)) {
+                boolean foundNonZeroElement = false;
+                for (int j = i + 1; j < numberEquations; ++j) {
+                    if (!matrix[j][i].equals(ZERO)) {
+                        swapRows(i, j);
+                        foundNonZeroElement = true;
+                        break;
+                    }
+                }
+                if (!foundNonZeroElement) {
+                    for (int j = i + 1; j < numberEquations; ++j) {
+                        if (!matrix[i][j].equals(ZERO)) {
+                            swapColumns(i, j);
+                            foundNonZeroElement = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!foundNonZeroElement) {
+                    for (int k = i + 1; !foundNonZeroElement && k < numberVariables; ++k) {
+                        for (int j = i + 1; j < numberEquations; ++j) {
+                            if (!matrix[j][k].equals(ZERO)) {
+                                swapColumns(k, i);
+                                swapRows(j, i);
+                                foundNonZeroElement = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (!foundNonZeroElement) {
+                    if (matrix[i][numberEquations].equals(ZERO)) {
+                        numberSolutions = NumberSolutions.MANY;
+                        continue;
+                    } else {
+                        numberSolutions = NumberSolutions.NONE;
+                        return;
+                    }
+                }
+            }
+
+            if (!matrix[i][i].equals(ONE)) {
+                divideRow(i, matrix[i][i]);
+            }
+            for (int j = i + 1; j < numberEquations && j < numberVariables; ++j) {
+                final Complex k = Complex.multiply(MINUS_ONE, matrix[j][i]);
+                if (!k.equals(ZERO)) {
+                    addKRow1ToRow2(k, i, j);
+                }
+            }
+        }
+    }
+
+    private void gausSecondStep() {
+        for (int i = numberVariables - 1; i >= 0; --i) {
+            for (int j = i - 1; j >= 0; --j) {
+                final Complex k = Complex.multiply(MINUS_ONE, matrix[j][i]);
+                if (!k.equals(ZERO)) {
+                    addKRow1ToRow2(k, i, j);
+                }
+            }
+        }
+    }
+
+    private void generateSolutions() {
+        for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
+            solutionParticular[solutionIndexes[i]] = matrix[i][numberVariables];
+            if (matrix[i][i].equals(ZERO)) {
+                solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i] + 1);
+            } else {
+                solutionGeneral[solutionIndexes[i]] = matrix[i][numberVariables].toString();
+                for (int j = i + 1; j < numberVariables; ++j) {
+                    if (matrix[i][j].equals(ONE)) {
+                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
+                                (solutionIndexes[j] + 1);
+                    } else if (!matrix[i][j].equals(ZERO)) {
+                        solutionGeneral[solutionIndexes[i]] = solutionGeneral[solutionIndexes[i]] + " - x" +
+                                (solutionIndexes[j] + 1) + " * (" + matrix[i][j].toString() + ")";
+                    }
+                }
+            }
+        }
+    }
+
     private void printSolution() {
         if (verbose) {
             printSolutionInternal(new PrintWriter(System.out, true));
@@ -210,7 +227,7 @@ public class Solver {
     }
 
     private void printSolutionInternal(PrintWriter printWriter) {
-        switch(numberSolutions) {
+        switch (numberSolutions) {
             case NONE:
                 printWriter.println("There are no solutions");
                 break;
@@ -241,40 +258,23 @@ public class Solver {
         }
         final int n = matrix.length;
         for (int i = 0; i < n; ++i) {
-            final Complex temp = matrix[i][column1];
+            final Complex temp1 = matrix[i][column1];
             matrix[i][column1] = matrix[i][column2];
-            matrix[i][column2] = temp;
+            matrix[i][column2] = temp1;
         }
-        final int temp = solutionIndexes[column1];
+        final int temp2 = solutionIndexes[column1];
         solutionIndexes[column1] = solutionIndexes[column2];
-        solutionIndexes[column2] = temp;
+        solutionIndexes[column2] = temp2;
     }
 
-    public void writeSolutionToFile(String out) throws FileNotFoundException {
-        final File file = new File(out);
-        final PrintWriter printWriter = new PrintWriter(file);
-        printSolutionInternal(printWriter);
-        printWriter.close();
+    private void swapRows(int row1, int row2) {
         if (verbose) {
-            System.out.printf("Saved to file %s", out);
+            System.out.printf("R%d <-> R%d\n", row1 + 1, row2 + 1);
         }
-    }
-
-    public Complex[] getSolutionParticular() {
-        if (numberSolutions == NumberSolutions.NONE) {
-            return null;
+        for (int i = 0; i < numberVariables + 1; ++i) {
+            final Complex temp = matrix[row1][i];
+            matrix[row1][i] = matrix[row2][i];
+            matrix[row2][i] = temp;
         }
-        return solutionParticular;
-    }
-
-    public NumberSolutions getNumberSolutions() {
-        return numberSolutions;
-    }
-
-    public String[] getSolutionGeneral() {
-        if (numberSolutions != NumberSolutions.MANY) {
-            return null;
-        }
-        return solutionGeneral;
     }
 }
