@@ -11,6 +11,9 @@ Java/out/
 # node_modules
 Typescript/node_modules/
 
+# package-lock
+Typescript/package-lock.json
+
 # BlueJ files
 *.ctxt
 
