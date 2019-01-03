@@ -28,6 +28,19 @@ public class SolverTest {
     }
 
     @Test
+    public void solve0() {
+        final Scanner sc = new Scanner("1   1 \n\n 2 4");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        final Complex[] expectedPartialSolution = new Complex[]{new Complex(2.0, 0)};
+
+        Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
+        Assert.assertArrayEquals(null, p.getSolutionGeneral());
+    }
+
+    @Test
     public void solve1() {
         final Scanner sc = new Scanner("1 1\n2 4");
         final Solver p = new Solver(sc);
