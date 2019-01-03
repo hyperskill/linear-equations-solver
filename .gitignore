@@ -8,6 +8,10 @@ Java/out/
 # Javascript files
 *.js
 
+# Test accestance output files
+out*.txt
+stdout*.txt
+
 # node_modules
 Typescript/node_modules/
 
