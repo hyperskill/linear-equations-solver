@@ -94,7 +94,7 @@ public class Complex {
 
     @NotNull
     @Contract("_ -> new")
-    private String[] split(@NotNull String s) {
+    private String[] split(@NotNull String s) throws NumberFormatException {
         String realString = "0";
         String imagString = "0";
         int i = 1;
@@ -102,6 +102,9 @@ public class Complex {
             if (s.charAt(i) == '+' || s.charAt(i) == '-') {
                 realString = s.substring(0, i);
                 imagString = s.substring(i, s.length() - 1);
+                if (s.charAt(s.length()-1) != 'i') {
+                    throw  new NumberFormatException("can't parse complex");
+                }
                 break;
             }
             if (s.charAt(i) == 'i') {

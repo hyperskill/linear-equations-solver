@@ -6,6 +6,9 @@ const split = (s: string): string[] => {
         if (s.charAt(i) === "+" || s.charAt(i) === "-") {
             realString = s.substring(0, i);
             imagString = s.substring(i, s.length - 1);
+            if (s.charAt(s.length - 1) !== "i") {
+                throw new Error("can't parse complex");
+            }
             break;
         }
         if (s.charAt(i) === "i") {
@@ -38,6 +41,9 @@ export class Complex {
         const strs = split(s);
         const real = Number.parseFloat(strs[0]);
         const imag = Number.parseFloat(strs[1]);
+        if (Number.isNaN(real) || Number.isNaN(imag)) {
+            throw new Error("can't parse complex");
+        }
 
         return new Complex(real, imag);
     }

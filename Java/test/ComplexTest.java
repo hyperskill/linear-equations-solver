@@ -16,6 +16,19 @@ public class ComplexTest {
         Assert.assertNotEquals("Hello", a);
     }
 
+    @Test
+    public void equals3() {
+        final Complex a = new Complex(1.0, 2.0);
+        final Complex b = new Complex(1.1, 2.0);
+        Assert.assertNotEquals(b, a);
+    }
+
+    @Test
+    public void equals4() {
+        final Complex a = new Complex(1.0, 2.1);
+        final Complex b = new Complex(1.0, 2.0);
+        Assert.assertNotEquals(b, a);
+    }
 
     @Test
     public void toString1() {
@@ -102,6 +115,17 @@ public class ComplexTest {
         final Complex c = new Complex(s);
         Assert.assertEquals(1.0, c.getReal(), Complex.EPSILON);
         Assert.assertEquals(0.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor7() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3-2.5");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
     }
 
     @Test

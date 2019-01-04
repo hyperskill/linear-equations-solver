@@ -8,6 +8,20 @@ describe("complex tests", () => {
         expect(a.equals(b)).toBe(true);
     });
 
+    it("equals2", () => {
+        const a = new Complex(1, 2);
+        const b = new Complex(1.1, 2);
+
+        expect(a.equals(b)).toBe(false);
+    });
+
+    it("equals3", () => {
+        const a = new Complex(1, 2.1);
+        const b = new Complex(1, 2);
+
+        expect(a.equals(b)).toBe(false);
+    });
+
     it("toString1", () => {
         const a = new Complex(1, 0);
 
@@ -85,7 +99,13 @@ describe("complex tests", () => {
     });
 
     it("fromString5", () => {
-        expect(Complex.fromString.bind("gdc")).toThrow();
+        const f = () => Complex.fromString("gdc");
+        expect(f).toThrow();
+    });
+
+    it("fromString6", () => {
+        const f = () => Complex.fromString("1.3-2.5");
+        expect(f).toThrow();
     });
 
     it("add", () => {
