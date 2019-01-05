@@ -8,6 +8,15 @@ Java/out/
 # Javascript files
 *.js
 
+# C++ generated files and folders
+.vs/
+*.d
+*.o
+x64/
+Release/
+Debug/
+*.user
+
 # Test accestance output files
 out*.txt
 stdout*.txt
