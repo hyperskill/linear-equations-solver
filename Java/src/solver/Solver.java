@@ -16,7 +16,7 @@ public class Solver {
     private final int numberEquations;
     private final int numberVariables;
     private final Complex[][] matrix;
-    private final Complex[] solutionParticular;
+    private final Complex[] solutionPartial;
     private final String[] solutionGeneral;
     private final int[] solutionIndexes;
     private final boolean verbose;
@@ -42,7 +42,7 @@ public class Solver {
                 matrix[i][j] = new Complex();
             }
         }
-        solutionParticular = new Complex[numberVariables];
+        solutionPartial = new Complex[numberVariables];
         solutionGeneral = new String[numberVariables];
         solutionIndexes = IntStream.range(0, numberVariables).toArray();
         this.verbose = verbose;
@@ -71,7 +71,7 @@ public class Solver {
         if (numberSolutions == NumberSolutions.NONE) {
             return null;
         }
-        return solutionParticular;
+        return solutionPartial;
     }
 
     public void solve() {
@@ -112,7 +112,7 @@ public class Solver {
         for (int i = numberVariables; i < numberEquations; ++i) {
             Complex sum = new Complex(0.0, 0.0);
             for (int j = 0; j < numberVariables; ++j) {
-                final Complex temp = Complex.multiply(solutionParticular[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
+                final Complex temp = Complex.multiply(solutionPartial[solutionIndexes[j]], matrix[i][solutionIndexes[j]]);
                 sum = Complex.add(sum, temp);
             }
             if (!sum.equals(matrix[i][numberVariables])) {
@@ -202,7 +202,7 @@ public class Solver {
 
     private void generateSolutions() {
         for (int i = 0; i < numberEquations && i < numberVariables; ++i) {
-            solutionParticular[solutionIndexes[i]] = matrix[i][numberVariables];
+            solutionPartial[solutionIndexes[i]] = matrix[i][numberVariables];
             if (matrix[i][i].equals(ZERO)) {
                 solutionGeneral[solutionIndexes[i]] = "x" + (solutionIndexes[i] + 1);
             } else {
@@ -232,15 +232,15 @@ public class Solver {
                 printWriter.println("There are no solutions");
                 break;
             case ONE:
-                printWriter.printf("(%s", solutionParticular[0].toString());
-                for (int i = 1; i < solutionParticular.length; ++i) {
-                    printWriter.printf(", %s", solutionParticular[i].toString());
+                printWriter.printf("(%s", solutionPartial[0].toString());
+                for (int i = 1; i < solutionPartial.length; ++i) {
+                    printWriter.printf(", %s", solutionPartial[i].toString());
                 }
                 printWriter.println(")");
                 break;
             case MANY:
                 printWriter.printf("(%s", solutionGeneral[0]);
-                for (int i = 1; i < solutionParticular.length; ++i) {
+                for (int i = 1; i < solutionPartial.length; ++i) {
                     printWriter.printf(", %s", solutionGeneral[i]);
                 }
                 printWriter.println(")");

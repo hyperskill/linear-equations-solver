@@ -14,7 +14,7 @@ export class Solver {
     private readonly numberVariables: number;
     private readonly solutionGeneral: string[];
     private readonly solutionIndexes: number[];
-    private readonly solutionParticular: Complex[];
+    private readonly solutionPartial: Complex[];
     private readonly verbose: boolean;
 
     public constructor(s: string, verbose = false) {
@@ -40,7 +40,7 @@ export class Solver {
                 this.matrix[i][j] = new Complex();
             }
         }
-        this.solutionParticular = new Array<Complex>(this.numberVariables);
+        this.solutionPartial = new Array<Complex>(this.numberVariables);
         this.solutionGeneral = new Array<string>(this.numberVariables);
         this.solutionIndexes = new Array<number>(this.numberVariables);
         for (let i = 0; i < this.numberVariables; i += 1) {
@@ -66,7 +66,7 @@ export class Solver {
             return undefined;
         }
 
-        return this.solutionParticular;
+        return this.solutionPartial;
     }
 
     public readonly solve = (): void => {
@@ -107,7 +107,7 @@ export class Solver {
             let sum = new Complex(0, 0);
             for (let j = 0; j < this.numberVariables; j += 1) {
                 const temp = Complex.multiply(
-                    this.solutionParticular[this.solutionIndexes[j]],
+                    this.solutionPartial[this.solutionIndexes[j]],
                     this.matrix[i][this.solutionIndexes[j]]);
                 sum = Complex.add(sum, temp);
             }
@@ -200,7 +200,7 @@ export class Solver {
 
     private readonly generateSolutions = (): void => {
         for (let i = 0; i < this.numberEquations && i < this.numberVariables; i += 1) {
-            this.solutionParticular[this.solutionIndexes[i]] = this.matrix[i][this.numberVariables];
+            this.solutionPartial[this.solutionIndexes[i]] = this.matrix[i][this.numberVariables];
             if (this.matrix[i][i].equals(Solver.ZERO)) {
                 this.solutionGeneral[this.solutionIndexes[i]] = `x${this.solutionIndexes[i] + 1}`;
             } else {
@@ -232,15 +232,15 @@ export class Solver {
                 result = "There are no solutions";
                 break;
             case NumberSolutions.ONE:
-                result = `(${this.solutionParticular[0].toString()}`;
-                for (let i = 1; i < this.solutionParticular.length; i += 1) {
-                    result += `, ${this.solutionParticular[i].toString()}`;
+                result = `(${this.solutionPartial[0].toString()}`;
+                for (let i = 1; i < this.solutionPartial.length; i += 1) {
+                    result += `, ${this.solutionPartial[i].toString()}`;
                 }
                 result += ")";
                 break;
             case NumberSolutions.MANY:
                 result = `(${this.solutionGeneral[0]}`;
-                for (let i = 1; i < this.solutionParticular.length; i += 1) {
+                for (let i = 1; i < this.solutionPartial.length; i += 1) {
                     result += `, ${this.solutionGeneral[i]}`;
                 }
                 result +=  ")";
