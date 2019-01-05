@@ -26,6 +26,10 @@ complex<double> parse_complex (const string& s)
     switch (next_character)
     {
     case 'i':
+        if (in.peek() != EOF)
+        {
+            throw runtime_error ("can't parse complex");
+        }
         imag = real;
         real = 0.0;
         break;

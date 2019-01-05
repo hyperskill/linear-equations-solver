@@ -108,6 +108,9 @@ public class Complex {
                 break;
             }
             if (s.charAt(i) == 'i') {
+                if (i != s.length() - 1) {
+                    throw  new NumberFormatException("can't parse complex");
+                }
                 imagString = s.substring(0, i);
                 break;
             }

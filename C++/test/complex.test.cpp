@@ -136,3 +136,17 @@ BOOST_AUTO_TEST_CASE (complex_parse6)
     }
     BOOST_FAIL ("no throw exception");
 }
+
+BOOST_AUTO_TEST_CASE (complex_parse7)
+{
+    try
+    {
+        const complex<double>a = parse_complex ("1.3i-2.5");
+        (void)a;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}

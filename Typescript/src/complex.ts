@@ -12,6 +12,9 @@ const split = (s: string): string[] => {
             break;
         }
         if (s.charAt(i) === "i") {
+            if (i !== s.length - 1) {
+                throw new Error("can;t parse complex");
+            }
             imagString = s.substring(0, i);
             break;
         }

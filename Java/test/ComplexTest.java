@@ -129,6 +129,17 @@ public class ComplexTest {
     }
 
     @Test
+    public void constructor8() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3i-2.5");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+    @Test
     public void add() {
         final Complex a = new Complex(3.0, -5.0);
         final Complex b = new Complex(4.0, 2.0);

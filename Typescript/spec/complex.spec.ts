@@ -108,6 +108,11 @@ describe("complex tests", () => {
         expect(f).toThrow();
     });
 
+    it("fromString7", () => {
+        const f = () => Complex.fromString("1.3i-2.5");
+        expect(f).toThrow();
+    });
+
     it("add", () => {
         const a = new Complex(3, -5);
         const b = new Complex(4, 2);
