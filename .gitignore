@@ -16,6 +16,7 @@ x64/
 Release/
 Debug/
 *.user
+*.orig
 
 # Test accestance output files
 out*.txt
