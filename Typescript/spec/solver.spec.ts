@@ -11,9 +11,18 @@ describe("solver tests", () => {
     });
 
     it("constructor2", () => {
-        const s = "1 1\nab 2";
+        const f = () => new Solver("1 1\nab 2");
+        expect(f).toThrow();
+    });
 
-        expect(Solver.bind(s)).toThrow();
+    it("constructor3", () => {
+        const f = () => new Solver("-1 1\n2 2");
+        expect(f).toThrow();
+    });
+
+    it("constructor4", () => {
+        const f = () => new Solver("1 -1\n2 2");
+        expect(f).toThrow();
     });
 
     it("solve: allow multiple delimiters", () => {
