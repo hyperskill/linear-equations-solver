@@ -18,7 +18,7 @@ export class Solver {
     private readonly verbose: boolean;
 
     public constructor(s: string, verbose = false) {
-        const args = s.split(new RegExp("\n| ")).filter((x: string) => x.length !== 0);
+        const args = s.split(new RegExp("\r\n|\r|\n| ")).filter((x: string) => x.length !== 0);
         let argsI = 0;
         this.numberVariables = Number.parseInt(args[argsI], 10);
         argsI += 1;

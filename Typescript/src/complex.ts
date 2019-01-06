@@ -27,9 +27,10 @@ const split = (s: string): string[] => {
 };
 
 const strongParseFloat = (s: string): number => {
-    if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(s)) {
+    if (/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(s)) {
         return Number.parseFloat(s);
     }
+
     return NaN;
 };
 
