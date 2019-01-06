@@ -31,9 +31,15 @@ constexpr complex<double> ZERO (0.0, 0.0);
 constexpr complex<double> ONE (1.0, 0.0);
 constexpr complex<double> MINUS_ONE (-1.0, 0.0);
 
-solver::solver (istream& in, bool verbose /* = false */)
-    : number_solutions_ (number_solutions::one)
-    , verbose (verbose)
+solver::solver (istream& in, bool verbose_ /* = false */)
+    : number_equations (0)
+    , number_variables (0)
+    , number_solutions_ (number_solutions::one)
+    , matrix()
+    , solution_partial()
+    , solution_general()
+    , solution_indexes()
+    , verbose (verbose_)
 {
     static_assert (SIZE_MAX >= UINT32_MAX);
 

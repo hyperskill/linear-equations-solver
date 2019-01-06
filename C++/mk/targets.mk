@@ -15,7 +15,7 @@
 ./bin/test_cpp$(EXEEXT): $(OBJ_TEST_CXX)
 	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_TEST_CXX) $(SANITIZERS)
 
-./bin/thread_test_cpp$(EXEEXT): CXXFLAGS +=  $(DEBUG_STL) $(THREAD_SANITIZER)
+./bin/thread_test_cpp$(EXEEXT): CXXFLAGS +=  $(DEBUG_STL) $(THREAD_SANITIZER) $(WARNINGS_TESTS)
 ./bin/thread_test_cpp$(EXEEXT): CFLAGS += $(THREAD_SANITIZER)
 ./bin/thread_test_cpp$(EXEEXT): $(OBJ_TEST_CXX)
 	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_TEST_CXX) $(THREAD_SANITIZER)
@@ -32,11 +32,10 @@ clean_details:
 
 help_details:
 	@echo "The following are some of the valid targets for this makefile:"
-	@echo "    all (the default if no target is provided)(=debug)"
-	@echo "    force_cpp (building c solution with c++ compiler)"
+	@echo "    all (the default if no target is provided)(=test)"
 	@echo "    release"
-	@echo "    debug"
-	@echo "    thread_debug (searching thread races with tsan)"
+	@echo "    test (with msan)"
+	@echo "    thread_test (searching thread races with tsan)"
 	@echo "    clean"
 	@echo "    help"
 

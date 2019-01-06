@@ -15,6 +15,8 @@ using std::ostringstream;
 using std::runtime_error;
 using std::round;
 
+constexpr double EPSILON = 0.00001;
+
 complex<double> parse_complex (const string& s)
 {
     double real = 0.0;

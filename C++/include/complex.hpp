@@ -6,8 +6,6 @@
 #include <complex>
 #include <string>
 
-constexpr double EPSILON = 0.00001;
-
 std::complex<double> parse_complex (const std::string& s);
 
 bool equals (const std::complex<double>& a, const std::complex<double>& b) noexcept;

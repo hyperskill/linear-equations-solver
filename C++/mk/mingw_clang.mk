@@ -5,7 +5,7 @@ CPPFLAGS = -MT $@ -MMD -MP
 TARGET_ARCH ?=
 
 WARNINGS = -Weverything -Wno-padded -Wno-tautological-pointer-compare -Wno-covered-switch-default -Werror
-WARNINGS_CXX_ONLY = -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-shadow-field-in-constructor
+WARNINGS_CXX_ONLY = -Wno-c++98-compat -Wno-c++98-compat-pedantic
 WARNINGS_TESTS = -Wno-disabled-macro-expansion -Wno-global-constructors
 
 INCLUDE = -I"include" -isystem"3rd"
