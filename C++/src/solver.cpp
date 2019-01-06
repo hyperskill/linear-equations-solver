@@ -11,13 +11,21 @@
 
 #include "complex.hpp"
 
+using std::cout;
+using std::endl;
 using std::iota;
 using std::istream;
+using std::string;
 using std::size_t;
 using std::complex;
 using std::nullopt;
 using std::uint32_t;
 using std::ifstream;
+using std::vector;
+using std::optional;
+using std::ofstream;
+using std::ostream;
+using std::swap;
 
 constexpr complex<double> ZERO (0.0, 0.0);
 constexpr complex<double> ONE (1.0, 0.0);
@@ -27,7 +35,7 @@ solver::solver (istream& in, bool verbose /* = false */)
     : number_solutions_ (number_solutions::one)
     , verbose (verbose)
 {
-    assert (SIZE_MAX >= UINT32_MAX);
+    static_assert (SIZE_MAX >= UINT32_MAX);
 
     in.exceptions (istream::failbit | istream::badbit);
     uint32_t temp_number_variables;
@@ -44,7 +52,7 @@ solver::solver (istream& in, bool verbose /* = false */)
         matrix.at (i).resize (number_variables + 1);
         for (auto& matrix_el : matrix.at (i))
         {
-            std::string temp;
+            string temp;
             in >> temp;
             matrix_el = parse_complex (temp);
         }
@@ -64,26 +72,26 @@ number_solutions solver::get_number_solutions()  const noexcept
     return number_solutions_;
 }
 
-std::size_t solver::get_size() const noexcept
+size_t solver::get_size() const noexcept
 {
     return matrix.size();
 }
 
-std::optional<std::vector<std::string>> solver::get_solution_general() const
+optional<vector<string>> solver::get_solution_general() const noexcept
 {
     if (number_solutions_ != number_solutions::many)
     {
-        return  std::nullopt;
+        return  nullopt;
     }
 
     return solution_general;
 }
 
-std::optional<std::vector<std::complex<double>>> solver::get_solution_partial() const
+optional<vector<complex<double>>> solver::get_solution_partial() const noexcept
 {
     if (number_solutions_ == number_solutions::none)
     {
-        return  std::nullopt;
+        return  nullopt;
     }
 
     return solution_partial;
@@ -93,7 +101,7 @@ void solver::solve()
 {
     if (verbose)
     {
-        std::cout << "Start solving the equation.\n" << "Rows manipulation:" << std::endl;
+        cout << "Start solving the equation.\n" << "Rows manipulation:" << endl;
     }
     gaus_first_step();
     if (number_solutions_ != number_solutions::none)
@@ -105,39 +113,39 @@ void solver::solve()
     print_solution();
 }
 
-void solver::write_solution_to_file (const std::string& out_filename)
+void solver::write_solution_to_file (const string& out_filename)
 {
-    std::ofstream out (out_filename);
+    ofstream out (out_filename);
     print_solution_internal (out);
     if (verbose)
     {
-        std::cout << "Saved to file " << out_filename << std::endl;
+        cout << "Saved to file " << out_filename << endl;
     }
 }
 
-void solver::add_k_row1_to_row2 (std::complex<double>k, std::size_t row1, std::size_t row2)
+void solver::add_k_row1_to_row2 (complex<double>k, size_t row1, size_t row2)
 {
     if (verbose)
     {
-        std::cout << to_string (k) << " * R" << row1 + 1 << " +R" << row2 + 1 << " -> R" << row2 + 1 <<
-                  std::endl;
+        cout << to_string (k) << " * R" << row1 + 1 << " +R" << row2 + 1 << " -> R" << row2 + 1 <<
+             endl;
     }
-    for (std::size_t i = 0; i < number_variables + 1; ++i)
+    for (size_t i = 0; i < number_variables + 1; ++i)
     {
-        matrix[row2][i] += k * matrix[row1][i];
+        matrix.at (row2).at (i) += k * matrix.at (row1).at (i);
     }
 }
 
 void solver::check_that_solution_is_sane()
 {
-    for (std::size_t i = number_variables; i < number_equations; ++i)
+    for (size_t i = number_variables; i < number_equations; ++i)
     {
-        std::complex<double> sum (0.0, 0.0);
-        for (std::size_t j = 0; j < number_variables; ++j)
+        complex<double> sum (0.0, 0.0);
+        for (size_t j = 0; j < number_variables; ++j)
         {
-            sum += solution_partial[solution_indexes[j]] * matrix[i][solution_indexes[j]];
+            sum += solution_partial.at (solution_indexes.at (j)) * matrix.at (i).at (solution_indexes.at (j));
         }
-        if (!equals (sum, matrix[i][number_variables]))
+        if (!equals (sum, matrix.at (i).at (number_variables)))
         {
             number_solutions_ = number_solutions::none;
             return;
@@ -145,13 +153,13 @@ void solver::check_that_solution_is_sane()
     }
 }
 
-void solver::divide_row (std::size_t row, std::complex<double> k)
+void solver::divide_row (size_t row, complex<double> k)
 {
     if (verbose)
     {
-        std::cout << "R" << row + 1 << " / " << to_string (k) << " -> R" << row + 1 << std::endl;
+        cout << "R" << row + 1 << " / " << to_string (k) << " -> R" << row + 1 << endl;
     }
-    for (auto& matrix_el : matrix[row])
+    for (auto& matrix_el : matrix.at (row))
     {
         matrix_el /= k;
     }
@@ -159,14 +167,14 @@ void solver::divide_row (std::size_t row, std::complex<double> k)
 
 void solver::gaus_first_step()
 {
-    for (std::size_t i = 0; i < number_variables; ++i)
+    for (size_t i = 0; i < number_variables; ++i)
     {
-        if (equals (matrix[i][i], ZERO))
+        if (equals (matrix.at (i).at (i), ZERO))
         {
             bool found_non_zero_element = false;
-            for (std::size_t j = i + 1; j < number_equations; ++j)
+            for (size_t j = i + 1; j < number_equations; ++j)
             {
-                if (!equals (matrix[j][i], ZERO))
+                if (!equals (matrix.at (j).at (i), ZERO))
                 {
                     swap_rows (i, j);
                     found_non_zero_element = true;
@@ -175,9 +183,9 @@ void solver::gaus_first_step()
             }
             if (!found_non_zero_element)
             {
-                for (std::size_t j = i + 1; j < number_equations; ++j)
+                for (size_t j = i + 1; j < number_equations; ++j)
                 {
-                    if (!equals (matrix[i][j], ZERO))
+                    if (!equals (matrix.at (i).at (j), ZERO))
                     {
                         swap_columns (i, j);
                         found_non_zero_element = true;
@@ -188,11 +196,11 @@ void solver::gaus_first_step()
 
             if (!found_non_zero_element)
             {
-                for (std::size_t k = i + 1; !found_non_zero_element && k < number_variables; ++k)
+                for (size_t k = i + 1; !found_non_zero_element && k < number_variables; ++k)
                 {
-                    for (std::size_t j = i + 1; j < number_equations; ++j)
+                    for (size_t j = i + 1; j < number_equations; ++j)
                     {
-                        if (!equals (matrix[j][k], ZERO))
+                        if (!equals (matrix.at (j).at (k), ZERO))
                         {
                             swap_columns (k, i);
                             swap_rows (j, i);
@@ -205,7 +213,7 @@ void solver::gaus_first_step()
 
             if (!found_non_zero_element)
             {
-                if (equals (matrix[i][number_equations], ZERO))
+                if (equals (matrix.at (i).at (number_equations), ZERO))
                 {
                     number_solutions_ = number_solutions::many;
                     continue;
@@ -218,13 +226,13 @@ void solver::gaus_first_step()
             }
         }
 
-        if (!equals (matrix[i][i], ONE))
+        if (!equals (matrix.at (i).at (i), ONE))
         {
-            divide_row (i, matrix[i][i]);
+            divide_row (i, matrix.at (i).at (i));
         }
-        for (std::size_t j = i + 1; j < number_equations && j < number_variables; ++j)
+        for (size_t j = i + 1; j < number_equations && j < number_variables; ++j)
         {
-            const std::complex<double> k = MINUS_ONE * matrix[j][i];
+            const complex<double> k = MINUS_ONE * matrix.at (j).at (i);
             if (!equals (k, ZERO))
             {
                 add_k_row1_to_row2 (k, i, j);
@@ -235,15 +243,15 @@ void solver::gaus_first_step()
 
 void solver::gaus_second_step()
 {
-    for (std::size_t i = number_variables - 1; true; --i)
+    for (size_t i = number_variables - 1; true; --i)
     {
         if (i == 0)
         {
             break;
         }
-        for (std::size_t j = i - 1; true; --j)
+        for (size_t j = i - 1; true; --j)
         {
-            const std::complex<double> k = MINUS_ONE * matrix[j][i];
+            const complex<double> k = MINUS_ONE * matrix.at (j).at (i);
             if (!equals (k, ZERO))
             {
                 add_k_row1_to_row2 (k, i, j);
@@ -258,26 +266,29 @@ void solver::gaus_second_step()
 
 void solver::generate_solutions()
 {
-    for (std::size_t i = 0; i < number_equations && i < number_variables; ++i)
+    for (size_t i = 0; i < number_equations && i < number_variables; ++i)
     {
-        solution_partial[solution_indexes[i]] = matrix[i][number_variables];
-        if (equals (matrix[i][i], ZERO))
+        auto& matrix_i = matrix.at (i);
+        solution_partial.at (solution_indexes.at (i)) = matrix_i.at (number_variables);
+        if (equals (matrix_i.at (i), ZERO))
         {
-            solution_general[solution_indexes[i]] = "x" + std::to_string (solution_indexes[i] + 1ULL);
+            solution_general.at (solution_indexes.at (i)) = "x" + std::to_string (solution_indexes.at (
+                        i) + 1ULL);
         }
         else
         {
-            solution_general[solution_indexes[i]] = to_string (matrix[i][number_variables]);
-            for (std::size_t j = i + 1; j < number_variables; ++j)
+            solution_general.at (solution_indexes.at (i)) = to_string (matrix_i.at (number_variables));
+            for (size_t j = i + 1; j < number_variables; ++j)
             {
-                if (equals (matrix[i][j], ONE))
+                if (equals (matrix_i.at (j), ONE))
                 {
-                    solution_general[solution_indexes[i]] += " - x" + std::to_string (solution_indexes[j] + 1ULL);
+                    solution_general.at (solution_indexes.at (i)) += " - x" + std::to_string (solution_indexes.at (
+                                j) + 1ULL);
                 }
-                else if (!equals (matrix[i][j], ZERO))
+                else if (!equals (matrix_i.at (j), ZERO))
                 {
-                    solution_general[solution_indexes[i]] += " - x" + std::to_string (solution_indexes[j] + 1ULL)
-                            + " * (" + to_string (matrix[i][j]) + ")";
+                    solution_general.at (solution_indexes.at (i)) += " - x" + std::to_string (solution_indexes.at (
+                                j) + 1ULL) + " * (" + to_string (matrix_i.at (j)) + ")";
                 }
             }
         }
@@ -288,32 +299,32 @@ void solver::print_solution()
 {
     if (verbose)
     {
-        print_solution_internal (std::cout);
+        print_solution_internal (cout);
     }
 }
 
-void solver::print_solution_internal (std::ostream& out)
+void solver::print_solution_internal (ostream& out)
 {
     switch (number_solutions_)
     {
     case number_solutions::none:
-        out << "There are no solutions" << std::endl;
+        out << "There are no solutions" << endl;
         break;
     case number_solutions::one:
-        out << "(" << to_string (solution_partial[0]);
-        for (std::size_t i = 1; i < solution_partial.size(); ++i)
+        out << "(" << to_string (solution_partial.at (0));
+        for (size_t i = 1; i < solution_partial.size(); ++i)
         {
-            out << ", " << to_string (solution_partial[i]);
+            out << ", " << to_string (solution_partial.at (i));
         }
-        out << ")" << std::endl;
+        out << ")" << endl;
         break;
     case number_solutions::many:
-        out << "(" << solution_general[0];
-        for (std::size_t i = 1; i < solution_partial.size(); ++i)
+        out << "(" << solution_general.at (0);
+        for (size_t i = 1; i < solution_partial.size(); ++i)
         {
-            out << ", " << solution_general[i];
+            out << ", " << solution_general.at (i);
         }
-        out << ")" << std::endl;
+        out << ")" << endl;
         break;
     default:
         assert (false);
@@ -321,28 +332,28 @@ void solver::print_solution_internal (std::ostream& out)
     }
 }
 
-void solver::swap_columns (std::size_t column1, std::size_t column2)
+void solver::swap_columns (size_t column1, size_t column2)
 {
     if (verbose)
     {
-        std::cout << "C" << column1 + 1 << " <-> C" << column2 + 1 << std::endl;
+        cout << "C" << column1 + 1 << " <-> C" << column2 + 1 << endl;
     }
     const auto n = matrix.size();
-    for (std::size_t i = 0; i < n; ++i)
+    for (size_t i = 0; i < n; ++i)
     {
-        std::swap (matrix[i][column1], matrix[i][column2]);
+        swap (matrix.at (i).at (column1), matrix.at (i).at (column2));
     }
-    std::swap (solution_indexes[column1], solution_indexes[column2]);
+    swap (solution_indexes.at (column1), solution_indexes.at (column2));
 }
 
-void solver::swap_rows (std::size_t row1, std::size_t row2)
+void solver::swap_rows (size_t row1, size_t row2)
 {
     if (verbose)
     {
-        std::cout << "R" << row1 + 1 << " <-> R" << row2 + 1 << std::endl;
+        cout << "R" << row1 + 1 << " <-> R" << row2 + 1 << endl;
     }
-    for (std::size_t i = 0; i < number_variables + 1; ++i)
+    for (size_t i = 0; i < number_variables + 1; ++i)
     {
-        std::swap (matrix[row1][i], matrix[row2][i]);
+        swap (matrix.at (row1).at (i), matrix.at (row2).at (i));
     }
 }

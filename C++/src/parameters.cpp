@@ -6,6 +6,7 @@
 #include <cstring>
 
 using std::size_t;
+using std::strcmp;
 using std::strlen;
 
 static bool  NONNULL (1, 2) str_equal (const char* s1, const char* s2) noexcept

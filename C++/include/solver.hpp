@@ -27,8 +27,8 @@ public:
     solver (std::istream& in, bool verbose = false);
     number_solutions get_number_solutions() const noexcept;
     std::size_t get_size() const noexcept;
-    std::optional<std::vector<std::string>> get_solution_general() const;
-    std::optional<std::vector<std::complex<double>>> get_solution_partial() const;
+    std::optional<std::vector<std::string>> get_solution_general() const noexcept;
+    std::optional<std::vector<std::complex<double>>> get_solution_partial() const noexcept;
     void solve();
     void write_solution_to_file (const std::string& out_filename);
 

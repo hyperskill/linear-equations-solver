@@ -48,7 +48,7 @@ complex<double> parse_complex (const string& s)
     return complex<double> (real, imag);
 }
 
-bool equals (const complex<double>& a, const complex<double>& b)
+bool equals (const complex<double>& a, const complex<double>& b) noexcept
 {
     return abs (a.imag() - b.imag()) < EPSILON && abs (a.real() - b.real()) < EPSILON;
 }

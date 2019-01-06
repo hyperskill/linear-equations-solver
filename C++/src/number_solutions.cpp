@@ -2,7 +2,9 @@
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 #include "number_solutions.hpp"
 
-std::ostream& operator<< (std::ostream& out, number_solutions s)
+using std::ostream;
+
+ostream& operator<< (ostream& out, number_solutions s)
 {
     switch (s)
     {
