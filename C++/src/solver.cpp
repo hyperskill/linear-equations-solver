@@ -3,11 +3,13 @@
 #include "solver.hpp"
 
 #include <cassert>
+#include <cctype>
 #include <cinttypes>
 #include <climits>
 #include <numeric>
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
 
 #include "32bit_support.hpp"
 
@@ -18,6 +20,8 @@ using std::endl;
 using std::iota;
 using std::istream;
 using std::string;
+using std::isdigit;
+using std::isspace;
 using std::size_t;
 using std::complex;
 using std::nullopt;
@@ -28,6 +32,7 @@ using std::optional;
 using std::ofstream;
 using std::ostream;
 using std::swap;
+using std::runtime_error;
 
 constexpr complex<double> ZERO (0.0, 0.0);
 constexpr complex<double> ONE (1.0, 0.0);
@@ -46,9 +51,24 @@ solver::solver (istream& in, bool verbose_ /* = false */)
     static_assert (SIZE_MAX >= UINT32_MAX);
 
     in.exceptions (istream::failbit | istream::badbit);
+    auto check = [&]()
+    {
+        int next_character = ' ';
+        while (isspace (next_character))
+        {
+            next_character = in.get();
+        }
+        if (! (next_character == '+' || isdigit (next_character) != 0))
+        {
+            throw runtime_error ("wrong data");
+        }
+        in.unget();
+    };
+    check();
     uint32_t temp_number_variables;
     in >> temp_number_variables;
     number_variables = CAST_UINT32_TO_SIZE_T (temp_number_variables);
+    check();
     uint32_t temp_real_number_equations;
     in >> temp_real_number_equations;
     const size_t real_number_equations = CAST_UINT32_TO_SIZE_T (temp_real_number_equations);
