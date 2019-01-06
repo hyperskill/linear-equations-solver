@@ -1,1 +1,1 @@
-scan-build60 -o ./report/ gmake
+/usr/local/llvm60/bin/scan-build -o ./report/ gmake

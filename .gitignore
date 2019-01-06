@@ -18,6 +18,10 @@ Debug/
 *.user
 *.orig
 bin/
+drd.txt
+helgrind.txt
+valgrind.txt
+report/
 
 # Test accestance output files
 out*.txt
