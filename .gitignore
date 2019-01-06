@@ -17,6 +17,7 @@ Release/
 Debug/
 *.user
 *.orig
+bin/
 
 # Test accestance output files
 out*.txt

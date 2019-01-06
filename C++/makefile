@@ -1,7 +1,7 @@
 include mk/init.mk
 
-OBJ_SOLUTION_CXX += src/main.o src/number_solutions.o src/solver.o src/complex.o src/parameters.o
-OBJ_TEST_CXX += src/number_solutions.o src/solver.o src/complex.o src/parameters.o test/main.o test/parameters.test.o test/complex.test.o test/solver.test.o
+OBJ_SOLUTION_CXX += src/main.o src/number_solutions.o src/solver.o src/complex.o src/parameters.o src/util.o
+OBJ_TEST_CXX += src/number_solutions.o src/solver.o src/complex.o src/parameters.o src/util.o test/main.o test/parameters.test.o test/complex.test.o test/solver.test.o
 
 all: test
 

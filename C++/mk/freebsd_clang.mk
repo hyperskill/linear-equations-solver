@@ -7,7 +7,7 @@ TARGET_ARCH ?=
 WARNINGS = -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-tautological-pointer-compare -Wno-covered-switch-default -Werror
 WARNINGS_TESTS = -Wno-disabled-macro-expansion -Wno-global-constructors
 
-INCLUDE = -I"include" -isystem"3rd"
+INCLUDE = -I"include" -isystem"3rd" -isystem"/usr/local/include/"
 LTO =
 SECURITY = 
 DEFINES = 
@@ -16,19 +16,19 @@ OPENMP = -fopenmp
 OPTIMIZE = -O3 -fstrict-aliasing -funsafe-math-optimizations
 CXXSTANDARD = -std=c++1z
 
-SANITIZERS = 
-THREAD_SANITIZER =
+SANITIZERS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -fno-omit-frame-pointer
+THREAD_SANITIZER = -fsanitize=thread -fno-omit-frame-pointer
 
 LD_LTO =
-LD_INCLUDE = 
+LD_INCLUDE = -L"/usr/local/lib"
 LD_SECURITY =
 LD_SYSTEM =
 
 LIBS_OPENMP = -fopenmp=libiomp5
 LIBS_SYSTEM =
-LIBS_THREAD =
+LIBS_THREAD = -pthread
 LIBS_3RD =
-LIBS_TEST = -lboost_unit_test_framework-mt
+LIBS_TEST = -lboost_unit_test_framework
 
 FLAGS = $(OPTIMIZE) $(WARNINGS) $(INCLUDE) $(LTO) $(DEFINES) $(OPENMP)         \
     $(SECURITY) $(DEBUG)

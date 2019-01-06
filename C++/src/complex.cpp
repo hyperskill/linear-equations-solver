@@ -7,8 +7,11 @@
 #include <exception>
 #include <sstream>
 
+#include "util.hpp"
+
 using std::abs;
 using std::complex;
+using std::sscanf;
 using std::string;
 using std::istringstream;
 using std::ostringstream;
@@ -17,6 +20,39 @@ using std::round;
 
 constexpr double EPSILON = 0.00001;
 
+#ifdef _LIBCPP_VERSION
+/* в libc++ по другому устроена логика чтения из стрима, чем в libstdc++ и стандартной библиотеки от Microsoft
+*  подробнее: https://bugs.llvm.org/show_bug.cgi?id=17782
+*/
+complex<double> parse_complex (const string& s)
+{
+    double real;
+    double imag;
+    char c[3] = {0};
+    int result = sscanf (s.c_str(), "%lg%lg%2s", &real, &imag, c);
+    if (result != 3)
+    {
+        real = 0.0;
+        result = sscanf (s.c_str(), "%lg%2s", &imag, c);
+        if (result != 2)
+        {
+            c[0] = '\0';
+            imag = 0.0;
+            result = sscanf (s.c_str(), "%lg", &real);
+            if (result == 1)
+            {
+                c[0] = 'i';
+                c[1] = '\0';
+            }
+        }
+    }
+    if (!str_equal (c, "i"))
+    {
+        throw runtime_error ("can't parse complex");
+    }
+    return complex<double> (real, imag);
+}
+#else
 complex<double> parse_complex (const string& s)
 {
     double real = 0.0;
@@ -49,6 +85,7 @@ complex<double> parse_complex (const string& s)
     }
     return complex<double> (real, imag);
 }
+#endif
 
 bool equals (const complex<double>& a, const complex<double>& b) noexcept
 {

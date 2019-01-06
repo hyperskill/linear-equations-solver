@@ -38,8 +38,8 @@ LD_SYSTEM = -Wl,-O1 -rdynamic
 LIBS_OPENMP = -fopenmp
 LIBS_SYSTEM = -lm
 LIBS_THREAD =  -pthread -Wl,--no-as-needed -lpthread
-LIBS_3RD_CXX =
-LIBS_TEST_CXX = -lboost_unit_test_framework
+LIBS_3RD =
+LIBS_TEST = -lboost_unit_test_framework
 
 FLAGS = $(OPTIMIZE) $(WARNINGS) $(INCLUDE) $(LTO) $(DEFINES) $(OPENMP)         \
     $(SECURITY) $(DEBUG)

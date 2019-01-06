@@ -1,24 +1,21 @@
 ./bin/solution_cpp$(EXEEXT): $(OBJ_SOLUTION_CXX)
-	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_3RD_CXX)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 ./bin/debug_cpp$(EXEEXT): CXXFLAGS += $(SANITIZERS)
-./bin/debug_cpp$(EXEEXT): CFLAGS += $(SANITIZERS)
 ./bin/debug_cpp$(EXEEXT): $(OBJ_SOLUTION_CXX)
-	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_3RD_CXX) $(SANITIZERS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS) $(SANITIZERS)
 
 ./bin/thread_debug_cpp$(EXEEXT): CXXFLAGS += $(THREAD_SANITIZER)
-./bin/thread_debug_cpp$(EXEEXT): CFLAGS += $(THREAD_SANITIZER)
 ./bin/thread_debug_cpp$(EXEEXT): $(OBJ_SOLUTION_CXX)
-	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_3RD_CXX) $(THREAD_SANITIZER)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS) $(THREAD_SANITIZER)
 
-./bin/test_cpp$(EXEEXT): CXXFLAGS +=  $(DEBUG_STL) $(SANITIZERS) $(WARNINGS_TESTS)
+./bin/test_cpp$(EXEEXT): CXXFLAGS += $(SANITIZERS) $(WARNINGS_TESTS)
 ./bin/test_cpp$(EXEEXT): $(OBJ_TEST_CXX)
-	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_TEST_CXX) $(SANITIZERS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS) $(LIBS_TEST) $(SANITIZERS)
 
-./bin/thread_test_cpp$(EXEEXT): CXXFLAGS +=  $(DEBUG_STL) $(THREAD_SANITIZER) $(WARNINGS_TESTS)
-./bin/thread_test_cpp$(EXEEXT): CFLAGS += $(THREAD_SANITIZER)
+./bin/thread_test_cpp$(EXEEXT): CXXFLAGS += $(THREAD_SANITIZER) $(WARNINGS_TESTS)
 ./bin/thread_test_cpp$(EXEEXT): $(OBJ_TEST_CXX)
-	$(CXX) -o $@ $^ $(LDFLAGS_CXX) $(LIBS_CXX) $(LIBS_TEST_CXX) $(THREAD_SANITIZER)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LIBS) $(LIBS_TEST) $(THREAD_SANITIZER)
 
 clean_details:
 	find .  -name "*.o"    ! -path "./.git/*" ! -path "./msvc2017/*" -type f -delete

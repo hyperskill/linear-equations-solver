@@ -17,6 +17,11 @@ endif
 
 OS_SUPPORTED = false
 
+ifeq ($(findstring FreeBSD, $(PLATFORM)), FreeBSD)
+    include mk/freebsd_clang.mk
+    OS_SUPPORTED = true
+endif
+
 ifeq ($(findstring Linux, $(PLATFORM)), Linux)
     include mk/linux_gcc.mk
     OS_SUPPORTED = true
