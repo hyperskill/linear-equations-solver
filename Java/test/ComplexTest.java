@@ -140,6 +140,50 @@ public class ComplexTest {
     }
 
     @Test
+    public void constructor9() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3ij");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+    @Test
+    public void constructor10() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3+3.5546ij");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+    @Test
+    public void constructor11() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3ji");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+    @Test
+    public void constructor12() {
+        boolean ok = false;
+        try {
+            @SuppressWarnings("unused") final Complex c = new Complex("1.3+3.5546ji");
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+    @Test
     public void add() {
         final Complex a = new Complex(3.0, -5.0);
         final Complex b = new Complex(4.0, 2.0);

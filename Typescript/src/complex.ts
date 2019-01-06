@@ -13,7 +13,7 @@ const split = (s: string): string[] => {
         }
         if (s.charAt(i) === "i") {
             if (i !== s.length - 1) {
-                throw new Error("can;t parse complex");
+                throw new Error("can't parse complex");
             }
             imagString = s.substring(0, i);
             break;
@@ -24,6 +24,13 @@ const split = (s: string): string[] => {
     }
 
     return [realString, imagString];
+};
+
+const strongParseFloat = (s: string): number => {
+    if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(s)) {
+        return Number.parseFloat(s);
+    }
+    return NaN;
 };
 
 export class Complex {
@@ -42,8 +49,8 @@ export class Complex {
 
     public static readonly fromString = (s: string): Complex => {
         const strs = split(s);
-        const real = Number.parseFloat(strs[0]);
-        const imag = Number.parseFloat(strs[1]);
+        const real = strongParseFloat(strs[0]);
+        const imag = strongParseFloat(strs[1]);
         if (Number.isNaN(real) || Number.isNaN(imag)) {
             throw new Error("can't parse complex");
         }

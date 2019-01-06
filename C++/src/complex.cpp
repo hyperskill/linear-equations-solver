@@ -77,7 +77,7 @@ complex<double> parse_complex (const string& s)
         in.unget();
         in >> imag;
         const int last_character = in.get();
-        if (last_character != 'i')
+        if (last_character != 'i' || in.peek() != EOF)
         {
             throw runtime_error ("can't parse complex");
         }

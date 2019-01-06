@@ -113,6 +113,26 @@ describe("complex tests", () => {
         expect(f).toThrow();
     });
 
+    it("fromString8", () => {
+        const f = () => Complex.fromString("1.3ij");
+        expect(f).toThrow();
+    });
+
+    it("fromString9", () => {
+        const f = () => Complex.fromString("1.3+3.5546ij");
+        expect(f).toThrow();
+    });
+
+    it("fromString10", () => {
+        const f = () => Complex.fromString("1.3ji");
+        expect(f).toThrow();
+    });
+
+    it("fromString11", () => {
+        const f = () => Complex.fromString("1.3+3.5546ji");
+        expect(f).toThrow();
+    });
+
     it("add", () => {
         const a = new Complex(3, -5);
         const b = new Complex(4, 2);

@@ -150,3 +150,59 @@ BOOST_AUTO_TEST_CASE (complex_parse7)
     }
     BOOST_FAIL ("no throw exception");
 }
+
+BOOST_AUTO_TEST_CASE (complex_parse8)
+{
+    try
+    {
+        const complex<double>a = parse_complex ("1.3ij");
+        (void)a;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse9)
+{
+    try
+    {
+        const complex<double>a = parse_complex ("1.3+3.5546ij");
+        (void)a;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse10)
+{
+    try
+    {
+        const complex<double>a = parse_complex ("1.3ji");
+        (void)a;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse11)
+{
+    try
+    {
+        const complex<double>a = parse_complex ("1.3+3.5546ji");
+        (void)a;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}
