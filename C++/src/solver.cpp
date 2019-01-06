@@ -9,6 +9,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "32bit_support.hpp"
+
 #include "complex.hpp"
 
 using std::cout;
@@ -46,10 +48,10 @@ solver::solver (istream& in, bool verbose_ /* = false */)
     in.exceptions (istream::failbit | istream::badbit);
     uint32_t temp_number_variables;
     in >> temp_number_variables;
-    number_variables = static_cast<size_t> (temp_number_variables);
+    number_variables = CAST_UINT32_TO_SIZE_T (temp_number_variables);
     uint32_t temp_real_number_equations;
     in >> temp_real_number_equations;
-    const size_t real_number_equations = static_cast<size_t> (temp_real_number_equations);
+    const size_t real_number_equations = CAST_UINT32_TO_SIZE_T (temp_real_number_equations);
     number_equations = (real_number_equations < number_variables) ? number_variables :
                        real_number_equations;
     matrix.resize (number_equations);

@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE (solver_solve0)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE (solver_solve1)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE (solver_solve2)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -142,7 +142,7 @@ BOOST_AUTO_TEST_CASE (solver_solve3)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -171,7 +171,7 @@ BOOST_AUTO_TEST_CASE (solver_solve4)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE (solver_solve5)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -227,7 +227,7 @@ BOOST_AUTO_TEST_CASE (solver_solve6)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -293,7 +293,7 @@ BOOST_AUTO_TEST_CASE (solver_solve9)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -325,7 +325,7 @@ BOOST_AUTO_TEST_CASE (solver_solve10)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -357,7 +357,7 @@ BOOST_AUTO_TEST_CASE (solver_solve11)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -389,7 +389,7 @@ BOOST_AUTO_TEST_CASE (solver_solve12)
     BOOST_REQUIRE (actual_partial_solution.has_value());
     BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
     const bool equals_partial = all_of (expected_partial_solution.cbegin(),
-                                        expected_partial_solution.cend(), [&, i = 0ULL] (auto&)mutable
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
     {
         const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
         ++i;
@@ -398,4 +398,3 @@ BOOST_AUTO_TEST_CASE (solver_solve12)
     BOOST_CHECK (equals_partial);
     BOOST_CHECK (!actual_general_solution.has_value());
 }
-
