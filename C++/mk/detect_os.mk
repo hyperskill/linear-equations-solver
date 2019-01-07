@@ -17,6 +17,11 @@ endif
 
 OS_SUPPORTED = false
 
+ifeq ($(findstring Haiku, $(PLATFORM)), Haiku)
+    include mk/haiku_clang.mk
+    OS_SUPPORTED = true
+endif
+
 ifeq ($(findstring DragonFly, $(PLATFORM)), DragonFly)
     include mk/dragonfly_gcc.mk
     OS_SUPPORTED = true
