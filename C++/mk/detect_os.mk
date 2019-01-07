@@ -17,6 +17,11 @@ endif
 
 OS_SUPPORTED = false
 
+ifeq ($(findstring OpenBSD, $(PLATFORM)), OpenBSD)
+    include mk/openbsd_clang.mk
+    OS_SUPPORTED = true
+endif
+
 ifeq ($(findstring SunOS, $(PLATFORM)), SunOS)
     include mk/openindiana_gcc.mk
     OS_SUPPORTED = true
