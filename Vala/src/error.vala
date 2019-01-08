@@ -1,5 +1,4 @@
-public errordomain Error
-{
+public errordomain Error {
     PARSE_COMPLEX,
     WRONG_DATA,
     FILE_NOT_FOUND,

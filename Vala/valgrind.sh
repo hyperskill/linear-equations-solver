@@ -9,6 +9,6 @@ case $OS in
   *) ;;
 esac
 
-make clean && VALGRIND=1 make && valgrind --track-origins=yes --log-file=valgrind.txt --read-var-info=yes --leak-check=full bin/test_cpp
+make clean && VALGRIND=1 make && G_DEBUG=resident-modules G_DEBUG=gc-friendly G_SLICE=always-malloc valgrind --log-file=valgrind.txt --leak-resolution=high --num-callers=20 --leak-check=full bin/test_vala
 
 

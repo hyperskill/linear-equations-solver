@@ -1,0 +1,21 @@
+
+##############################################################
+# Documentation is available from                            #
+# http://astyle.sourceforge.net/astyle.html          	     #
+##############################################################
+
+### Options ###
+--pad-header
+--pad-paren
+--suffix=none
+--convert-tabs
+--attach-inlines
+--attach-classes
+--attach-namespaces
+
+### Settings ###
+--style=java 
+--indent=spaces=4
+--indent-namespaces
+--lineend=windows
+--min-conditional-indent=0
