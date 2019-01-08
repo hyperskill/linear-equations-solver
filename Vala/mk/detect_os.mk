@@ -19,6 +19,11 @@ include mk/vala.mk
 
 OS_SUPPORTED = false
 
+ifeq ($(findstring SunOS, $(PLATFORM)), SunOS)
+    include mk/openindiana_gcc.mk
+    OS_SUPPORTED = true
+endif
+
 ifeq ($(findstring FreeBSD, $(PLATFORM)), FreeBSD)
     include mk/freebsd_clang.mk
     OS_SUPPORTED = true
