@@ -23,6 +23,11 @@ helgrind.txt
 valgrind.txt
 report/
 
+# Vala generated files and folders
+Vala/bin/
+Vala/src/*.c
+Vala/test/*.c
+
 # Test accestance output files
 out*.txt
 stdout*.txt
