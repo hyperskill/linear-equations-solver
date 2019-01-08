@@ -4,6 +4,7 @@ public class Parameters
     public string out {get; private set; default = "output.txt";}
     public bool verbose {get; private set; default = false;}
     public Parameters (string[] args)
+    requires (args != null)
     {
         bool need_assign_in = true;
         bool need_assign_out = true;

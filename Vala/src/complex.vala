@@ -4,11 +4,15 @@ public class ComplexNumber
     public const double EPSILON = 0.00001;
 
     public static ComplexNumber add (ComplexNumber a, ComplexNumber b)
+    requires (a != null)
+    requires (b != null)
     {
         return new ComplexNumber (a.real + b.real, a.imag + b.imag);
     }
 
     public static ComplexNumber divide (ComplexNumber a, ComplexNumber b)
+    requires (a != null)
+    requires (b != null)
     {
         ComplexNumber bConjugate = b.conjugate();
         ComplexNumber a1 = ComplexNumber.multiply (a, bConjugate);
@@ -18,6 +22,8 @@ public class ComplexNumber
     }
 
     public static ComplexNumber multiply (ComplexNumber a, ComplexNumber b)
+    requires (a != null)
+    requires (b != null)
     {
         return new ComplexNumber (a.real * b.real - a.imag * b.imag, a.real * b.imag + a.imag * b.real);
     }
@@ -32,6 +38,7 @@ public class ComplexNumber
     }
 
     public ComplexNumber.from_string (string s) throws Error
+    requires (s != null)
     {
         string c = "__";
         double real = 0.0;
@@ -66,6 +73,7 @@ public class ComplexNumber
     }
 
     public bool equals (ComplexNumber o)
+    requires (o != null)
     {
         return Math.fabs (o.imag - imag) < EPSILON && Math.fabs (o.real - real) < EPSILON;
     }

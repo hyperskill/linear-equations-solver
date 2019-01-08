@@ -1,6 +1,7 @@
 namespace Util
 {
     string ? read_next (FileStream in)
+    requires (in != null)
     {
         int c;
         StringBuilder ? ret = null;

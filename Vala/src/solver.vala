@@ -14,6 +14,7 @@ public class Solver
     public NumberSolutions number_solutions {get; private set; default = NumberSolutions.ONE;}
 
     public Solver (FileStream in, bool verbose = false) throws Error
+    requires (in != null)
     {
         int real_number_equations = -1;
         int result = in.scanf ("%d%d", &number_variables,  &real_number_equations);
@@ -22,7 +23,7 @@ public class Solver
             throw new Error.WRONG_DATA ("wrong data");
         }
         number_equations = (real_number_equations < number_variables) ? number_variables :
-        real_number_equations;
+                           real_number_equations;
         matrix = new ComplexNumber[number_equations, number_variables + 1];
         for (int i = 0; i < real_number_equations; ++i)
         {
@@ -89,6 +90,7 @@ public class Solver
     }
 
     public void write_solution_to_file (string o) throws Error
+    requires (o != null)
     {
         FileStream file = FileStream.open (o, "w");
         if (file == null)
@@ -104,6 +106,7 @@ public class Solver
     }
 
     private void add_k_row1_to_row2 (ComplexNumber k, int row1, int row2)
+    requires (k != null)
     {
         if (verbose)
         {
@@ -136,6 +139,7 @@ public class Solver
     }
 
     private void divide_row (int row, ComplexNumber k)
+    requires (k != null)
     {
         if (verbose)
         {
@@ -277,6 +281,7 @@ public class Solver
     }
 
     private void print_solution_internal (FileStream out)
+    requires (out != null)
     {
         switch (number_solutions)
         {
