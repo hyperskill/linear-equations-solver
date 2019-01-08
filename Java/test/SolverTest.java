@@ -9,10 +9,13 @@ import java.util.Scanner;
 public class SolverTest {
     @Test
     public void constructor1() {
-        final Scanner sc = new Scanner("1 1\n1 2");
-        final Solver p = new Solver(sc);
-
-        Assert.assertEquals(1, p.getSize());
+        try {
+            final Scanner sc = new Scanner("1 1\n1 2");
+            @SuppressWarnings("unused") final Solver p = new Solver(sc);
+        }
+        catch (Exception e) {
+            Assert.fail();
+        }
     }
 
     @Test

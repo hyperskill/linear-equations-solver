@@ -4,10 +4,8 @@ import { Solver } from "../src/solver";
 
 describe("solver tests", () => {
     it("constructor1", () => {
-        const s = "1 1\n1 2";
-        const p = new Solver(s);
-
-        expect(p.getSize()).toBe(1);
+        const f = () => new Solver("1 1\n2 2");
+        expect(f).not.toThrow();
     });
 
     it("constructor2", () => {

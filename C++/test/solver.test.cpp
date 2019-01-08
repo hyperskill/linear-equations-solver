@@ -21,12 +21,16 @@ using std::all_of;
 
 BOOST_AUTO_TEST_CASE (solver_constructor1)
 {
+    try
+    {
     istringstream in ("1 1\n1 2");
     const solver s (in);
-
-    const size_t expected_problem_size = 1;
-
-    BOOST_CHECK_EQUAL (expected_problem_size, s.get_size());
+    (void)s;
+    }
+    catch (const exception&)
+    {
+       BOOST_FAIL ("shoudn't throw");
+    }
 }
 
 BOOST_AUTO_TEST_CASE (solver_constructor2)

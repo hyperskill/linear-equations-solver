@@ -17,7 +17,7 @@ Release/
 Debug/
 *.user
 *.orig
-bin/
+C++/bin/
 drd.txt
 helgrind.txt
 valgrind.txt

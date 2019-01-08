@@ -51,8 +51,6 @@ export class Solver {
 
     public readonly getNumberSolutions = () => this.numberSolutions;
 
-    public readonly getSize = () => this.matrix.length;
-
     public readonly getSolutionGeneral = (): string[] | undefined => {
         if (this.numberSolutions !== NumberSolutions.MANY) {
             return undefined;

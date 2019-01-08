@@ -100,11 +100,6 @@ number_solutions solver::get_number_solutions()  const noexcept
     return number_solutions_;
 }
 
-size_t solver::get_size() const noexcept
-{
-    return matrix.size();
-}
-
 optional<vector<string>> solver::get_solution_general() const noexcept
 {
     if (number_solutions_ != number_solutions::many)

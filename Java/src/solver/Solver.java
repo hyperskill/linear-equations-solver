@@ -56,10 +56,6 @@ public class Solver {
         return numberSolutions;
     }
 
-    public int getSize() {
-        return matrix.length;
-    }
-
     public String[] getSolutionGeneral() {
         if (numberSolutions != NumberSolutions.MANY) {
             return null;
@@ -240,7 +236,7 @@ public class Solver {
                 break;
             case MANY:
                 printWriter.printf("(%s", solutionGeneral[0]);
-                for (int i = 1; i < solutionPartial.length; ++i) {
+                for (int i = 1; i < solutionGeneral.length; ++i) {
                     printWriter.printf(", %s", solutionGeneral[i]);
                 }
                 printWriter.println(")");
