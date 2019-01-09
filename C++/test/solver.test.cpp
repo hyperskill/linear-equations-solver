@@ -432,3 +432,30 @@ BOOST_AUTO_TEST_CASE (solver_solve12)
     BOOST_CHECK (equals_partial);
     BOOST_CHECK (!actual_general_solution.has_value());
 }
+
+BOOST_AUTO_TEST_CASE (solver_solve13)
+{
+    istringstream in ("1\t1\t2\t4");
+    solver s (in);
+    s.solve();
+
+    const vector<complex<double>> expected_partial_solution = { complex<double> (2.0, 0.0) };
+    const number_solutions expected_number_solutions = number_solutions::one;
+
+    const auto actual_partial_solution = s.get_solution_partial();
+    const auto actual_number_solutions = s.get_number_solutions();
+    const auto actual_general_solution = s.get_solution_general();
+
+    BOOST_CHECK_EQUAL (expected_number_solutions, actual_number_solutions);
+    BOOST_REQUIRE (actual_partial_solution.has_value());
+    BOOST_REQUIRE (actual_partial_solution->size() == expected_partial_solution.size());
+    const bool equals_partial = all_of (expected_partial_solution.cbegin(),
+                                        expected_partial_solution.cend(), [&, i = size_t (0)] (auto&)mutable
+    {
+        const bool result = equals (expected_partial_solution.at (i), actual_partial_solution->at (i));
+        ++i;
+        return result;
+    });
+    BOOST_CHECK (equals_partial);
+    BOOST_CHECK (!actual_general_solution.has_value());
+}

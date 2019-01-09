@@ -16,6 +16,7 @@ void solver_tests () {
     Test.add_func ( "/solve10_solver_test", solve10_solver_test );
     Test.add_func ( "/solve11_solver_test", solve11_solver_test );
     Test.add_func ( "/solve12_solver_test", solve12_solver_test );
+    Test.add_func ( "/solve13_solver_test", solve13_solver_test );
 }
 
 void constructor1_solver_test () {
@@ -396,3 +397,25 @@ void solve12_solver_test () {
     }
 }
 
+void solve13_solver_test () {
+    try {
+        var in = generate_filestream ( "1\t1\t2\t4" );
+        Solver p = new Solver ( in );
+        p.solve ();
+
+        ComplexNumber[] expected_partial_solution = new ComplexNumber[] {new ComplexNumber ( 2.0, 0 ) };
+        NumberSolutions expected_number_solutions = NumberSolutions.ONE;
+        string[] ? expected_general_solution = null;
+
+        var actual_partial_solution = p.get_solution_partial ();
+
+        assert ( expected_number_solutions == p.number_solutions );
+        assert ( expected_general_solution == p.get_solution_general () );
+        assert ( actual_partial_solution.length == expected_partial_solution.length );
+        for ( int i = 0; i < actual_partial_solution.length; ++i ) {
+            assert ( actual_partial_solution[i].equals ( expected_partial_solution[i] ) );
+        }
+    } catch {
+        assert ( false );
+    }
+}

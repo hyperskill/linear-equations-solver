@@ -302,4 +302,26 @@ describe("solver tests", () => {
             expect(undefined).toBe(actualGeneralSolution);
         }
     });
+
+    it("solve13", () => {
+        const s = "1\t1\t2\t4";
+        const p = new Solver(s);
+        p.solve();
+
+        const expectedPartialSolution = [new Complex(2, 0)];
+
+        const actualPartialSolution = p.getSolutionPartial();
+        const actualGeneralSolution = p.getSolutionGeneral();
+
+        if (actualPartialSolution === undefined || actualGeneralSolution !== undefined) {
+            fail();
+        } else {
+            expect(NumberSolutions.ONE).toBe(p.getNumberSolutions());
+            expect(expectedPartialSolution.length).toBe(actualPartialSolution.length);
+            for (let i = 0; i < expectedPartialSolution.length; i += 1) {
+                expect(expectedPartialSolution[i].equals(actualPartialSolution[i])).toBe(true);
+            }
+            expect(undefined).toBe(actualGeneralSolution);
+        }
+    });
 });

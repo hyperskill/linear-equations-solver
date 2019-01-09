@@ -233,4 +233,17 @@ public class SolverTest {
         Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
+
+    @Test
+    public void solve13() {
+        final Scanner sc = new Scanner("1\t1\t2\t4");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        final Complex[] expectedPartialSolution = new Complex[]{new Complex(2.0, 0)};
+
+        Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
+        Assert.assertArrayEquals(null, p.getSolutionGeneral());
+    }
 }

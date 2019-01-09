@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 Java/out/
+Java/.idea/workspace.xml
 
 # Log file
 *.log
