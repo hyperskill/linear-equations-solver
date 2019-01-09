@@ -23,6 +23,11 @@ describe("solver tests", () => {
         expect(f).toThrow();
     });
 
+    it("constructor5", () => {
+        const f = () => new Solver("1 1\n2");
+        expect(f).toThrow();
+    });
+
     it("solve: allow multiple delimiters", () => {
         const s = "1   1 \n\n 2 4";
         const p = new Solver(s);

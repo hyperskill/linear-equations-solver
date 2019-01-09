@@ -78,6 +78,21 @@ BOOST_AUTO_TEST_CASE (solver_constructor4)
     BOOST_FAIL ("no throw exception");
 }
 
+BOOST_AUTO_TEST_CASE (solver_constructor5)
+{
+    istringstream in ("1 1\n2");
+    try
+    {
+        const solver s (in);
+        (void)s;
+    }
+    catch (const exception&)
+    {
+        return;
+    }
+    BOOST_FAIL ("no throw exception");
+}
+
 BOOST_AUTO_TEST_CASE (solver_solve0)
 {
     istringstream in ("1   1 \n\n 2 4");
