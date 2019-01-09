@@ -67,6 +67,30 @@ public class SolverTest {
     }
 
     @Test
+    public void constructor6() {
+        boolean ok = false;
+        try {
+            final Scanner sc = new Scanner("0 1\n2 2");
+            @SuppressWarnings("unused") final Solver p = new Solver(sc);
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+    @Test
+    public void constructor7() {
+        boolean ok = false;
+        try {
+            final Scanner sc = new Scanner("1 0\n2 2");
+            @SuppressWarnings("unused") final Solver p = new Solver(sc);
+        } catch (Exception e) {
+            ok = true;
+        }
+        Assert.assertTrue(ok);
+    }
+
+
+    @Test
     public void solve0() {
         final Scanner sc = new Scanner("1   1 \n\n 2 4");
         final Solver p = new Solver(sc);

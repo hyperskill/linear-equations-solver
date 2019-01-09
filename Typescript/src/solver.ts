@@ -24,6 +24,9 @@ export class Solver {
         argsI += 1;
         const realNumberEquations = Number.parseInt(args[argsI], 10);
         argsI += 1;
+        if (this.numberVariables < 1 || realNumberEquations < 1) {
+            throw new Error("wrong data");
+        }
         this.numberEquations = (realNumberEquations < this.numberVariables) ? this.numberVariables
             : realNumberEquations;
         this.matrix = [];

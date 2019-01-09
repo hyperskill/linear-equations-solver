@@ -30,6 +30,9 @@ public class Solver {
     public Solver(@NotNull Scanner sc, boolean verbose) throws NumberFormatException {
         numberVariables = sc.nextInt();
         final int realNumberEquations = sc.nextInt();
+        if (numberVariables < 1 || realNumberEquations < 1) {
+            throw new NumberFormatException("wrong input data");
+        }
         numberEquations = (realNumberEquations < numberVariables) ? numberVariables : realNumberEquations;
         matrix = new Complex[numberEquations][numberVariables + 1];
         for (int i = 0; i < realNumberEquations; ++i) {

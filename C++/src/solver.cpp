@@ -72,6 +72,10 @@ solver::solver (istream& in, bool verbose_ /* = false */)
     uint32_t temp_real_number_equations;
     in >> temp_real_number_equations;
     const size_t real_number_equations = CAST_UINT32_TO_SIZE_T (temp_real_number_equations);
+    if (number_variables < 1 || real_number_equations < 1) 
+    {
+        throw runtime_error("wrong input data");
+    }
     number_equations = (real_number_equations < number_variables) ? number_variables :
                        real_number_equations;
     matrix.resize (number_equations);

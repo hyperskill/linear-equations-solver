@@ -4,6 +4,8 @@ void solver_tests () {
     Test.add_func ( "/constructor3_solver_test", constructor3_solver_test );
     Test.add_func ( "/constructor4_solver_test", constructor4_solver_test );
     Test.add_func ( "/constructor5_solver_test", constructor5_solver_test );
+    Test.add_func ( "/constructor6_solver_test", constructor6_solver_test );
+    Test.add_func ( "/constructor7_solver_test", constructor7_solver_test );
     Test.add_func ( "/solve0_solver_test", solve0_solver_test );
     Test.add_func ( "/solve1_solver_test", solve1_solver_test );
     Test.add_func ( "/solve2_solver_test", solve2_solver_test );
@@ -70,6 +72,30 @@ void constructor5_solver_test () {
     bool ok = false;
     try {
         var in = generate_filestream ( "1 1\n2" );
+        Solver p = new Solver ( in );
+        ( void ) p;
+    } catch {
+        ok = true;
+    }
+    assert ( ok );
+}
+
+void constructor6_solver_test () {
+    bool ok = false;
+    try {
+        var in = generate_filestream ( "0 1\n2 2" );
+        Solver p = new Solver ( in );
+        ( void ) p;
+    } catch {
+        ok = true;
+    }
+    assert ( ok );
+}
+
+void constructor7_solver_test () {
+    bool ok = false;
+    try {
+        var in = generate_filestream ( "1 0\n2 2" );
         Solver p = new Solver ( in );
         ( void ) p;
     } catch {
