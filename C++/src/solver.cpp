@@ -72,9 +72,9 @@ solver::solver (istream& in, bool verbose_ /* = false */)
     uint32_t temp_real_number_equations;
     in >> temp_real_number_equations;
     const size_t real_number_equations = CAST_UINT32_TO_SIZE_T (temp_real_number_equations);
-    if (number_variables < 1 || real_number_equations < 1) 
+    if (number_variables < 1 || real_number_equations < 1)
     {
-        throw runtime_error("wrong input data");
+        throw runtime_error ("wrong input data");
     }
     number_equations = (real_number_equations < number_variables) ? number_variables :
                        real_number_equations;
@@ -154,8 +154,8 @@ void solver::add_k_row1_to_row2 (complex<double>k, size_t row1, size_t row2)
 {
     if (verbose)
     {
-        cout << to_string (k) << " * R" << row1 + 1 << " +R" << row2 + 1 << " -> R" << row2 + 1 <<
-             endl;
+        cout << to_string (k) << " * R" << CAST_SIZE_T_TO_UINT32 (row1 + 1) << " +R"
+             << CAST_SIZE_T_TO_UINT32 (row2 + 1) << " -> R" << CAST_SIZE_T_TO_UINT32 (row2 + 1) << endl;
     }
     for (size_t i = 0; i < number_variables + 1; ++i)
     {
@@ -184,7 +184,8 @@ void solver::divide_row (size_t row, complex<double> k)
 {
     if (verbose)
     {
-        cout << "R" << row + 1 << " / " << to_string (k) << " -> R" << row + 1 << endl;
+        cout << "R" << CAST_SIZE_T_TO_UINT32 (row + 1) << " / " << to_string (k)
+             << " -> R" << CAST_SIZE_T_TO_UINT32 (row + 1) << endl;
     }
     for (auto& matrix_el : matrix.at (row))
     {
@@ -363,7 +364,8 @@ void solver::swap_columns (size_t column1, size_t column2)
 {
     if (verbose)
     {
-        cout << "C" << column1 + 1 << " <-> C" << column2 + 1 << endl;
+        cout << "C" << CAST_SIZE_T_TO_UINT32 (column1 + 1) << " <-> C"
+             << CAST_SIZE_T_TO_UINT32 (column2 + 1) << endl;
     }
     const auto n = matrix.size();
     for (size_t i = 0; i < n; ++i)
@@ -377,7 +379,8 @@ void solver::swap_rows (size_t row1, size_t row2)
 {
     if (verbose)
     {
-        cout << "R" << row1 + 1 << " <-> R" << row2 + 1 << endl;
+        cout << "R" << CAST_SIZE_T_TO_UINT32 (row1 + 1) << " <-> R" << CAST_SIZE_T_TO_UINT32 (
+                 row2 + 1) << endl;
     }
     for (size_t i = 0; i < number_variables + 1; ++i)
     {

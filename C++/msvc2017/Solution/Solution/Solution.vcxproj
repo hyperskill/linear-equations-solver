@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\src\number_solutions.cpp" />
     <ClCompile Include="..\..\..\src\parameters.cpp" />
     <ClCompile Include="..\..\..\src\solver.cpp" />
+    <ClCompile Include="..\..\..\src\util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\complex.hpp" />

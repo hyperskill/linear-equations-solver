@@ -23,13 +23,13 @@ BOOST_AUTO_TEST_CASE (solver_constructor1)
 {
     try
     {
-    istringstream in ("1 1\n1 2");
-    const solver s (in);
-    (void)s;
+        istringstream in ("1 1\n1 2");
+        const solver s (in);
+        (void)s;
     }
     catch (const exception&)
     {
-       BOOST_FAIL ("shoudn't throw");
+        BOOST_FAIL ("shoudn't throw");
     }
 }
 

@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\..\src\number_solutions.cpp" />
     <ClCompile Include="..\..\..\src\parameters.cpp" />
     <ClCompile Include="..\..\..\src\solver.cpp" />
+    <ClCompile Include="..\..\..\src\util.cpp" />
     <ClCompile Include="..\..\..\test\complex.test.cpp" />
     <ClCompile Include="..\..\..\test\main.cpp" />
     <ClCompile Include="..\..\..\test\parameters.test.cpp" />
