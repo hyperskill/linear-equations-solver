@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <attributes.h>
+#include <useful-c-macros/all.h>
 
 bool  NONNULL (1, 2) str_equal (const char* s1, const char* s2) noexcept;
 

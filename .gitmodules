@@ -4,3 +4,6 @@
 [submodule "C\\3rd\\useful-c-macros"]
 	path = C\\3rd\\useful-c-macros
 	url = https://github.com/fsb4000/useful-c-macros
+[submodule "C++\\3rd\\useful-c-macros"]
+	path = C++\\3rd\\useful-c-macros
+	url = https://github.com/fsb4000/useful-c-macros

@@ -5,7 +5,7 @@
 
 #include <cstddef>
 
-#include <attributes.h>
+#include <useful-c-macros/all.h>
 
 class parameters
 {

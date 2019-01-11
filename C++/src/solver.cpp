@@ -11,7 +11,7 @@
 #include <fstream>
 #include <stdexcept>
 
-#include "32bit_support.hpp"
+#include <useful-c-macros/all.h>
 
 #include "complex.hpp"
 
