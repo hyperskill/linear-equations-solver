@@ -8,7 +8,7 @@
 
 using std::size_t;
 
-parameters::parameters (size_t argc, const char* argv[]) noexcept
+parameters::parameters (size_t argc, const char* const* argv) noexcept
     : in ("input.txt")
     , out ("output.txt")
     , verbose (false)

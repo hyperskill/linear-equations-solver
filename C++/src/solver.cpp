@@ -51,7 +51,7 @@ solver::solver (istream& in, bool verbose_ /* = false */)
     static_assert (SIZE_MAX >= UINT32_MAX);
 
     in.exceptions (istream::failbit | istream::badbit);
-    auto check = [&]()
+    const auto check = [&]()
     {
         int next_character = ' ';
         while (isspace (next_character))

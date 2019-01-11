@@ -14,7 +14,7 @@ using std::endl;
 using std::exception;
 using std::size_t;
 
-int main (int argc, const char* argv[])
+int main (int argc, char* argv[])
 {
     try
     {
