@@ -14,7 +14,11 @@ WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
     -Wunused-const-variable=2 -Wdangling-else -Wnonnull -Wuseless-cast        \
     -Wold-style-cast -Woverloaded-virtual -Wsuggest-final-types -Weffc++      \
     -Wsuggest-final-methods -Wsuggest-override -Wzero-as-null-pointer-constant\
-    -Wsubobject-linkage -Werror
+    -Wsubobject-linkage -Wsuggest-attribute=pure -Wsuggest-attribute=const    \
+    -Wsuggest-attribute=noreturn -Wmissing-noreturn -Wmissing-format-attribute\
+    -Wsuggest-attribute=malloc -Wsuggest-attribute=format                     \
+    -Wsuggest-attribute=cold                                                  \
+    -Werror
 WARNINGS_TESTS = 
 
 LTO = -flto-partition=none -flto -ffat-lto-objects
