@@ -17,20 +17,20 @@ int main (int argc, char* argv[])
     parameters* p = parameters_new (correct_argc, correct_argv, parameters_stack);
     if (p == nullptr)
     {
-        fprintf (stderr, "something wrong\n");
+        fprintf (stderr, "can't read command line parameters\n");
         return EXIT_FAILURE;
     }
     FILE* in = fopen (parameters_get_in (p), "r");
     if (in == nullptr)
     {
-        fprintf (stderr, "something wrong\n");
+        fprintf (stderr, "can't open -in file: %s\n", parameters_get_in (p));
         parameters_free (p);
         return EXIT_FAILURE;
     }
     solver* s = solver_new (in, parameters_get_verbose (p), solver_stack);
     if (s == nullptr)
     {
-        fprintf (stderr, "something wrong\n");
+        fprintf (stderr, "can't read from -in file or incorrect data\n");
         parameters_free (p);
         fclose (in);
         return EXIT_FAILURE;
@@ -38,7 +38,7 @@ int main (int argc, char* argv[])
     bool ok = solver_solve (s);
     if (!ok)
     {
-        fprintf (stderr, "something wrong\n");
+        fprintf (stderr, "something wrong while solve\n");
         solver_free (s);
         parameters_free (p);
         fclose (in);
@@ -47,7 +47,7 @@ int main (int argc, char* argv[])
     ok = solver_write_solution_to_file (s, parameters_get_out (p));
     if (!ok)
     {
-        fprintf (stderr, "something wrong\n");
+        fprintf (stderr, "can't write to output file: %s\n", parameters_get_out (p));
         solver_free (s);
         parameters_free (p);
         fclose (in);
