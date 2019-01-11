@@ -6,13 +6,13 @@
 ./bin/solution_cpp$(EXEEXT):  $(OBJ_SOLUTION)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
 
-./bin/test_c$(EXEEXT): CFLAGS += $(SANITIZERS)
+./bin/test_c$(EXEEXT): CFLAGS += $(SANITIZERS) $(WARNINGS_TEST)
 ./bin/test_c$(EXEEXT): $(OBJ_TEST)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) $(SANITIZERS)
 
 ./bin/test_cpp$(EXEEXT): CFLAGS = $(CXXFLAGS)
 ./bin/test_cpp$(EXEEXT): CC = $(CXX)
-./bin/test_cpp$(EXEEXT): CFLAGS += $(SANITIZERS)
+./bin/test_cpp$(EXEEXT): CFLAGS += $(SANITIZERS) $(WARNINGS_TEST) $(WARNINGS_TEST_CXX)
 ./bin/test_cpp$(EXEEXT): $(OBJ_TEST)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) $(SANITIZERS)
 

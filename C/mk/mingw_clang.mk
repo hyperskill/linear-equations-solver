@@ -5,10 +5,12 @@ CPPFLAGS = -MT $@ -MMD -MP
 TARGET_ARCH ?=
 
 WARNINGS = -Weverything -Wno-used-but-marked-unused -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-vla -Wno-tautological-pointer-compare -Wno-covered-switch-default -Werror
-WARNINGS_C_ONLY = -Wbad-function-cast -Winit-self -fno-common
+WARNINGS_C_ONLY = -fno-common
 WARNINGS_FORCE_CXX = -Wno-deprecated -Wno-old-style-cast
+WARNINGS_TEST = -Wno-switch-enum
+WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-float-equal
 
-INCLUDE = -I"include" -isystem"3rd"
+INCLUDE += -I"include" -isystem"3rd"
 LTO =
 SECURITY = 
 DEFINES =

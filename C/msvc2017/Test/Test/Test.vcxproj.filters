@@ -19,24 +19,15 @@
     <Filter Include="Исходные файлы\runners">
       <UniqueIdentifier>{744cd46e-f503-4243-82ac-411cab055c43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\tests">
+      <UniqueIdentifier>{a721e3b5-545c-42f1-948f-82f64d9a95de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\src">
+      <UniqueIdentifier>{4dc1e766-cb61-4709-97d1-00d5de42e026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\3rd\unity\unity.c">
-      <Filter>Исходные файлы\unity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\3rd\unity\unity_fixture.c">
-      <Filter>Исходные файлы\unity</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\parameters.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\util.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\test\main.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\test\parameters.test.c">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\test\test_runners\parameters.runner.c">
@@ -45,20 +36,35 @@
     <ClCompile Include="..\..\..\test\test_runners\complex_support.runner.c">
       <Filter>Исходные файлы\runners</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\test\complex_support.test.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\complex_support.c">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\test\test_runners\solver.runner.c">
       <Filter>Исходные файлы\runners</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\solver.c">
-      <Filter>Исходные файлы</Filter>
+    <ClCompile Include="..\..\..\test\complex_support.test.c">
+      <Filter>Исходные файлы\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\test\parameters.test.c">
+      <Filter>Исходные файлы\tests</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\test\solver.test.c">
-      <Filter>Исходные файлы</Filter>
+      <Filter>Исходные файлы\tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\complex_support.c">
+      <Filter>Исходные файлы\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\parameters.c">
+      <Filter>Исходные файлы\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solver.c">
+      <Filter>Исходные файлы\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\util.c">
+      <Filter>Исходные файлы\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd\unity\src\unity.c">
+      <Filter>Исходные файлы\unity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\3rd\unity\extras\fixture\src\unity_fixture.c">
+      <Filter>Исходные файлы\unity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

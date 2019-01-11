@@ -1,7 +1,9 @@
 VALGRIND ?= 0
 EXEEXT = 
 
-OBJ_UNITY = 3rd/unity/unity.o 3rd/unity/unity_fixture.o
+OBJ_UNITY = 3rd/unity/src/unity.o 3rd/unity/extras/fixture/src/unity_fixture.o
+
+INCLUDE = -isystem"3rd/unity/src" -isystem"3rd/unity/extras/fixture/src"
 
 OBJ_TEST = $(OBJ_UNITY)
 
