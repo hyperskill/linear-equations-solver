@@ -9,4 +9,4 @@ case $OS in
   *) ;;
 esac
 
-make clean && VALGRIND=1 make && valgrind --log-file=drd.txt --read-var-info=yes --tool=drd bin/test_cpp
+make clean && VALGRIND=1 make && valgrind --log-file=drd.txt --read-var-info=yes --tool=drd bin/test_c

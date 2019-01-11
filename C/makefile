@@ -16,7 +16,13 @@ test: bin/test_c$(EXEEXT)
 
 test_cpp: bin/test_cpp$(EXEEXT)
 
+thread_test: bin/thread_test_c$(EXEEXT)
+
+thread_test_cpp: bin/thread_test_cpp$(EXEEXT)
+
 clean: clean_details
+
+help: help_details
 
 include mk/targets.mk
 
