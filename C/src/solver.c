@@ -134,6 +134,13 @@ void solver_free (solver* self)
 {
     if (self != nullptr)
     {
+        if (self->solution_general != nullptr)
+        {
+            for (size_t i = 0; i < self->number_variables; ++i)
+            {
+                free(self->solution_general[i]);
+            }
+        }
         free (self->matrix);
         free (self->solution_partial);
         free (self->solution_general);
@@ -161,8 +168,8 @@ const char* const* solver_get_solution_general (solver* self,
         return  nullptr;
     }
     *solution_general_size = self->number_variables;
-    char* const* const tmp1 = (char* const * const)self->solution_general;
-    const char* const* const tmp2 = (const char* const * const)tmp1;
+    char* const* const tmp1 = (char* const *)self->solution_general;
+    const char* const* const tmp2 = (const char* const *)tmp1;
     return tmp2;
 }
 
@@ -395,7 +402,7 @@ static bool generate_solutions (solver* self) noexcept
         free (self->solution_general[self->solution_indexes[i]]);
         if (complex_equals (self->matrix[get_matrix_index (self, i, i)], ZERO))
         {
-            ok = snprintf (buffer, sizeof (buffer) - 1, "x%" PRIu64,
+            ok = snprintf (buffer, sizeof (buffer) - 1, "x%llu" ,
                            self->solution_indexes[i] + 1ULL) > 0;
             if (!ok)
             {
@@ -425,7 +432,7 @@ static bool generate_solutions (solver* self) noexcept
             {
                 if (complex_equals (self->matrix[get_matrix_index (self, i, j)], ONE))
                 {
-                    ok = snprintf (buffer, sizeof (buffer) - 1, " - x%" PRIu64,
+                    ok = snprintf (buffer, sizeof (buffer) - 1, " - x%llu" ,
                                    self->solution_indexes[j] + 1ULL) > 0;
                     if (!ok)
                     {
@@ -443,7 +450,7 @@ static bool generate_solutions (solver* self) noexcept
                 }
                 else if (!complex_equals (self->matrix[get_matrix_index (self, i, j)], ZERO))
                 {
-                    ok = snprintf (buffer, sizeof (buffer) - 1, " - x%" PRIu64 " * (%s)",
+                    ok = snprintf (buffer, sizeof (buffer) - 1, " - x%llu * (%s)",
                                    self->solution_indexes[j] + 1ULL,
                                    complex_to_string (self->matrix[get_matrix_index (self, i, j)])) > 0;
                     if (!ok)

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <useful-c-macros\all.h>
+#include <useful-c-macros/all.h>
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -19,9 +19,9 @@ extern const size_t parameters_size;
 parameters* NONNULL (2) (parameters_new) (size_t argc, const char* const* argv,
         void* memory) noexcept;
 void parameters_free (parameters* p);
-const char* NONNULL (1) parameters_get_in (const parameters* p);
-const char* NONNULL (1) parameters_get_out (const parameters* p);
-bool NONNULL (1) parameters_get_verbose (const parameters* p);
+const char* PURE NONNULL (1) parameters_get_in (const parameters* p);
+const char* PURE NONNULL (1) parameters_get_out (const parameters* p);
+bool PURE NONNULL (1) parameters_get_verbose (const parameters* p);
 
 END_DECLS
 

@@ -4,7 +4,7 @@ Describe CppAcceptanceTests {
         Remove-Item "$PSScriptRoot/out.txt" -ErrorAction SilentlyContinue
         Remove-Item "$PSScriptRoot/stdout.txt" -ErrorAction SilentlyContinue
 
-        & "$PSScriptRoot/../bin/solution_cpp" -in "$PSScriptRoot/in.txt" -out "$PSScriptRoot/out.txt" -verbose > "$PSScriptRoot/stdout.txt"
+        & "$PSScriptRoot/../bin/solution_c" -in "$PSScriptRoot/in.txt" -out "$PSScriptRoot/out.txt" -verbose > "$PSScriptRoot/stdout.txt"
 
         [String[]]$lines = [System.IO.File]::ReadLines("$PSScriptRoot/out.txt")
         $lines.Count | Should Be 1
@@ -24,7 +24,7 @@ Describe CppAcceptanceTests {
         Remove-Item "$PSScriptRoot/out1.txt" -ErrorAction SilentlyContinue
         Remove-Item "$PSScriptRoot/stdout1.txt" -ErrorAction SilentlyContinue
 
-        & "$PSScriptRoot/../bin/solution_cpp" -in "$PSScriptRoot/in1.txt" -out "$PSScriptRoot/out1.txt" -verbose > "$PSScriptRoot/stdout1.txt"
+        & "$PSScriptRoot/../bin/solution_c" -in "$PSScriptRoot/in1.txt" -out "$PSScriptRoot/out1.txt" -verbose > "$PSScriptRoot/stdout1.txt"
 
         [String[]]$lines = [System.IO.File]::ReadLines("$PSScriptRoot/out1.txt")
         $lines.Count | Should Be 1
@@ -42,7 +42,7 @@ Describe CppAcceptanceTests {
         Remove-Item "$PSScriptRoot/out2.txt" -ErrorAction SilentlyContinue
         Remove-Item "$PSScriptRoot/stdout2.txt" -ErrorAction SilentlyContinue
 
-        & "$PSScriptRoot/../bin/solution_cpp" -in "$PSScriptRoot/in2.txt" -out "$PSScriptRoot/out2.txt" -verbose > "$PSScriptRoot/stdout2.txt"
+        & "$PSScriptRoot/../bin/solution_c" -in "$PSScriptRoot/in2.txt" -out "$PSScriptRoot/out2.txt" -verbose > "$PSScriptRoot/stdout2.txt"
 
         [String[]]$lines = [System.IO.File]::ReadLines("$PSScriptRoot/out2.txt")
         $lines.Count | Should Be 1
@@ -61,7 +61,7 @@ Describe CppAcceptanceTests {
         Remove-Item "$PSScriptRoot/out3.txt" -ErrorAction SilentlyContinue
         Remove-Item "$PSScriptRoot/stdout3.txt" -ErrorAction SilentlyContinue
 
-        & "$PSScriptRoot/../bin/solution_cpp" -in "$PSScriptRoot/in3.txt" -out "$PSScriptRoot/out3.txt" -verbose > "$PSScriptRoot/stdout3.txt"
+        & "$PSScriptRoot/../bin/solution_c" -in "$PSScriptRoot/in3.txt" -out "$PSScriptRoot/out3.txt" -verbose > "$PSScriptRoot/stdout3.txt"
 
         [String[]]$lines = [System.IO.File]::ReadLines("$PSScriptRoot/out3.txt")
         $lines.Count | Should Be 1
@@ -81,7 +81,7 @@ Describe CppAcceptanceTests {
         Remove-Item "$PSScriptRoot/out4.txt" -ErrorAction SilentlyContinue
         Remove-Item "$PSScriptRoot/stdout4.txt" -ErrorAction SilentlyContinue
 
-        & "$PSScriptRoot/../bin/solution_cpp" -in "$PSScriptRoot/in.txt" -out "$PSScriptRoot/out4.txt" > "$PSScriptRoot/stdout4.txt"
+        & "$PSScriptRoot/../bin/solution_c" -in "$PSScriptRoot/in.txt" -out "$PSScriptRoot/out4.txt" > "$PSScriptRoot/stdout4.txt"
 
         [String[]]$stdoutLines = [System.IO.File]::ReadLines("$PSScriptRoot/stdout4.txt")
         $stdoutLines.Count | Should Be 0
