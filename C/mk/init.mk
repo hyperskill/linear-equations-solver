@@ -5,7 +5,9 @@ OBJ_UNITY = 3rd/unity/unity.o 3rd/unity/unity_fixture.o
 
 OBJ_TEST = $(OBJ_UNITY)
 
-OBJS = $(OBJ_TEST)
+OBJ_SOLUTION =
+
+OBJS = $(OBJ_TEST) $(OBJ_SOLUTION)
 
 include mk/detect_os.mk
 include mk/optional_ccache.mk

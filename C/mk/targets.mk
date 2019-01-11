@@ -1,3 +1,11 @@
+./bin/solution_c$(EXEEXT):  $(OBJ_SOLUTION)
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
+
+./bin/solution_cpp$(EXEEXT): CFLAGS = $(CXXFLAGS)
+./bin/solution_cpp$(EXEEXT): CC = $(CXX)
+./bin/solution_cpp$(EXEEXT):  $(OBJ_SOLUTION)
+	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS)
+
 ./bin/test_c$(EXEEXT): CFLAGS += $(SANITIZERS)
 ./bin/test_c$(EXEEXT): $(OBJ_TEST)
 	$(CC) -o $@ $^ $(LDFLAGS) $(LIBS) $(SANITIZERS)

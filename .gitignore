@@ -24,6 +24,9 @@ helgrind.txt
 valgrind.txt
 report/
 
+# C generated files and folders
+C/bin/
+
 # Vala generated files and folders
 Vala/bin/
 Vala/src/*.c

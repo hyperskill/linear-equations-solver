@@ -17,4 +17,21 @@
   <ItemGroup>
     <None Include="Solution.ruleset" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\complex_support.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\main.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\parameters.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\solver.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\util.c">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
