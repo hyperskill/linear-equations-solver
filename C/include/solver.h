@@ -3,10 +3,7 @@
 
 #pragma once
 
-#include <attributes.h>
-#include <cpp_support.h>
-#include <default_parameters.h>
-#include <universal_complex.h>
+#include <useful-c-macros\all.h>
 
 #include <stdbool.h>
 #include <stddef.h>

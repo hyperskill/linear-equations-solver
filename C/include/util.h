@@ -6,8 +6,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#include <attributes.h>
-#include <cpp_support.h>
+#include <useful-c-macros\all.h>
 
 BEGIN_DECLS
 

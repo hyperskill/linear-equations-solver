@@ -4,8 +4,6 @@
 
 #include "parameters.h"
 
-#include <cpp_support.h>
-
 TEST_GROUP (Parameters);
 
 

@@ -25,6 +25,9 @@
     <Filter Include="Исходные файлы\src">
       <UniqueIdentifier>{4dc1e766-cb61-4709-97d1-00d5de42e026}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\useful-c-macros">
+      <UniqueIdentifier>{db0dc142-7f6a-4d6a-abd5-a72132a5c02b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\test\main.c">
@@ -69,5 +72,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Test.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\include\complex_support.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\number_solutions.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\parameters.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\solver.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\util.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\32bit_support.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\all.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\attributes.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\cpp_support.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\default_parameters.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\universal_complex.h">
+      <Filter>Файлы заголовков\useful-c-macros</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

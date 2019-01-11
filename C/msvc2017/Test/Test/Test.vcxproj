@@ -36,6 +36,19 @@
   <ItemGroup>
     <None Include="Test.ruleset" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\32bit_support.h" />
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\all.h" />
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\attributes.h" />
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\cpp_support.h" />
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\default_parameters.h" />
+    <ClInclude Include="..\..\..\3rd\useful-c-macros\universal_complex.h" />
+    <ClInclude Include="..\..\..\include\complex_support.h" />
+    <ClInclude Include="..\..\..\include\number_solutions.h" />
+    <ClInclude Include="..\..\..\include\parameters.h" />
+    <ClInclude Include="..\..\..\include\solver.h" />
+    <ClInclude Include="..\..\..\include\util.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A7F93A37-D503-4669-AE95-CE0A247A9EF0}</ProjectGuid>

@@ -7,9 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <32bit_support.h>
-#include <cpp_support.h>
-
 #include "util.h"
 #include "number_solutions.h"
 #include "complex_support.h"

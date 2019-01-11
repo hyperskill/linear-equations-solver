@@ -1,3 +1,6 @@
 [submodule "C\\3rd\\unity"]
 	path = C\\3rd\\unity
 	url = https://github.com/ThrowTheSwitch/Unity
+[submodule "C\\3rd\\useful-c-macros"]
+	path = C\\3rd\\useful-c-macros
+	url = https://github.com/fsb4000/useful-c-macros

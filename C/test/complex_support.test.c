@@ -4,8 +4,6 @@
 
 #include "complex_support.h"
 
-#include <cpp_support.h>
-
 TEST_GROUP (ComplexSupport);
 
 
