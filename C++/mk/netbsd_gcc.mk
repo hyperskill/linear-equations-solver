@@ -20,7 +20,7 @@ WARNINGS_TESTS =
 LTO = -flto-partition=none -flto -ffat-lto-objects
 INCLUDE = -I"include" -isystem"3rd" -isystem"/usr/pkg/include"
 SECURITY =
-DEFINES = -D_FORTIFY_SOURCE=2
+DEFINES = -D_FORTIFY_SOURCE=2 -DFORCE_STATIC_BOOST
 DEBUG = -g3
 OPENMP = -fopenmp
 OPTIMIZE = -O3 -fstrict-aliasing -funsafe-math-optimizations -ftracer

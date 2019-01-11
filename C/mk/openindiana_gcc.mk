@@ -18,7 +18,7 @@ WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
     -Wsuggest-attribute=cold                                                  \
     -Werror
 WARNINGS_C_ONLY = -Wbad-function-cast -Winit-self -fno-common
-WARNINGS_FORCE_CXX = -Wuseless-cast -Wsubobject-linkage -Wzero-as-null-pointer-constant
+WARNINGS_FORCE_CXX = -Wno-alloca -Wuseless-cast -Wsubobject-linkage -Wzero-as-null-pointer-constant
 WARNINGS_TEST = -Wno-float-equal -Wno-switch-enum -Wno-strict-overflow -Wno-suggest-attribute=const
 WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast
 

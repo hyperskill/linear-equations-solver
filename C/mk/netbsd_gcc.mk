@@ -1,6 +1,6 @@
 CCACHE = ccache
-CC = $(CCACHE) gcc
-CXX = $(CCACHE) g++
+CC = $(CCACHE) /usr/pkg/gcc8/bin/gcc
+CXX = $(CCACHE) /usr/pkg/gcc8/bin/g++
 CPPFLAGS = -MT $@ -MMD -MP
 TARGET_ARCH ?=
 
@@ -20,12 +20,11 @@ WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
 WARNINGS_C_ONLY = -Wbad-function-cast -Winit-self -fno-common
 WARNINGS_FORCE_CXX = -Wno-alloca -Wuseless-cast -Wsubobject-linkage -Wzero-as-null-pointer-constant
 WARNINGS_TEST = -Wno-float-equal -Wno-switch-enum -Wno-strict-overflow -Wno-suggest-attribute=const
-WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast
+WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast -Wno-sign-conversion
 
 LTO = -flto-partition=none -flto -ffat-lto-objects
 INCLUDE += -I"include" -isystem"3rd"
-SECURITY = -fPIC -fstack-protector-all --param ssp-buffer-size=4 -fstack-check\
-    -mindirect-branch=thunk -fPIE -Wa,--noexecstack 
+SECURITY =
 DEFINES = -D_FORTIFY_SOURCE=2
 DEBUG = -g3
 OPENMP = -fopenmp
@@ -33,13 +32,13 @@ OPTIMIZE = -O3 -fstrict-aliasing -funsafe-math-optimizations -ftracer
 CXXSTANDARD = -std=gnu++1z
 CSTANDARD = -std=gnu11
 
-SANITIZERS = -fsanitize=address -fsanitize=undefined -fsanitize=leak -fno-omit-frame-pointer
-THREAD_SANITIZER = -fsanitize=thread -fno-omit-frame-pointer
+SANITIZERS =
+THREAD_SANITIZER =
 
 LD_LTO = -flto-partition=none -flto -ffat-lto-objects
-LD_INCLUDE =
-LD_SECURITY = -pie -Wl,-z,relro,-z,now -Wl,-z,noexecstack
-LD_SYSTEM = -Wl,-O1 -rdynamic
+LD_INCLUDE = -L"/usr/pkg/lib"
+LD_SECURITY =
+LD_SYSTEM =
 
 LIBS_OPENMP = -fopenmp
 LIBS_SYSTEM = -lm
