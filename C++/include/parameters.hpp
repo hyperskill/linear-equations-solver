@@ -15,9 +15,9 @@ private:
     bool verbose;
 public:
     NONNULL (3) parameters (std::size_t argc, const char* const* argv) noexcept;
-    const char* get_in() const noexcept;
-    const char* get_out() const noexcept;
-    bool is_verbose() const noexcept;
+    const char* PURE get_in() const noexcept;
+    const char* PURE get_out() const noexcept;
+    bool PURE is_verbose() const noexcept;
 };
 
 #endif

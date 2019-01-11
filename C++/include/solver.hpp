@@ -10,6 +10,8 @@
 #include <vector>
 #include <optional>
 
+#include <useful-c-macros/all.h>
+
 #include "number_solutions.hpp"
 
 class solver
@@ -25,7 +27,7 @@ private:
     bool verbose;
 public:
     solver (std::istream& in, bool verbose = false);
-    number_solutions get_number_solutions() const noexcept;
+    number_solutions PURE get_number_solutions() const noexcept;
     std::optional<std::vector<std::string>> get_solution_general() const noexcept;
     std::optional<std::vector<std::complex<double>>> get_solution_partial() const noexcept;
     void solve();
