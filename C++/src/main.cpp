@@ -13,6 +13,7 @@ using std::ifstream;
 using std::endl;
 using std::exception;
 using std::size_t;
+using std::runtime_error;
 
 int main (int argc, char* argv[])
 {
@@ -20,6 +21,10 @@ int main (int argc, char* argv[])
     {
         const parameters p (static_cast<size_t> (argc), argv);
         ifstream in (p.get_in());
+	if (!in.is_open())
+        {
+            throw runtime_error("can't open -in file");
+        }
         solver s (in, p.is_verbose());
         s.solve();
         s.write_solution_to_file (p.get_out());
