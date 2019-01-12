@@ -5,7 +5,7 @@ CPPFLAGS = -MT $@ -MMD -MP
 TARGET_ARCH ?=
 
 WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
-    -Wstrict-overflow=5 -Wfloat-equal -Wformat-extra-args -Wshadow -Winit-self\
+    -Wstrict-overflow=2 -Wfloat-equal -Wformat-extra-args -Wshadow -Winit-self\
     -Wswitch-default -Wformat-nonliteral -Wdouble-promotion -Wnull-dereference\
     -Walloca -Wdouble-promotion -Wduplicated-branches -Wduplicated-cond -Wchkp\
     -Wconversion -Wlogical-not-parentheses -Walloc-zero -Wcast-qual -Wrestrict\
@@ -22,8 +22,8 @@ WARNINGS_FORCE_CXX = -Wno-alloca -Wuseless-cast -Wsubobject-linkage -Wzero-as-nu
 WARNINGS_TEST = -Wno-float-equal -Wno-switch-enum -Wno-strict-overflow -Wno-suggest-attribute=const
 WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast -Wno-sign-conversion
 
-LTO =
-INCLUDE += -I"include" -isystem"3rd"
+LTO = -flto-partition=none -flto -ffat-lto-objects
+INCLUDE += -I"include" -isystem"3rd" -isystem"/usr/local/include/"
 SECURITY =
 DEFINES = -D_FORTIFY_SOURCE=2
 DEBUG = -g3
@@ -35,14 +35,14 @@ CSTANDARD = -std=gnu11
 SANITIZERS =
 THREAD_SANITIZER =
 
-LD_LTO =
-LD_INCLUDE =
+LD_LTO = -flto-partition=none -flto -ffat-lto-objects
+LD_INCLUDE = -L"/usr/local/lib"
 LD_SECURITY =
-LD_SYSTEM =
+LD_SYSTEM = -Wl,-O1 -rdynamic
 
 LIBS_OPENMP = -fopenmp
 LIBS_SYSTEM = -lm
-LIBS_THREAD = -pthread
+LIBS_THREAD = -pthread -Wl,--no-as-needed -lpthread
 LIBS_3RD =
 
 FLAGS = $(OPTIMIZE) $(WARNINGS) $(INCLUDE) $(LTO) $(DEFINES) $(OPENMP)         \

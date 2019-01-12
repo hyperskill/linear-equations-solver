@@ -20,7 +20,7 @@ WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
 WARNINGS_C_ONLY = -Wbad-function-cast -Winit-self -fno-common
 WARNINGS_FORCE_CXX = -Wno-alloca -Wuseless-cast -Wsubobject-linkage -Wzero-as-null-pointer-constant
 WARNINGS_TEST = -Wno-float-equal -Wno-switch-enum -Wno-strict-overflow -Wno-suggest-attribute=const
-WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast
+WARNINGS_TEST_CXX = -Wno-zero-as-null-pointer-constant -Wno-useless-cast -Wno-sign-conversion
 
 LTO = -flto-partition=none -flto -ffat-lto-objects
 INCLUDE += -I"include" -isystem"3rd"
