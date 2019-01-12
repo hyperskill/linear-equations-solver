@@ -19,6 +19,8 @@ TEST (Parameters, new_stack)
 {
 #ifdef __cplusplus
     uint8_t* const stack = (uint8_t*)alloca (parameters_size);
+#elif (__STDC_VERSION__ < 201112L)
+    uint8_t* const stack = nullptr;
 #else
     alignas (max_align_t) uint8_t stack[parameters_size];
 #endif

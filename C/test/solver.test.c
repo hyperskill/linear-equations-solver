@@ -106,6 +106,8 @@ TEST (Solver, constructor8)
 {
 #ifdef __cplusplus
     uint8_t* const stack = (uint8_t*)alloca (solver_size);
+#elif (__STDC_VERSION__ < 201112L)
+    uint8_t* const stack = nullptr;
 #else
     alignas (max_align_t) uint8_t stack[solver_size];
 #endif

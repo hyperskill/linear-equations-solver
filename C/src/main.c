@@ -8,6 +8,9 @@ int main (int argc, char* argv[])
 #ifdef __cplusplus
     uint8_t* const parameters_stack = (uint8_t*)alloca (parameters_size);
     uint8_t* const solver_stack = (uint8_t*)alloca (solver_size);
+#elif (__STDC_VERSION__ < 201112L)
+    uint8_t* const parameters_stack = nullptr;
+    uint8_t* const solver_stack = nullptr;
 #else
     alignas (max_align_t) uint8_t parameters_stack[parameters_size];
     alignas (max_align_t) uint8_t solver_stack[solver_size];
