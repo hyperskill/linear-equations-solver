@@ -16,7 +16,9 @@ using std::string;
 using std::istringstream;
 using std::ostringstream;
 using std::runtime_error;
+#ifndef __DJGPP__
 using std::round;
+#endif
 
 constexpr double EPSILON = 0.00001;
 
