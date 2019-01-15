@@ -1,8 +1,8 @@
 CCACHE = ccache
-CC = $(CCACHE) i586-pc-msdosdjgpp-gcc
-CXX = $(CCACHE) i586-pc-msdosdjgpp-g++
+CC = $(CCACHE) i386-pc-msdosdjgpp-gcc
+CXX = $(CCACHE) i386-pc-msdosdjgpp-g++
 CPPFLAGS = -MT $@ -MMD -MP
-TARGET_ARCH ?= -march=i386
+TARGET_ARCH ?=
 
 WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
     -Wstrict-overflow=5 -Wfloat-equal -Wformat-extra-args -Wshadow -Winit-self\
