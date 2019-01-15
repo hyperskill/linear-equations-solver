@@ -2,7 +2,7 @@ CCACHE = ccache
 CC = $(CCACHE) i586-pc-msdosdjgpp-gcc
 CXX = $(CCACHE) i586-pc-msdosdjgpp-g++
 CPPFLAGS = -MT $@ -MMD -MP
-TARGET_ARCH ?=
+TARGET_ARCH ?= -march=i386
 
 WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
     -Wstrict-overflow=5 -Wfloat-equal -Wformat-extra-args -Wshadow -Winit-self\
@@ -26,7 +26,7 @@ LTO = -flto-partition=none -flto -ffat-lto-objects
 INCLUDE += -I"include" -isystem"3rd"
 SECURITY =
 DEFINES = -D_FORTIFY_SOURCE=2 -D__STDC_FORMAT_MACROS
-DEBUG = -s
+DEBUG = -g3
 OPENMP =
 OPTIMIZE = -O3 -fstrict-aliasing -funsafe-math-optimizations -ftracer
 CXXSTANDARD = -std=gnu++1z
