@@ -24,13 +24,9 @@ public class Swapper {
     }
 
     private static void unSwapColumns(Swap swap, double[][] matrix){
-        int sourceColumn = swap.getNewColumnsNumber();
-        int targetColumn = swap.getOldColumnsNumber();
-        for(int row = 0; row < matrix.length; row++){
-            double tmp = matrix[row][sourceColumn];
-            matrix[row][sourceColumn] = matrix[row][targetColumn];
-            matrix[row][targetColumn] = tmp;
-        }
+        int oldColumn = swap.getNewColumnsNumber();
+        int newColumn = swap.getOldColumnsNumber();
+        swapColumns (oldColumn, newColumn, matrix);
     }
 
     public static void unSwapAllC(Deque<Swap> swapDeque, double[][] matrix){

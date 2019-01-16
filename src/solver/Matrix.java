@@ -15,9 +15,10 @@ public class Matrix {
     Matrix(String fileName){
         try (Scanner scanner = new Scanner(new FileInputStream(fileName))){
             int rows = scanner.nextInt();
-            matrix = new double[rows][rows+1];
+            int columns = scanner.nextInt();
+            matrix = new double[rows][columns];
             for(int i = 0; i < rows; i++){
-                for (int j = 0; j < rows + 1; j++){
+                for (int j = 0; j < columns; j++){
                     matrix[i][j] = scanner.nextDouble();
                 }
             }

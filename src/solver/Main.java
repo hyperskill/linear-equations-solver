@@ -13,16 +13,18 @@ public class Main {
         m.fileNameSource = args[0];
         m.fileNameAnswer = args[1];
         m.matrix = new Matrix(m.fileNameSource);
-        m.solver = new Solver();
+        m.solver = new Solver(m.matrix);
         m.answer = new Answer(m.fileNameAnswer);
 
-        double[][] gaussJordanMatrix = m.solver.calcGausJordan(m.matrix.getMatrix());
-        m.answer.writeAnswer(gaussJordanMatrix);
+        double[][] gaussJordanMatrix = m.solver.calcGaussJordan(m.matrix.getMatrix());
 
-
-
-
-
+        if(m.solver.noSolutions){
+            m.answer.writeAnswer("No Solution");
+        }else if(m.solver.infinitySolutions){
+            m.answer.writeAnswer("Infinity Solutions");
+        }else {
+            m.answer.writeAnswer(gaussJordanMatrix);
+        }
 
         //============================TESTS======================//
 
