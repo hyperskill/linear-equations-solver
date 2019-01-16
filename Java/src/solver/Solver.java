@@ -63,14 +63,14 @@ public class Solver {
         if (numberSolutions != NumberSolutions.MANY) {
             return null;
         }
-        return solutionGeneral;
+        return solutionGeneral.clone();
     }
 
     public Complex[] getSolutionPartial() {
         if (numberSolutions == NumberSolutions.NONE) {
             return null;
         }
-        return solutionPartial;
+        return solutionPartial.clone();
     }
 
     public void solve() {
