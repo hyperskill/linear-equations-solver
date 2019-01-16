@@ -21,10 +21,10 @@ WARNINGS = -Wall -Wextra -pedantic -Wstrict-aliasing=2 -Wformat-security      \
     -Werror
 WARNINGS_TESTS = 
 
-LTO = -flto-partition=none -flto -ffat-lto-objects
+LTO = #-flto-partition=none -flto -ffat-lto-objects
 INCLUDE += -I"include" -isystem"3rd"
 SECURITY =
-DEFINES = -D_FORTIFY_SOURCE=2 -D__STDC_FORMAT_MACROS
+DEFINES = -D_FORTIFY_SOURCE=2 -D__STDC_FORMAT_MACROS -DFORCE_STATIC_BOOST
 DEBUG = -g3
 OPENMP =
 OPTIMIZE = -O3 -fstrict-aliasing -funsafe-math-optimizations -ftracer
@@ -34,7 +34,7 @@ CSTANDARD = -std=gnu11
 SANITIZERS =
 THREAD_SANITIZER =
 
-LD_LTO = -flto-partition=none -flto -ffat-lto-objects
+LD_LTO = #-flto-partition=none -flto -ffat-lto-objects
 LD_INCLUDE =
 LD_SECURITY =
 LD_SYSTEM =
