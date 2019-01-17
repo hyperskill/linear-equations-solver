@@ -27,6 +27,9 @@ report/
 # C generated files and folders
 C/bin/
 
+# C# generated files and folders
+DotNET/packages/
+
 # Vala generated files and folders
 Vala/bin/
 Vala/src/*.c
