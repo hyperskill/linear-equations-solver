@@ -1,5 +1,7 @@
 package solver.specialCases;
 
+import solver.Complex;
+
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -7,25 +9,28 @@ import java.util.stream.Collectors;
  * Created by DIMA, on 14.01.2019
  */
 public class Helper {
-    public static void print(double matrix[][]){
+    public static void print(Complex matrix[][]){
         System.out.println("Start print");
-        String s = Arrays.stream(matrix)
-                .map(i -> Arrays.stream(i).boxed()
-                        .map(String::valueOf)
-                        .collect(Collectors.joining(" ")))
-                .collect(Collectors.joining("\n"));
+        StringBuilder sb = new StringBuilder();
+        for(int row = 0; row < matrix.length; row++){
+            for(int column = 0; column < matrix[row].length; column++){
+                sb.append(matrix[row][column].getRealPart());
+                double imaginary = matrix[row][column].getImaginaryPart();
+                if(imaginary > 0){
+                    sb.append("+");
+                }
+                if(imaginary == 0){
+                    sb.append(" ");
+                }else {
+                    sb.append(imaginary).append("i");
+                    sb.append(" ");
+                }
 
-        System.out.println(s);
+            }
+            sb.append("\n");
+        }
+        System.out.println(sb.toString());
         System.out.println("End print");
     }
 
-    public static void roundInMatrix(double[][] matrix){
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix[i].length; j++){
-                if(Math.abs(matrix[i][j]) < Checker.DELTA_DOUBLE){
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-    }
 }

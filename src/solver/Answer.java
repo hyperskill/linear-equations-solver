@@ -14,13 +14,16 @@ import java.util.stream.Collectors;
  */
 public class Answer {
     private String fileNameToWrite;
+    private List<Complex> answer;
 
-    private List<Double> createAnswer(double[][] gaussJordanMatrix){
-        List<Double> answer = new ArrayList<>();
+    private List<Complex> createAnswer(Complex[][] gaussJordanMatrix){
+        answer = new ArrayList<>();
         for(int i = 0; i < gaussJordanMatrix.length; i++){
-            double x = gaussJordanMatrix[i][gaussJordanMatrix[i].length-1];
-            x = new BigDecimal(x).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
-            answer.add(x);
+            double xReal = gaussJordanMatrix[i][gaussJordanMatrix[i].length-1].getRealPart();
+            double xImaginary = gaussJordanMatrix[i][gaussJordanMatrix[i].length-1].getImaginaryPart();
+            xReal = new BigDecimal(xReal).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+            xImaginary = new BigDecimal(xImaginary).setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+            answer.add(new Complex(xReal, xImaginary));
         }
         return answer;
     }
@@ -29,11 +32,28 @@ public class Answer {
         this.fileNameToWrite = fileNameToWrite;
     }
 
-    void writeAnswer(double[][] gaussJordanMatrix){
-        List<Double> answer = createAnswer(gaussJordanMatrix);
+    void writeAnswer(Complex[][] gaussJordanMatrix){
+        List<Complex> answer = createAnswer(gaussJordanMatrix);
         try (FileWriter fileWriter = new FileWriter(fileNameToWrite)){
-            String s = answer.stream().map(String::valueOf).collect(Collectors.joining(" "));
-            fileWriter.write(s);
+            StringBuilder sb = new StringBuilder();
+            for(Complex c : answer){
+                if(c.getRealPart() == 0 && c.getImaginaryPart() == 0){
+                    sb.append(0).append(" ");
+                    continue;
+                }
+                if(c.getRealPart() != 0){
+                    sb.append(c.getRealPart());
+                }
+                if(c.getImaginaryPart() != 0){
+                    if(c.getImaginaryPart() > 0){
+                        sb.append("+");
+                    }
+                    sb.append(c.getImaginaryPart()).append("i");
+                }
+                sb.append(" ");
+            }
+            //String s = answer.stream().map(String::valueOf).collect(Collectors.joining(" "));
+            fileWriter.write(sb.toString().trim());
             fileWriter.flush();
         }catch (IOException e){
             System.out.println("Wrong fileOut, please check");
@@ -51,8 +71,7 @@ public class Answer {
         }
     }
 
-
-
-
-
+    public List<Complex> getAnswer() {
+        return answer;
+    }
 }

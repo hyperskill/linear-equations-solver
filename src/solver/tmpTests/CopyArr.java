@@ -15,10 +15,10 @@ public class CopyArr {
         double[][] a3;
 
         a2 = Arrays.copyOf(a1, 2);
-        Helper.print(a2);
+        //Helper.print(a2);
 
         a3 = Arrays.copyOfRange(a1, 3, a1.length);
-        Helper.print(a3);
+        //Helper.print(a3);
 
 
 
