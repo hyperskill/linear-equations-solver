@@ -59,7 +59,7 @@ export class Solver {
             return undefined;
         }
 
-        return this.solutionGeneral;
+        return Object.assign([], this.solutionGeneral);
     }
 
     public readonly getSolutionPartial = (): Complex[] | undefined => {
@@ -67,7 +67,7 @@ export class Solver {
             return undefined;
         }
 
-        return this.solutionPartial;
+        return Object.assign([], this.solutionPartial);
     }
 
     public readonly solve = (): void => {

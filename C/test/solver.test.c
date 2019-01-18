@@ -17,6 +17,72 @@ TEST_TEAR_DOWN (Solver)
 {
 }
 
+#ifndef __cplusplus
+
+#define RIGHT_NUMBER_SOLUTIONS_TYPE(x) _Generic((x), \
+    number_solutions: true,                          \
+    default: false)
+
+#define RIGHT_SOLUTION_GENERAL_TYPE(x) _Generic((x), \
+    const char* const*: true,                        \
+    default: false)
+
+#define RIGHT_SOLUTION_PARTIAL_TYPE(x) _Generic((x), \
+    const complex_double*: true,                     \
+    default: false)
+
+#else
+
+#include <type_traits>
+
+#define RIGHT_NUMBER_SOLUTIONS_TYPE(x) std::is_same<decltype(x), number_solutions>::value
+#define RIGHT_SOLUTION_GENERAL_TYPE(x) std::is_same<decltype(x), const char* const*>::value
+#define RIGHT_SOLUTION_PARTIAL_TYPE(x) std::is_same<decltype(x), const complex_double*>::value
+
+#endif
+
+TEST (Solver, types1)
+{
+    FILE* in = generate_file ("1 1\n1 2");
+    TEST_ASSERT_NOT_NULL (in);
+    solver* s = solver_new (in);
+
+    TEST_ASSERT_NOT_NULL (s);
+    TEST_ASSERT ( RIGHT_NUMBER_SOLUTIONS_TYPE (solver_get_number_solutions (s)) );
+
+    solver_free (s);
+    fclose (in);
+}
+
+TEST (Solver, types2)
+{
+    FILE* in = generate_file ("1 1\n1 2");
+    TEST_ASSERT_NOT_NULL (in);
+    solver* s = solver_new (in);
+    size_t temp;
+
+    TEST_ASSERT_NOT_NULL (s);
+    TEST_ASSERT ( RIGHT_SOLUTION_GENERAL_TYPE (solver_get_solution_general (s,
+                  &temp)) );
+
+    solver_free (s);
+    fclose (in);
+}
+
+TEST (Solver, types3)
+{
+    FILE* in = generate_file ("1 1\n1 2");
+    TEST_ASSERT_NOT_NULL (in);
+    solver* s = solver_new (in);
+    size_t temp;
+
+    TEST_ASSERT_NOT_NULL (s);
+    TEST_ASSERT ( RIGHT_SOLUTION_PARTIAL_TYPE (solver_get_solution_partial (s,
+                  &temp)) );
+
+    solver_free (s);
+    fclose (in);
+}
 
 TEST (Solver, constructor1)
 {
@@ -615,6 +681,43 @@ TEST (Solver, solve12)
 TEST (Solver, solve13)
 {
     FILE* in = generate_file ("1\t1\t2\t4");
+    TEST_ASSERT_NOT_NULL (in);
+    solver* s = solver_new (in);
+    TEST_ASSERT_NOT_NULL (s);
+    solver_solve (s);
+
+    const complex_double expected_partial_solution[] = {CMPLX (2.0, 0.0)};
+    const size_t expected_partial_solution_size = sizeof (
+                expected_partial_solution) / sizeof (expected_partial_solution[0]);
+    const number_solutions expected_number_solutions = number_solutions_one;
+
+    size_t actual_partial_solution_size = 0;
+    const complex_double* actual_partial_solution = solver_get_solution_partial (s,
+            &actual_partial_solution_size);
+    const number_solutions actual_number_solutions = solver_get_number_solutions (
+                s);
+    size_t actual_general_solution_size = 0;
+    const char* const* actual_general_solution = solver_get_solution_general (s,
+            &actual_general_solution_size);
+
+    TEST_ASSERT_NOT_NULL (actual_partial_solution);
+    TEST_ASSERT_NULL (actual_general_solution);
+    TEST_ASSERT_EQUAL (expected_number_solutions, actual_number_solutions);
+    TEST_ASSERT_EQUAL (expected_partial_solution_size,
+                       actual_partial_solution_size);
+    for (size_t i = 0; i < actual_partial_solution_size; ++i)
+    {
+        TEST_ASSERT (complex_equals (actual_partial_solution[i],
+                                     expected_partial_solution[i]));
+    }
+
+    solver_free (s);
+    fclose (in);
+}
+
+TEST (Solver, solve14)
+{
+    FILE* in = generate_file ("1 1\r\n2 4");
     TEST_ASSERT_NOT_NULL (in);
     solver* s = solver_new (in);
     TEST_ASSERT_NOT_NULL (s);

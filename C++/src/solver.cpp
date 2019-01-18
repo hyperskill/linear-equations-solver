@@ -33,6 +33,8 @@ using std::ofstream;
 using std::ostream;
 using std::swap;
 using std::runtime_error;
+using std::reference_wrapper;
+using std::cref;
 
 constexpr complex<double> ZERO (0.0, 0.0);
 constexpr complex<double> ONE (1.0, 0.0);
@@ -104,24 +106,25 @@ number_solutions solver::get_number_solutions()  const noexcept
     return number_solutions_;
 }
 
-optional<vector<string>> solver::get_solution_general() const noexcept
+optional<reference_wrapper<const vector<string>>> solver::get_solution_general() const noexcept
 {
     if (number_solutions_ != number_solutions::many)
     {
         return  nullopt;
     }
 
-    return solution_general;
+    return cref (solution_general);
 }
 
-optional<vector<complex<double>>> solver::get_solution_partial() const noexcept
+optional<reference_wrapper <const vector<complex<double>>>> solver::get_solution_partial() const
+noexcept
 {
     if (number_solutions_ == number_solutions::none)
     {
         return  nullopt;
     }
 
-    return solution_partial;
+    return cref (solution_partial);
 }
 
 void solver::solve()

@@ -7,6 +7,45 @@ import solver.Solver;
 import java.util.Scanner;
 
 public class SolverTest {
+
+    @Test
+    public void types1() {
+        final Scanner sc = new Scanner("1 1\r\n2 4");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        NumberSolutions n =  p.getNumberSolutions();
+        Assert.assertEquals(NumberSolutions.ONE, n);
+        n = NumberSolutions.MANY;
+        Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
+    }
+
+    @Test
+    public void types2() {
+        final Scanner sc = new Scanner("1 1\r\n2 4");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        Complex[] array =  p.getSolutionPartial();
+        Assert.assertEquals(array[0], new Complex(2.0, 0.0));
+        array[0] = new Complex();
+        array =  p.getSolutionPartial();
+        Assert.assertEquals(array[0], new Complex(2.0, 0.0));
+    }
+
+    @Test
+    public void types3() {
+        final Scanner sc = new Scanner("1 1\r\n0 0");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        String[] array =  p.getSolutionGeneral();
+        Assert.assertEquals(array[0], "x1");
+        array[0] = "hello";
+        array =  p.getSolutionGeneral();
+        Assert.assertEquals(array[0], "x1");
+    }
+
     @Test
     public void constructor1() {
         try {
@@ -273,6 +312,19 @@ public class SolverTest {
     @Test
     public void solve13() {
         final Scanner sc = new Scanner("1\t1\t2\t4");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        final Complex[] expectedPartialSolution = new Complex[]{new Complex(2.0, 0)};
+
+        Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
+        Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
+        Assert.assertArrayEquals(null, p.getSolutionGeneral());
+    }
+
+    @Test
+    public void solve14() {
+        final Scanner sc = new Scanner("1 1\r\n2 4");
         final Solver p = new Solver(sc);
         p.solve();
 

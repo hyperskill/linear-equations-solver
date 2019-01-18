@@ -9,6 +9,58 @@ namespace tests
     public class SolverTest
     {
         [Test()]
+        public void Types1()
+        {
+            void f()
+            {
+                Solver p = new Solver("1 1\n1 2");
+                p.Solve();
+                NumberSolutions n = p.NumberSolutions;
+                Assert.AreEqual(NumberSolutions.ONE, n);
+                n = NumberSolutions.MANY;
+                Assert.AreEqual(NumberSolutions.ONE, p.NumberSolutions);
+
+            }
+            Assert.DoesNotThrow(f);
+        }
+
+        [Test()]
+        public void Types2()
+        {
+            void f()
+            {
+                Solver p = new Solver("1 1\n1 2");
+                p.Solve();
+                var array = p.GetSolutionPartial();
+                Complex expected = new Complex(2.0, 0.0);
+                Assert.AreEqual(expected, array[0]);
+                array[0] = new Complex();
+                array = p.GetSolutionPartial();
+                Assert.AreEqual(expected, array[0]);
+
+            }
+            Assert.DoesNotThrow(f);
+        }
+
+        [Test()]
+        public void Types3()
+        {
+            void f()
+            {
+                Solver p = new Solver("1 1\n0 0");
+                p.Solve();
+                var array = p.GetSolutionGeneral();
+                string expected = "x1";
+                Assert.AreEqual(expected, array[0]);
+                array[0] = "hello";
+                array = p.GetSolutionGeneral();
+                Assert.AreEqual(expected, array[0]);
+
+            }
+            Assert.DoesNotThrow(f);
+        }
+
+        [Test()]
         public void Constructor1()
         {
             void f() { Solver p = new Solver("1 1\n1 2"); }
@@ -233,6 +285,19 @@ namespace tests
         public void Solve13()
         {
             string s = "1\t1\t2\t4";
+            Solver p = new Solver(s);
+            p.Solve();
+
+            Complex[] expectedPartialSolution = { new Complex(2.0, 0) };
+
+            Assert.AreEqual(NumberSolutions.ONE, p.NumberSolutions);
+            Assert.AreEqual(expectedPartialSolution, p.GetSolutionPartial());
+            Assert.AreEqual(null, p.GetSolutionGeneral());
+        }
+        [Test()]
+        public void Solve14()
+        {
+            string s = "1 1\r\n2 4";
             Solver p = new Solver(s);
             p.Solve();
 

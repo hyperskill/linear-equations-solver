@@ -21,9 +21,9 @@ int main (int argc, char* argv[])
     {
         const parameters p (static_cast<size_t> (argc), argv);
         ifstream in (p.get_in());
-	if (!in.is_open())
+        if (!in.is_open())
         {
-            throw runtime_error("can't open -in file");
+            throw runtime_error ("can't open -in file");
         }
         solver s (in, p.is_verbose());
         s.solve();

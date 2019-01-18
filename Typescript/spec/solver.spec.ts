@@ -3,6 +3,48 @@ import { NumberSolutions } from "../src/numberSolutions";
 import { Solver } from "../src/solver";
 
 describe("solver tests", () => {
+    it("types1", () => {
+        const f = () => {
+            const p = new Solver("1 1\n1 2");
+            p.solve();
+            let n = p.getNumberSolutions();
+            expect(n).toBe(NumberSolutions.ONE);
+            n = NumberSolutions.MANY;
+            expect(p.getNumberSolutions()).toBe(NumberSolutions.ONE);
+        };
+        expect(f).not.toThrow();
+    });
+
+    it("types2", () => {
+        const f = () => {
+            const p = new Solver("1 1\n1 2");
+            p.solve();
+            let array = p.getSolutionPartial();
+            const expected = new Complex(2.0, 0.0);
+            expect(array !== undefined).toBe(true);
+            expect(expected.equals(array![0])).toBe(true);
+            array![0] = new Complex();
+            array = p.getSolutionPartial();
+            expect(expected.equals(array![0])).toBe(true);
+        };
+        expect(f).not.toThrow();
+    });
+
+    it("types3", () => {
+        const f = () => {
+            const p = new Solver("1 1\n0 0");
+            p.solve();
+            let array = p.getSolutionGeneral();
+            const expected = "x1";
+            expect(array !== undefined).toBe(true);
+            expect(expected).toBe(array![0]);
+            array![0] = "hello";
+            array = p.getSolutionGeneral();
+            expect(expected).toBe(array![0]);
+        };
+        expect(f).not.toThrow();
+    });
+
     it("constructor1", () => {
         const f = () => new Solver("1 1\n2 2");
         expect(f).not.toThrow();
@@ -320,6 +362,28 @@ describe("solver tests", () => {
 
     it("solve13", () => {
         const s = "1\t1\t2\t4";
+        const p = new Solver(s);
+        p.solve();
+
+        const expectedPartialSolution = [new Complex(2, 0)];
+
+        const actualPartialSolution = p.getSolutionPartial();
+        const actualGeneralSolution = p.getSolutionGeneral();
+
+        if (actualPartialSolution === undefined || actualGeneralSolution !== undefined) {
+            fail();
+        } else {
+            expect(NumberSolutions.ONE).toBe(p.getNumberSolutions());
+            expect(expectedPartialSolution.length).toBe(actualPartialSolution.length);
+            for (let i = 0; i < expectedPartialSolution.length; i += 1) {
+                expect(expectedPartialSolution[i].equals(actualPartialSolution[i])).toBe(true);
+            }
+            expect(undefined).toBe(actualGeneralSolution);
+        }
+    });
+
+    it("solve14", () => {
+        const s = "1 1\r\n2 4";
         const p = new Solver(s);
         p.solve();
 
