@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+using System;
 namespace src
 {
     public class Complex
@@ -7,7 +9,7 @@ namespace src
 
         public static bool operator ==(Complex a, Complex b)
         {
-            return Math.Abs(a.Imag - b.Imag) < EPSILON && Math.Abs(a.Real - b.Real) < EPSILON;
+            return !(a is null) && !(b is null) && Math.Abs(a.Imag - b.Imag) < EPSILON && Math.Abs(a.Real - b.Real) < EPSILON;
         }
 
         public static bool operator !=(Complex a, Complex b)
