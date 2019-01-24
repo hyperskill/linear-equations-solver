@@ -134,7 +134,7 @@ public class Solver {
                     }
                 }
                 if ( !found_non_zero_element ) {
-                    for ( int j = i + 1; j < number_equations; ++j ) {
+                    for ( int j = i + 1; j < number_variables; ++j ) {
                         if ( !matrix[i, j].equals ( ZERO ) ) {
                             swap_columns ( i, j );
                             found_non_zero_element = true;
@@ -157,7 +157,7 @@ public class Solver {
                 }
 
                 if ( !found_non_zero_element ) {
-                    if ( matrix[i, number_equations].equals ( ZERO ) ) {
+                    if ( matrix[i, number_variables].equals ( ZERO ) ) {
                         number_solutions = NumberSolutions.MANY;
                         continue;
                     } else {

@@ -214,7 +214,7 @@ void solver::gaus_first_step()
             }
             if (!found_non_zero_element)
             {
-                for (size_t j = i + 1; j < number_equations; ++j)
+                for (size_t j = i + 1; j < number_variables; ++j)
                 {
                     if (!equals (matrix.at (i).at (j), ZERO))
                     {
@@ -244,7 +244,7 @@ void solver::gaus_first_step()
 
             if (!found_non_zero_element)
             {
-                if (equals (matrix.at (i).at (number_equations), ZERO))
+                if (equals (matrix.at (i).at (number_variables), ZERO))
                 {
                     number_solutions_ = number_solutions::many;
                     continue;

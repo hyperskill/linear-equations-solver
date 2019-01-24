@@ -334,4 +334,15 @@ public class SolverTest {
         Assert.assertArrayEquals(expectedPartialSolution, p.getSolutionPartial());
         Assert.assertArrayEquals(null, p.getSolutionGeneral());
     }
+
+    @Test
+    public void solve15() {
+        final Scanner sc = new Scanner("3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0");
+        final Solver p = new Solver(sc);
+        p.solve();
+
+        Assert.assertEquals(NumberSolutions.NONE, p.getNumberSolutions());
+        Assert.assertArrayEquals(null, p.getSolutionPartial());
+        Assert.assertArrayEquals(null, p.getSolutionGeneral());
+    }
 }

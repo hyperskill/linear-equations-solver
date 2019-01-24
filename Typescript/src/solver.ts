@@ -59,7 +59,7 @@ export class Solver {
             return undefined;
         }
 
-        return Object.assign([], this.solutionGeneral);
+        return [...this.solutionGeneral];
     }
 
     public readonly getSolutionPartial = (): Complex[] | undefined => {
@@ -67,7 +67,7 @@ export class Solver {
             return undefined;
         }
 
-        return Object.assign([], this.solutionPartial);
+        return [...this.solutionPartial];
     }
 
     public readonly solve = (): void => {
@@ -142,7 +142,7 @@ export class Solver {
                     }
                 }
                 if (!foundNonZeroElement) {
-                    for (let j = i + 1; j < this.numberEquations; j += 1) {
+                    for (let j = i + 1; j < this.numberVariables; j += 1) {
                         if (!this.matrix[i][j].equals(Solver.ZERO)) {
                             this.swapColumns(i, j);
                             foundNonZeroElement = true;
@@ -165,7 +165,7 @@ export class Solver {
                 }
 
                 if (!foundNonZeroElement) {
-                    if (this.matrix[i][this.numberEquations].equals(Solver.ZERO)) {
+                    if (this.matrix[i][this.numberVariables].equals(Solver.ZERO)) {
                         this.numberSolutions = NumberSolutions.MANY;
                         continue;
                     } else {

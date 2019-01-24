@@ -295,7 +295,7 @@ static void gaus_first_step (solver* self)
             }
             if (!found_non_zero_element)
             {
-                for (size_t j = i + 1; j < self->number_equations; ++j)
+                for (size_t j = i + 1; j < self->number_variables; ++j)
                 {
                     if (!complex_equals (self->matrix[get_matrix_index (self, i, j)], ZERO))
                     {
@@ -327,7 +327,7 @@ static void gaus_first_step (solver* self)
             if (!found_non_zero_element)
             {
                 if (complex_equals (self->matrix[get_matrix_index (self, i,
-                                                                  self->number_equations)], ZERO))
+                                                                  self->number_variables)], ZERO))
                 {
                     self->number_solutions_ = number_solutions_many;
                     continue;

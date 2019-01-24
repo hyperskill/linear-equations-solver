@@ -751,3 +751,30 @@ TEST (Solver, solve14)
     solver_free (s);
     fclose (in);
 }
+
+TEST (Solver, solve15)
+{
+    FILE* in = generate_file ("3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0");
+    TEST_ASSERT_NOT_NULL (in);
+    solver* s = solver_new (in);
+    TEST_ASSERT_NOT_NULL (s);
+    solver_solve (s);
+
+    const number_solutions expected_number_solutions = number_solutions_none;
+
+    size_t actual_partial_solution_size = 0;
+    const complex_double* actual_partial_solution = solver_get_solution_partial (s,
+            &actual_partial_solution_size);
+    const number_solutions actual_number_solutions = solver_get_number_solutions (
+                s);
+    size_t actual_general_solution_size = 0;
+    const char* const* actual_general_solution = solver_get_solution_general (s,
+            &actual_general_solution_size);
+
+    TEST_ASSERT_NULL (actual_partial_solution);
+    TEST_ASSERT_NULL (actual_general_solution);
+    TEST_ASSERT_EQUAL (expected_number_solutions, actual_number_solutions);
+
+    solver_free (s);
+    fclose (in);
+}

@@ -21,6 +21,7 @@ void solver_tests () {
     Test.add_func ( "/solve12_solver_test", solve12_solver_test );
     Test.add_func ( "/solve13_solver_test", solve13_solver_test );
     Test.add_func ( "/solve14_solver_test", solve14_solver_test );
+    Test.add_func ( "/solve15_solver_test", solve15_solver_test );
     Test.add_func ( "/types1_solver_test", types1_solver_test );
     Test.add_func ( "/types2_solver_test", types2_solver_test );
     Test.add_func ( "/types3_solver_test", types3_solver_test );
@@ -527,6 +528,25 @@ void solve14_solver_test () {
         for ( int i = 0; i < actual_partial_solution.length; ++i ) {
             assert ( actual_partial_solution[i].equals ( expected_partial_solution[i] ) );
         }
+    } catch {
+        assert ( false );
+    }
+}
+
+void solve15_solver_test () {
+    try {
+        var in = generate_filestream ( "3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0" );
+        Solver p = new Solver ( in );
+        p.solve ();
+
+        NumberSolutions expected_number_solutions = NumberSolutions.NONE;
+
+        var actual_partial_solution = p.get_solution_partial ();
+        var actual_general_solution = p.get_solution_general ();
+
+        assert ( p.number_solutions == expected_number_solutions );
+        assert ( actual_partial_solution == null );
+        assert ( actual_general_solution == null );
     } catch {
         assert ( false );
     }

@@ -156,7 +156,7 @@ namespace src
                     }
                     if (!foundNonZeroElement)
                     {
-                        for (int j = i + 1; j < numberEquations; ++j)
+                        for (int j = i + 1; j < numberVariables; ++j)
                         {
                             if (matrix[i, j] != ZERO)
                             {
@@ -186,7 +186,7 @@ namespace src
 
                     if (!foundNonZeroElement)
                     {
-                        if (matrix[i, numberEquations] == ZERO)
+                        if (matrix[i, numberVariables] == ZERO)
                         {
                             NumberSolutions = NumberSolutions.MANY;
                             continue;

@@ -403,4 +403,19 @@ describe("solver tests", () => {
             expect(undefined).toBe(actualGeneralSolution);
         }
     });
+
+    it("solve15", () => {
+        const s = "3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0";
+        const p = new Solver(s);
+        p.solve();
+
+        const actualPartialSolution = p.getSolutionPartial();
+        const actualGeneralSolution = p.getSolutionGeneral();
+
+        if (actualPartialSolution !== undefined || actualGeneralSolution !== undefined) {
+            fail();
+        } else {
+            expect(NumberSolutions.NONE).toBe(p.getNumberSolutions());
+        }
+    });
 });

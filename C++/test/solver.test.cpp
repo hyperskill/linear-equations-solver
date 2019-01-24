@@ -557,3 +557,20 @@ BOOST_AUTO_TEST_CASE (solver_solve14)
     BOOST_CHECK (equals_partial);
     BOOST_CHECK (!actual_general_solution.has_value());
 }
+
+BOOST_AUTO_TEST_CASE (solver_solve15)
+{
+    istringstream in ("3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0");
+    solver s (in);
+    s.solve();
+
+    const number_solutions expected_number_solutions = number_solutions::none;
+
+    const auto actual_partial_solution = s.get_solution_partial();
+    const auto actual_number_solutions = s.get_number_solutions();
+    const auto actual_general_solution = s.get_solution_general();
+
+    BOOST_CHECK_EQUAL (expected_number_solutions, actual_number_solutions);
+    BOOST_CHECK (!actual_partial_solution.has_value());
+    BOOST_CHECK (!actual_general_solution.has_value());
+}

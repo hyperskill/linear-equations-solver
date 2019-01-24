@@ -27,6 +27,7 @@ TEST_GROUP_RUNNER (Solver)
     RUN_TEST_CASE (Solver, solve12);
     RUN_TEST_CASE (Solver, solve13);
     RUN_TEST_CASE (Solver, solve14);
+    RUN_TEST_CASE (Solver, solve15);
     RUN_TEST_CASE (Solver, types1);
     RUN_TEST_CASE (Solver, types2);
     RUN_TEST_CASE (Solver, types3);

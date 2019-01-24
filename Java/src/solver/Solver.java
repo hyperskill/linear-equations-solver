@@ -143,7 +143,7 @@ public class Solver {
                     }
                 }
                 if (!foundNonZeroElement) {
-                    for (int j = i + 1; j < numberEquations; ++j) {
+                    for (int j = i + 1; j < numberVariables; ++j) {
                         if (!matrix[i][j].equals(ZERO)) {
                             swapColumns(i, j);
                             foundNonZeroElement = true;
@@ -166,7 +166,7 @@ public class Solver {
                 }
 
                 if (!foundNonZeroElement) {
-                    if (matrix[i][numberEquations].equals(ZERO)) {
+                    if (matrix[i][numberVariables].equals(ZERO)) {
                         numberSolutions = NumberSolutions.MANY;
                         continue;
                     } else {

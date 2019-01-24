@@ -307,5 +307,16 @@ namespace tests
             Assert.AreEqual(expectedPartialSolution, p.GetSolutionPartial());
             Assert.AreEqual(null, p.GetSolutionGeneral());
         }
+        [Test()]
+        public void Solve15()
+        {
+            string s = "3 4\n1 1 2 9\n0 1 3 1\n0 2 6 1\n0 0 0 0";
+            Solver p = new Solver(s);
+            p.Solve();
+
+            Assert.AreEqual(NumberSolutions.NONE, p.NumberSolutions);
+            Assert.AreEqual(null, p.GetSolutionPartial());
+            Assert.AreEqual(null, p.GetSolutionGeneral());
+        }
     }
 }
