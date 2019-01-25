@@ -184,6 +184,46 @@ public class ComplexTest {
     }
 
     @Test
+    public void constructor13() {
+        final String s = "i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(1.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor14() {
+        final String s = "-i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(-1.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor15() {
+        final String s = "0.5+i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.5, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(1.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor16() {
+        final String s = "0.5-i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.5, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(-1.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
+    public void constructor17() {
+        final String s = "+i";
+        final Complex c = new Complex(s);
+        Assert.assertEquals(0.0, c.getReal(), Complex.EPSILON);
+        Assert.assertEquals(1.0, c.getImag(), Complex.EPSILON);
+    }
+
+    @Test
     public void add() {
         final Complex a = new Complex(3.0, -5.0);
         final Complex b = new Complex(4.0, 2.0);

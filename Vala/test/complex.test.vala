@@ -20,6 +20,11 @@ void complex_tests () {
     Test.add_func ( "/from_string9_complex_test", from_string9_complex_test );
     Test.add_func ( "/from_string10_complex_test", from_string10_complex_test );
     Test.add_func ( "/from_string11_complex_test", from_string11_complex_test );
+    Test.add_func ( "/from_string12_complex_test", from_string12_complex_test );
+    Test.add_func ( "/from_string13_complex_test", from_string13_complex_test );
+    Test.add_func ( "/from_string14_complex_test", from_string14_complex_test );
+    Test.add_func ( "/from_string15_complex_test", from_string15_complex_test );
+    Test.add_func ( "/from_string16_complex_test", from_string16_complex_test );
     Test.add_func ( "/add_complex_test", add_complex_test );
     Test.add_func ( "/multiply_complex_test", multiply_complex_test );
     Test.add_func ( "/conjugate_complex_test", conjugate_complex_test );
@@ -217,6 +222,61 @@ void from_string11_complex_test () {
     }
 
     assert ( ok );
+}
+
+void from_string12_complex_test () {
+    try {
+        ComplexNumber a = new ComplexNumber.from_string ( "i" );
+        ComplexNumber e = new ComplexNumber ( 0.0, 1.0 );
+
+        assert ( a.equals ( e ) );
+    } catch {
+        assert ( false );
+    }
+}
+
+void from_string13_complex_test () {
+    try {
+        ComplexNumber a = new ComplexNumber.from_string ( "-i" );
+        ComplexNumber e = new ComplexNumber ( 0.0, -1.0 );
+
+        assert ( a.equals ( e ) );
+    } catch {
+        assert ( false );
+    }
+}
+
+void from_string14_complex_test () {
+    try {
+        ComplexNumber a = new ComplexNumber.from_string ( "0.5+i" );
+        ComplexNumber e = new ComplexNumber ( 0.5, 1.0 );
+
+        assert ( a.equals ( e ) );
+    } catch {
+        assert ( false );
+    }
+}
+
+void from_string15_complex_test () {
+    try {
+        ComplexNumber a = new ComplexNumber.from_string ( "0.5-i" );
+        ComplexNumber e = new ComplexNumber ( 0.5, -1.0 );
+
+        assert ( a.equals ( e ) );
+    } catch {
+        assert ( false );
+    }
+}
+
+void from_string16_complex_test () {
+    try {
+        ComplexNumber a = new ComplexNumber.from_string ( "+i" );
+        ComplexNumber e = new ComplexNumber ( 0.0, 1.0 );
+
+        assert ( a.equals ( e ) );
+    } catch {
+        assert ( false );
+    }
 }
 
 void add_complex_test () {

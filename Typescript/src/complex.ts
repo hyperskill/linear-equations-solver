@@ -1,4 +1,14 @@
+const restoreOmittedImaginaryCoefficient = (s: string): string => {
+    if (s == "i") {
+        return "1i";
+    }
+    s = s.replace("+i", "+1i");
+    s = s.replace("-i", "-1i");
+    return s;
+};
+
 const split = (s: string): string[] => {
+    s = restoreOmittedImaginaryCoefficient(s);
     let realString = "0";
     let imagString = "0";
     let i = 1;

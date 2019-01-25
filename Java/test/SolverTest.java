@@ -16,6 +16,7 @@ public class SolverTest {
 
         NumberSolutions n =  p.getNumberSolutions();
         Assert.assertEquals(NumberSolutions.ONE, n);
+        //noinspection UnusedAssignment
         n = NumberSolutions.MANY;
         Assert.assertEquals(NumberSolutions.ONE, p.getNumberSolutions());
     }

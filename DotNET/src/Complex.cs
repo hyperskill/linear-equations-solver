@@ -75,6 +75,7 @@ namespace src
 
         private string[] Split(string s)
         {
+            s = Restore_omitted_imaginary_coefficient(s);
             string realString = "0";
             string imagString = "0";
             int i = 1;
@@ -105,6 +106,17 @@ namespace src
                 realString = s;
             }
             return new string[] { realString, imagString };
+        }
+
+        private string Restore_omitted_imaginary_coefficient(string s)
+        {
+            if (s == "i")
+            {
+                return "1i";
+            }
+            s = s.Replace("+i", "+1i");
+            s = s.Replace("-i", "-1i");
+            return s;
         }
 
         public override bool Equals(object obj)

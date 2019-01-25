@@ -184,3 +184,53 @@ TEST (ComplexSupport, parse11)
 
     TEST_ASSERT_FALSE (ok);
 }
+
+TEST (ComplexSupport, parse12)
+{
+    const complex_double expected = CMPLX (0.0, 1.0);
+    complex_double actual = CMPLX (0.0, 0.0);
+    const bool ok = complex_parse (&actual, "i");
+
+    TEST_ASSERT (ok);
+    TEST_ASSERT (complex_equals (expected, actual));
+}
+
+TEST (ComplexSupport, parse13)
+{
+    const complex_double expected = CMPLX (0.0, -1.0);
+    complex_double actual = CMPLX (0.0, 0.0);
+    const bool ok = complex_parse (&actual, "-i");
+
+    TEST_ASSERT (ok);
+    TEST_ASSERT (complex_equals (expected, actual));
+}
+
+TEST (ComplexSupport, parse14)
+{
+    const complex_double expected = CMPLX (0.5, 1.0);
+    complex_double actual = CMPLX (0.0, 0.0);
+    const bool ok = complex_parse (&actual, "0.5+i");
+
+    TEST_ASSERT (ok);
+    TEST_ASSERT (complex_equals (expected, actual));
+}
+
+TEST (ComplexSupport, parse15)
+{
+    const complex_double expected = CMPLX (0.5, -1.0);
+    complex_double actual = CMPLX (0.0, 0.0);
+    const bool ok = complex_parse (&actual, "0.5-i");
+
+    TEST_ASSERT (ok);
+    TEST_ASSERT (complex_equals (expected, actual));
+}
+
+TEST (ComplexSupport, parse16)
+{
+    const complex_double expected = CMPLX (0.0, 1.0);
+    complex_double actual = CMPLX (0.0, 0.0);
+    const bool ok = complex_parse (&actual, "+i");
+
+    TEST_ASSERT (ok);
+    TEST_ASSERT (complex_equals (expected, actual));
+}

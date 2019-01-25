@@ -23,4 +23,9 @@ TEST_GROUP_RUNNER (ComplexSupport)
     RUN_TEST_CASE (ComplexSupport, parse9);
     RUN_TEST_CASE (ComplexSupport, parse10);
     RUN_TEST_CASE (ComplexSupport, parse11);
+    RUN_TEST_CASE (ComplexSupport, parse12);
+    RUN_TEST_CASE (ComplexSupport, parse13);
+    RUN_TEST_CASE (ComplexSupport, parse14);
+    RUN_TEST_CASE (ComplexSupport, parse15);
+    RUN_TEST_CASE (ComplexSupport, parse16);
 }

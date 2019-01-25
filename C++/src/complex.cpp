@@ -16,20 +16,45 @@ using std::string;
 using std::istringstream;
 using std::ostringstream;
 using std::runtime_error;
+using std::size_t;
 #ifndef __DJGPP__
 using std::round;
 #endif
 
 constexpr double EPSILON = 0.00001;
 
+static void restore_omitted_imaginary_coefficient (string& s)
+{
+    if (s == "i")
+    {
+        s = "1i";
+    }
+    const string plus_i = "+i";
+    const string minus_i = "-i";
+    size_t found = s.find (plus_i);
+    if (found != string::npos)
+    {
+        s.replace (found, plus_i.size(), "+1i");
+    }
+    else
+    {
+        found = s.find (minus_i);
+        if (found != string::npos)
+        {
+            s.replace (found, minus_i.size(), "-1i");
+        }
+    }
+}
+
 #ifdef _LIBCPP_VERSION
 /* в libc++ по другому устроена логика чтения из стрима, чем в libstdc++ и стандартной библиотеки от Microsoft
 *  подробнее: https://bugs.llvm.org/show_bug.cgi?id=17782
 */
-complex<double> parse_complex (const string& s)
+complex<double> parse_complex (string s)
 {
-    double real;
-    double imag;
+    restore_omitted_imaginary_coefficient (s);
+    double real = 0.0;
+    double imag = 0.0;
     char c[3] = {0};
     int result = sscanf (s.c_str(), "%lg%lg%2s", &real, &imag, c);
     if (result != 3)
@@ -55,8 +80,9 @@ complex<double> parse_complex (const string& s)
     return complex<double> (real, imag);
 }
 #else
-complex<double> parse_complex (const string& s)
+complex<double> parse_complex (string s)
 {
+    restore_omitted_imaginary_coefficient (s);
     double real = 0.0;
     double imag = 0.0;
     istringstream in (s);

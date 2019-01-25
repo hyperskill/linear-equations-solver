@@ -95,6 +95,7 @@ public class Complex {
     @NotNull
     @Contract("_ -> new")
     private String[] split(@NotNull String s) throws NumberFormatException {
+        s = restoreOmittedImaginaryCoefficient(s);
         String realString = "0";
         String imagString = "0";
         int i = 1;
@@ -119,5 +120,14 @@ public class Complex {
             realString = s;
         }
         return new String[]{realString, imagString};
+    }
+
+    private String restoreOmittedImaginaryCoefficient(@NotNull String s) {
+        if (s.equals("i")) {
+            return "1i";
+        }
+        s = s.replaceAll("\\+i", "+1i");
+        s = s.replaceAll("-i", "-1i");
+        return s;
     }
 }

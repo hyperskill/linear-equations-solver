@@ -167,6 +167,51 @@ namespace tests
         }
 
         [Test()]
+        public void Constructor13()
+        {
+            string s = "i";
+            Complex c = new Complex(s);
+            Assert.AreEqual(0.0, c.Real, Complex.EPSILON);
+            Assert.AreEqual(1.0, c.Imag, Complex.EPSILON);
+        }
+
+        [Test()]
+        public void Constructor14()
+        {
+            string s = "-i";
+            Complex c = new Complex(s);
+            Assert.AreEqual(0.0, c.Real, Complex.EPSILON);
+            Assert.AreEqual(-1.0, c.Imag, Complex.EPSILON);
+        }
+
+        [Test()]
+        public void Constructor15()
+        {
+            string s = "0.5+i";
+            Complex c = new Complex(s);
+            Assert.AreEqual(0.5, c.Real, Complex.EPSILON);
+            Assert.AreEqual(1.0, c.Imag, Complex.EPSILON);
+        }
+
+        [Test()]
+        public void Constructor16()
+        {
+            string s = "0.5-i";
+            Complex c = new Complex(s);
+            Assert.AreEqual(0.5, c.Real, Complex.EPSILON);
+            Assert.AreEqual(-1.0, c.Imag, Complex.EPSILON);
+        }
+
+        [Test()]
+        public void Constructor17()
+        {
+            string s = "+i";
+            Complex c = new Complex(s);
+            Assert.AreEqual(0.0, c.Real, Complex.EPSILON);
+            Assert.AreEqual(1.0, c.Imag, Complex.EPSILON);
+        }
+
+        [Test()]
         public void Add()
         {
             Complex a = new Complex(3.0, -5.0);

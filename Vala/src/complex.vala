@@ -47,6 +47,27 @@ public class ComplexNumber {
                 result = s.scanf ( "%lg", &real );
                 if ( result == 1 ) {
                     c = "i";
+                } else {
+                    result = s.scanf ( "%2s", c );
+                    if ( result == 1 ) {
+                        if ( c == "i" || c == "+i" ) {
+                            imag = 1.0;
+                            c = "i";
+                        } else if ( c == "-i" ) {
+                            imag = -1.0;
+                            c = "i";
+                        }
+                    }
+                }
+            } else {
+                if ( c == "+i" ) {
+                    real = imag;
+                    imag = 1.0;
+                    c = "i";
+                } else if ( c == "-i" ) {
+                    real = imag;
+                    imag = -1.0;
+                    c = "i";
                 }
             }
         }

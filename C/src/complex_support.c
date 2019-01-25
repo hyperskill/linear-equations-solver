@@ -66,6 +66,42 @@ bool complex_parse (complex_double* a, const char* s)
                 c[0] = 'i';
                 c[1] = '\0';
             }
+            else
+            {
+                result = sscanf (s, "%2s", c);
+                if (result == 1)
+                {
+                    if (str_equal (c, "i") || str_equal (c, "+i"))
+                    {
+                        imag = 1.0;
+                        c[0] = 'i';
+                        c[1] = '\0';
+                    }
+                    else if (str_equal (c, "-i"))
+                    {
+                        imag = -1.0;
+                        c[0] = 'i';
+                        c[1] = '\0';
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (str_equal (c, "+i"))
+            {
+                real = imag;
+                imag = 1.0;
+                c[0] = 'i';
+                c[1] = '\0';
+            }
+            else if (str_equal (c, "-i"))
+            {
+                real = imag;
+                imag = -1.0;
+                c[0] = 'i';
+                c[1] = '\0';
+            }
         }
     }
     if (!str_equal (c, "i"))

@@ -133,6 +133,46 @@ describe("complex tests", () => {
         expect(f).toThrow();
     });
 
+    it("fromString12", () => {
+        const s = "i";
+        const c = Complex.fromString(s);
+
+        expect(0).toBeCloseTo(c.getReal());
+        expect(1).toBeCloseTo(c.getImag());
+    });
+
+    it("fromString13", () => {
+        const s = "-i";
+        const c = Complex.fromString(s);
+
+        expect(0).toBeCloseTo(c.getReal());
+        expect(-1).toBeCloseTo(c.getImag());
+    });
+
+    it("fromString14", () => {
+        const s = "0.5+i";
+        const c = Complex.fromString(s);
+
+        expect(0.5).toBeCloseTo(c.getReal());
+        expect(1).toBeCloseTo(c.getImag());
+    });
+
+    it("fromString15", () => {
+        const s = "0.5-i";
+        const c = Complex.fromString(s);
+
+        expect(0.5).toBeCloseTo(c.getReal());
+        expect(-1).toBeCloseTo(c.getImag());
+    });
+
+    it("fromString16", () => {
+        const s = "+i";
+        const c = Complex.fromString(s);
+
+        expect(0).toBeCloseTo(c.getReal());
+        expect(1).toBeCloseTo(c.getImag());
+    });
+
     it("add", () => {
         const a = new Complex(3, -5);
         const b = new Complex(4, 2);

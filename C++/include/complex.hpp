@@ -8,7 +8,7 @@
 
 #include <useful-c-macros/all.h>
 
-std::complex<double> parse_complex (const std::string& s);
+std::complex<double> parse_complex (std::string s);
 
 bool PURE equals (const std::complex<double>& a, const std::complex<double>& b) noexcept;
 

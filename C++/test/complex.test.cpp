@@ -206,3 +206,43 @@ BOOST_AUTO_TEST_CASE (complex_parse11)
     }
     BOOST_FAIL ("no throw exception");
 }
+
+BOOST_AUTO_TEST_CASE (complex_parse12)
+{
+    const complex<double> actual = parse_complex ("i");
+    const complex<double> expected (0.0, 1.0);
+
+    BOOST_CHECK (equals (actual, expected));
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse13)
+{
+    const complex<double> actual = parse_complex ("-i");
+    const complex<double> expected (0.0, -1.0);
+
+    BOOST_CHECK (equals (actual, expected));
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse14)
+{
+    const complex<double> actual = parse_complex ("0.5+i");
+    const complex<double> expected (0.5, 1.0);
+
+    BOOST_CHECK (equals (actual, expected));
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse15)
+{
+    const complex<double> actual = parse_complex ("0.5-i");
+    const complex<double> expected (0.5, -1.0);
+
+    BOOST_CHECK (equals (actual, expected));
+}
+
+BOOST_AUTO_TEST_CASE (complex_parse16)
+{
+    const complex<double> actual = parse_complex ("+i");
+    const complex<double> expected (0.0, 1.0);
+
+    BOOST_CHECK (equals (actual, expected));
+}
