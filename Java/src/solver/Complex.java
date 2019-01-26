@@ -1,3 +1,5 @@
+// This is an independent project of an individual developer. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 package solver;
 
 import org.jetbrains.annotations.Contract;
@@ -75,6 +77,11 @@ public class Complex {
 
     public double getImag() {
         return imag;
+    }
+
+    @Override
+    public int hashCode() {
+        return  toString().hashCode();
     }
 
     @Override
