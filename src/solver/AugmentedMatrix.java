@@ -29,6 +29,10 @@ public class AugmentedMatrix {
         matrix[i].set(j, value);
     }
 
+    double get(int i, int j) {
+        return matrix[i].get(j);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

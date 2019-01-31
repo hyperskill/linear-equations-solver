@@ -14,10 +14,19 @@ public class Row {
     }
 
     Row normalizeRow(int index) {
-        return divide(row[index]);
+        try {
+            return divide(row[index]);
+        } catch (ArithmeticException e) {
+            // Ignore
+            // Row cannot be normalized to the zero element
+            return this;
+        }
     }
 
     Row divide(double v) {
+        if(v == 0){
+            throw new java.lang.ArithmeticException("Division by zero");
+        }
         for(int i = 0; i < row.length; i++) {
             row[i] = row[i] / v;
         }
