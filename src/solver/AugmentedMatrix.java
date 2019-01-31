@@ -13,7 +13,7 @@ public class AugmentedMatrix {
 
     AugmentedMatrix() {}
 
-    void readMatrix(Scanner scanner) throws InputMismatchException {
+    public void readMatrix(Scanner scanner) throws InputMismatchException {
         int n = scanner.nextInt();
         int m = n+1;
         matrix = new Row[n];
@@ -25,11 +25,11 @@ public class AugmentedMatrix {
         }
     }
 
-    void set(int i, int j, double value) {
+    public void set(int i, int j, double value) {
         matrix[i].set(j, value);
     }
 
-    double get(int i, int j) {
+    public double get(int i, int j) {
         return matrix[i].get(j);
     }
 
@@ -63,9 +63,14 @@ public class AugmentedMatrix {
         return this.matrix[index];
     }
 
+    /**
+     * Get dimensions of Augmented matrix
+     * @return size()[0] - number of rows, size()[1] - number of columns
+     */
     public int[] size() {
         int[] size = new int[2];
         size[0] = matrix.length;
+        // Consider that all rows have the same size, according to the class initialization
         size[1] = matrix[0].size();
         return size;
     }

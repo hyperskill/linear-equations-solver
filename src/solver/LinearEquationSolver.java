@@ -3,9 +3,9 @@ package solver;
 import java.text.DecimalFormat;
 
 public class LinearEquationSolver {
-    AugmentedMatrix matrix;
-    StringBuilder logs;
-    double[] result;
+    private AugmentedMatrix matrix;
+    private StringBuilder logs;
+    private double[] result;
 
     LinearEquationSolver(AugmentedMatrix matrix) {
         this.matrix = new AugmentedMatrix(matrix.getMatrix());
@@ -15,7 +15,6 @@ public class LinearEquationSolver {
     private void transformToUpperTriangularForm() {
         Row currentRow;
         int n = matrix.size()[0];
-        double coefficient;
         for(int i = 0; i < n; i++) {
             currentRow = matrix.getRow(i);
             normalizeRowsForTransforming(i, currentRow);
@@ -28,7 +27,6 @@ public class LinearEquationSolver {
     private void transformToLowerTriangularForm() {
         Row currentRow;
         int n = matrix.size()[0];
-        double coefficient;
         for(int i = n-1; i >= 0; i--) {
             currentRow = matrix.getRow(i);
             normalizeRowsForTransforming(i, currentRow);
@@ -49,7 +47,8 @@ public class LinearEquationSolver {
     }
 
     /**
-     * Devide every element of matrix[j] row by the element at position i and subtracts currentRow from matrix[j]
+     * Devide every element of matrix[j] row by the element at position i, subtracts currentRow from matrix[j]
+     * and logs results
      * (was originally created to move duplicating code from methods)
      * @param i
      * @param j
@@ -80,15 +79,15 @@ public class LinearEquationSolver {
         }
     }
 
-    String getLogs() {
+    public String getLogs() {
         return this.logs.toString();
     }
 
-    double[] getResult() {
+    public double[] getResult() {
         return result;
     }
 
-    String getResultString() {
+    public String getResultString() {
         StringBuilder sb = new StringBuilder();
         for(double coefficient: result) {
             sb.append(new DecimalFormat("#.####").format(coefficient));
@@ -98,7 +97,7 @@ public class LinearEquationSolver {
         return sb.toString();
     }
 
-    LinearEquationSolver solve() {
+    public LinearEquationSolver solve() {
         tranformToDiagonalForm();
         // Get coefficients of the last column
         int n = this.matrix.size()[0];
