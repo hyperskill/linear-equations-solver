@@ -35,8 +35,9 @@ public class Main {
     private static double[][] goUp(double[][] matrix) {
         for(int masterRow = matrix.length-1; masterRow > 0; --masterRow){
             for(int currentRow = masterRow - 1; currentRow >=0; --currentRow){
+                double multiplier = matrix[currentRow][masterRow] / matrix[masterRow][masterRow];
                 for(int element = masterRow; element < matrix[0].length; element++){
-                    matrix[currentRow][element] -= (matrix[masterRow][element] * matrix[currentRow][masterRow] / matrix[masterRow][masterRow]);
+                    matrix[currentRow][element] -= (matrix[masterRow][element] * multiplier);
                 }
             }
         }
@@ -46,8 +47,9 @@ public class Main {
     private static double[][] goDown(double[][] matrix) {
         for(int masterRow = 0; masterRow < matrix.length - 1; ++masterRow){
             for(int currentRow = masterRow + 1; currentRow < matrix.length; ++currentRow){
+                double multiplier = matrix[currentRow][masterRow] / matrix[masterRow][masterRow];
                 for(int element = masterRow; element < matrix[0].length; ++element){
-                    matrix[currentRow][element] -= (matrix[masterRow][element] * matrix[currentRow][masterRow] / matrix[masterRow][masterRow]);
+                    matrix[currentRow][element] -= (matrix[masterRow][element] * multiplier);
                 }
             }
         }
