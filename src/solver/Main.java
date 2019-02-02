@@ -2,28 +2,50 @@ package solver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         double[][] matrix;
-        double[]   answer;
+        double[]   solution;
 
         matrix = readMatrix(args[1]);
+        System.out.println("Original matrix: ");
         printMatrix(matrix);
 
         matrix = goDown(matrix);
+        System.out.println("Triangular matrix: ");
         printMatrix(matrix);
 
         matrix = goUp(matrix);
+        System.out.println("Reduced matrix: ");
         printMatrix(matrix);
 
-        answer = findAnswer(matrix);
-        System.out.println(Arrays.toString(answer));
+        solution = findSolution(matrix);
+        System.out.println("Solution: ");
+        System.out.println(Arrays.toString(solution));
+        
+        writeSolution(args[3], solution);
     }
 
-    private static double[] findAnswer(double[][] matrix) {
+    private static void writeSolution(String out, double[] solution) {
+        File file = new File(out);
+
+        try {
+            FileWriter writer = new FileWriter(file);
+            for(Double d : solution){
+                writer.write(d + " ");
+            }
+            writer.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private static double[] findSolution(double[][] matrix) {
         double[] answer = new double[matrix.length];
         for(int i = 0; i < answer.length; ++i){
             answer[i] = matrix[i][matrix[0].length-1] / matrix[i][i];
