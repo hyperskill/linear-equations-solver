@@ -28,3 +28,4 @@ git.properties
 
 # IntelliJ IDEA folder 
 .idea/
+*.iml
