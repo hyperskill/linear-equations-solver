@@ -29,3 +29,7 @@ git.properties
 # IntelliJ IDEA folder 
 .idea/
 *.iml
+
+# Text files
+in.txt
+out.txt
