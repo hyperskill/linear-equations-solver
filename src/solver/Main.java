@@ -6,19 +6,44 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        String in = args[1];
-        String out = args[3];
+        double[][] matrix;
+
+        matrix = readMatrix(args[1]);
+        printMatrix(matrix);
+    }
+
+    static double[][] readMatrix(String in){
+        int rows, columns;
+        double[][] matrix;
 
         File file = new File(in);
 
         try {
             Scanner scanner = new Scanner(file);
 
-            while (scanner.hasNextLine())
-                System.out.println(scanner.nextLine());
+            rows = scanner.nextInt();
+            columns = rows + 1;
 
+            matrix = new double[rows][columns];
+
+            for(int i = 0; i < columns * rows; ++i){
+                matrix[i/columns][i%columns] = scanner.nextInt();
+            }
+
+            return matrix;
         } catch (FileNotFoundException e){
             e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    static void printMatrix(double[][] matrix){
+        for(double[] row : matrix){
+            for(Double element : row){
+                System.out.print(element + " ");
+            }
+            System.out.println();
         }
     }
 }
