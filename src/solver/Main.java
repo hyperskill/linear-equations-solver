@@ -10,6 +10,20 @@ public class Main {
 
         matrix = readMatrix(args[1]);
         printMatrix(matrix);
+
+        matrix = goDown(matrix);
+        printMatrix(matrix);
+    }
+
+    private static double[][] goDown(double[][] matrix) {
+        for(int masterRow = 0; masterRow < matrix.length - 1; ++masterRow){
+            for(int currentRow = masterRow + 1; currentRow < matrix.length; ++currentRow){
+                for(int element = masterRow; element < matrix[0].length; ++element){
+                    matrix[currentRow][element] -= (matrix[masterRow][element] * matrix[currentRow][masterRow] / matrix[masterRow][masterRow]);
+                }
+            }
+        }
+        return matrix;
     }
 
     static double[][] readMatrix(String in){
@@ -45,5 +59,6 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println();
     }
 }
