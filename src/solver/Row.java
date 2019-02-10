@@ -13,15 +13,6 @@ public class Row {
         row = new double[m];
     }
 
-    Row normalizeRow(int index) {
-        try {
-            return divide(row[index]);
-        } catch (ArithmeticException e) {
-            // Ignore
-            // Row cannot be normalized to the zero element
-            return this;
-        }
-    }
 
     Row divide(double v) {
         if(v == 0){
@@ -33,11 +24,45 @@ public class Row {
         return this;
     }
 
+    Row multiply(double v, boolean inplace) {
+        Row curRow;
+        if(inplace) {
+            curRow = this;
+        } else {
+            curRow = new Row(row.length);
+        }
+        for(int i = 0; i < row.length; i++) {
+            curRow.set(i, row[i] * v);
+        }
+        return curRow;
+    }
+
+    Row multiply(double v) {
+        return multiply(v, true);
+    }
+
     Row subtract(Row row) {
         for(int i = 0; i < this.row.length; i++) {
             this.row[i] = this.row[i] - row.get(i);
         }
         return this;
+    }
+
+    Row add(Row row) {
+        return add(row, true);
+    }
+
+    Row add(Row nextRow, boolean inplace) {
+        Row curRow;
+        if(inplace) {
+            curRow = this;
+        } else {
+            curRow = new Row(row.length);
+        }
+        for(int i = 0; i < row.length; i++) {
+            curRow.set(i, curRow.get(i) + nextRow.get(i));
+        }
+        return curRow;
     }
 
     public double[] getRow() {
@@ -54,6 +79,25 @@ public class Row {
 
     public double get(int j) {
         return this.row[j];
+    }
+
+    public boolean isZeroFilled() {
+        for(int i = 0; i < row.length; i++) {
+            if( row[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int getIndexOfFirstNonZeroElement() {
+        for(int i = 0; i < row.length; i++) {
+            if(row[i] != 0 ) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     public int size() {
