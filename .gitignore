@@ -1,9 +1,50 @@
 # Compiled class file
 *.class
-out/
+Java/out/
+Java/.idea/workspace.xml
+Java/.PVS-Studio/
 
 # Log file
 *.log
+
+# Javascript files
+*.js
+
+# C++ generated files and folders
+.vs/
+*.d
+*.o
+x64/
+Release/
+Debug/
+*.user
+*.orig
+C++/bin/
+drd.txt
+helgrind.txt
+valgrind.txt
+report/
+
+# C generated files and folders
+C/bin/
+
+# C# generated files and folders
+DotNET/packages/
+
+# Vala generated files and folders
+Vala/bin/
+Vala/src/*.c
+Vala/test/*.c
+
+# Test accestance output files
+out*.txt
+stdout*.txt
+
+# node_modules
+Typescript/node_modules/
+
+# package-lock
+Typescript/package-lock.json
 
 # BlueJ files
 *.ctxt
@@ -25,6 +66,3 @@ hs_err_pid*
 
 # Git
 git.properties
-
-# IntelliJ IDEA folder 
-.idea/

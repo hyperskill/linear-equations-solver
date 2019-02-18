@@ -1,0 +1,4 @@
+ifeq ($(VALGRIND), 1)
+	SANITIZERS =
+	LIBS_SANITIZERS =
+endif
