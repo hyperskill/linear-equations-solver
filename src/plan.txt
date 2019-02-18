@@ -1,0 +1,23 @@
+На этой стадии нужно написать программу, которая
+1.считывает коэффициенты системы линейных уравнений из файла.
+2.решает систему линейных уравнений
+3.записывает ответ в другой файл.
+3.1
+4.пути к файлам следует передвать как аргументы командной строки.
+In this stage, you need to write a program that reads coefficients from a file,
+solves the system of linear equations and writes the answer to another file.
+You should pass paths to files using command-line arguments.
+Write to the file only answers separated by "\n".
+Output all the steps only to the console, not in the file.
+
+The first line of the file should contain the number N - a number of variables
+being also a number of equations.
+Every other N lines contain N+1 numbers -
+N coefficients of the current row
+and a constant as the last number in this line.
+The program also should output all rows manipulation
+it is doing during solving the system of linear equations.
+
+Try to create a various classes
+like Matrix, Row, LinearEquation.
+With these, the code would be more readable and easier to program.
