@@ -1,11 +1,14 @@
 package solver;
 
+import java.util.Arrays;
+
 public class Row {
     private int rowNum;
+    private int colCnt;
     private double[] data;
-    public Row(int rowNum, double[] data){
+    public Row(int rowNum, int colCnt/*double[] data*/){
         this.rowNum = rowNum;
-        this.data = data;
+        this.data = new double[colCnt];
     }
 
     public String getName() {
@@ -52,5 +55,14 @@ public class Row {
                     String.format("The string '%s' cannot be parsed as an array of numbers", s),
                     e);
         }
+    }
+
+
+    public String asString() {
+        String s="";
+        for (double d:this.data) {
+            s +=d+" ";
+        };
+        return this.getName()+": "+ s.trim();
     }
 }
