@@ -47,19 +47,22 @@ public class Main {
                 m.addRow(lines.indexOf(line), line);
             }
             //m.print();
-
+            String manipulation;
             for (int i = 0; i < m.N; i++) {
-                System.out.println(m.rows[i].transform1(i));
+                manipulation = m.rows[i].transform1(i);
+                if (!manipulation.equals("")) System.out.println(manipulation);
                 //m.print();
                 for (int j = i+1; j < m.N; j++) {
-                    System.out.println(m.rows[j].transform0(i, m.rows[i]));
+                    manipulation = m.rows[j].transform0(i, m.rows[i]);
+                    if (!manipulation.equals("")) System.out.println(manipulation);
                     //m.print();
                 }
             }
             //System.out.println("-------");
             for (int i = m.N-1; i >= 0; i--) {
                 for (int j = i-1; j >= 0; j--) {
-                    System.out.println(m.rows[j].transform0(i, m.rows[i]));
+                    manipulation = m.rows[j].transform0(i, m.rows[i]);
+                    if (!manipulation.equals("")) System.out.println(manipulation);
                     //m.print();
                 }
             }
