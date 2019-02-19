@@ -15,7 +15,7 @@
 Start solving the equation.
 Rows manipulation:
 -2 * R1 + R2 -> R2
--3 * R3 + R3 -> R3
+-3 * R1 + R3 -> R3
 0.5 * R2 -> R2
 -3 * R2 + R3 -> R3
 -2 * R3 -> R3

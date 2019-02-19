@@ -20,7 +20,9 @@ public class Matrix {
         }
     }
 
-    public double[] getColumn(int index){
-        return null;
-    }
+    /*public void printSolution(){
+        for (Row r:this.rows) {
+            System.out.println(r.asString());
+        }
+    }*/
 }

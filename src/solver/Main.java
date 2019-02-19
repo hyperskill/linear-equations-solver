@@ -39,11 +39,19 @@ public class Main {
             if (lines.size() != n) {
                 throw new InvalidDataFileFormat("Incorrect data file format", null);
             }
+            System.out.println("Start solving the equation.\n" +
+                    "Rows manipulation:");
             Matrix m = new Matrix(n);
             for (String line : lines) {
                 m.addRow(lines.indexOf(line), line);
             }
             m.print();
+            System.out.println(m.rows[1].transform1(0));
+            //System.out.println(m.rows[1].asString());
+            m.print();
+            System.out.println(m.rows[1].transform0(0, m.rows[0]));
+            m.print();
+
         }
         catch (IOException e){
             System.out.println("File reading error: " + inFile);
