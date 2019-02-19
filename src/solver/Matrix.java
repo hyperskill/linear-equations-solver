@@ -20,9 +20,17 @@ public class Matrix {
         }
     }
 
-    /*public void printSolution(){
+    public String printSolution(){
+        String sOut = "The solution is: (";
+        String result="";
+        double s;
         for (Row r:this.rows) {
-            System.out.println(r.asString());
+            s =r.getCol(this.N);
+            result+=s+"\n";
+            sOut += s+", ";
         }
-    }*/
+        System.out.println(sOut.replaceAll(",\\s$", ")"));
+        return result;
+    }
+
 }

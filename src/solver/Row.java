@@ -32,7 +32,7 @@ public class Row {
     //преобразуем строку, чтобы элемент с индексом index стал = 1
     //возвращаем строку с манипуляцией
     public String transform1(int index){
-        if (this.data[index]==1) return "already transformed1";
+        if (this.data[index]==1) return "";//"already transformed1";
         double koef = 1/this.data[index];
         this.mult(koef);
         this.data[index] = 1;
@@ -40,11 +40,15 @@ public class Row {
     }
 
     public String transform0(int index, Row r){
-        if (this.data[index]==0) return "already transformed0";
+        if (this.data[index]==0) return "";//"already transformed0";
         double koef = -1 * this.data[index];
         this.add1(r,koef);
         this.data[index] = 0;
         return koef + " * "+ r.getName() + " + "+ this.getName()+" -> "+this.getName();
+    }
+
+    public double getCol(int index){
+        return this.data[index];
     }
 
     public void fillRow(String s) throws ParsingArrayException {

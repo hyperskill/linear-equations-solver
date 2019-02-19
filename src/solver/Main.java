@@ -2,6 +2,7 @@ package solver;
 
 import java.io.File;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -45,13 +46,32 @@ public class Main {
             for (String line : lines) {
                 m.addRow(lines.indexOf(line), line);
             }
-            m.print();
-            System.out.println(m.rows[1].transform1(0));
-            //System.out.println(m.rows[1].asString());
-            m.print();
-            System.out.println(m.rows[1].transform0(0, m.rows[0]));
-            m.print();
+            //m.print();
 
+            for (int i = 0; i < m.N; i++) {
+                System.out.println(m.rows[i].transform1(i));
+                //m.print();
+                for (int j = i+1; j < m.N; j++) {
+                    System.out.println(m.rows[j].transform0(i, m.rows[i]));
+                    //m.print();
+                }
+            }
+            //System.out.println("-------");
+            for (int i = m.N-1; i >= 0; i--) {
+                for (int j = i-1; j >= 0; j--) {
+                    System.out.println(m.rows[j].transform0(i, m.rows[i]));
+                    //m.print();
+                }
+            }
+            String result = m.printSolution();
+
+            File file = new File(outFile);
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(result);
+                System.out.printf("Saved to file %s\n",outFile);
+            } catch (IOException e) {
+                System.out.printf("File writing error %s", e.getMessage());
+            }
         }
         catch (IOException e){
             System.out.println("File reading error: " + inFile);
