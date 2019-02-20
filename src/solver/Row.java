@@ -3,10 +3,14 @@ package solver;
 public class Row {
     private int rowNum;
     private int colCnt;
+    private int oldRowNum;
     private double[] data;
+    public boolean isMoved;
     public Row(int rowNum, int colCnt/*double[] data*/){
         this.rowNum = rowNum;
+        this.oldRowNum = rowNum;
         this.data = new double[colCnt];
+        this.isMoved = false;
     }
 
     public String getName() {
