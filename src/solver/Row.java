@@ -5,12 +5,19 @@ public class Row {
     private int colCnt;
     private int oldRowNum;
     private double[] data;
-    public boolean isMoved;
-    public Row(int rowNum, int colCnt/*double[] data*/){
+    private boolean isMoved;
+    private Matrix owner;
+    public Row(int rowNum, int colCnt, Matrix owner/*double[] data*/){
         this.rowNum = rowNum;
         this.oldRowNum = rowNum;
         this.data = new double[colCnt];
+
         this.isMoved = false;
+        this.owner = owner;
+    }
+
+    public int getRowNum() {
+        return rowNum;
     }
 
     public String getName() {
@@ -37,6 +44,19 @@ public class Row {
     //возвращаем строку с манипуляцией
     public String transform1(int index){
         if (this.data[index]==1) return "";//"already transformed1";
+        if (this.data[index]==0){
+            int nonZeroInd = this.owner.findNonZeroBelow(index,this);
+            if (nonZeroInd >= -1)
+                return this.owner.swapRows(this.rowNum-1,nonZeroInd);
+            nonZeroInd = this.owner.findNonZeroRighter(index,this);
+            if (nonZeroInd >= -1)
+                return this.owner.swapColumns(index,nonZeroInd);
+            //поиск по всей матрице
+            Pos pos = this.owner.findNonZeroEverywere();
+            if (pos == null) return "";
+            return this.owner.swapColumns(index,pos.y)+";"+
+                    this.owner.swapRows(this.rowNum-1, pos.x);
+        }
         double koef = 1/this.data[index];
         this.mult(koef);
         this.data[index] = 1;
@@ -74,5 +94,23 @@ public class Row {
             s +=d+" ";
         };
         return this.getName()+": "+ s.trim();
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    public void setMoved(boolean moved, int newRow) {
+        isMoved = moved;
+        if (moved) {
+            this.oldRowNum = rowNum;
+            this.rowNum = newRow;
+        }
+    }
+    public void swapCells(int src, int dest){
+        double tmp;
+        tmp = this.data[dest];
+        this.data[dest] = this.data[src];
+        this.data[src] = tmp;
     }
 }

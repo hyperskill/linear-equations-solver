@@ -54,7 +54,6 @@ public class Main {
             for (String line : lines) {
                 m.addRow(lines.indexOf(line), line);
             }
-            m.print();
             String manipulation;
             for (int i = 0; i < m.M; i++) {
                 manipulation = m.rows[i].transform1(i);
