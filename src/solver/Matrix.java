@@ -1,16 +1,18 @@
 package solver;
 
 public class Matrix {
-    int N;//количество строк и столбцов
+    int N;//количество строк
+    int M;//количество столбцов
     Row[] rows;
 
-    public Matrix(int n) {
+    public Matrix(int n, int m) {
         N = n;
+        M = m;
         rows = new Row[n];
     }
 
     public void addRow(int index, String str) throws ParsingArrayException {
-        this.rows[index] = new Row(index+1, N+1);
+        this.rows[index] = new Row(index+1, M+1);
         this.rows[index].fillRow(str);
     }
 
@@ -25,7 +27,7 @@ public class Matrix {
         String result="";
         double s;
         for (Row r:this.rows) {
-            s =r.getCol(this.N);
+            s =r.getCol(this.M);
             result+=s+"\n";
             sOut += s+", ";
         }
@@ -33,4 +35,7 @@ public class Matrix {
         return result;
     }
 
+    public String swapRows(int src, int dest){
+        return null;
+    }
 }

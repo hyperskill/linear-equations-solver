@@ -26,14 +26,22 @@ public class Main {
         }
         try {
             List<String> lines = Files.readAllLines( Paths.get(inFile));
-            int n;
+            int n=0,v=0;
+            int k=0;
             try {
-                 n = Integer.parseInt(lines.get(0));
+                for (String s:lines.get(0).split("\\s")) {
+                    if (k==0)
+                        n = Integer.parseInt(s);//количество строк - уравнений
+                    else
+                        v = Integer.parseInt(s);//количество столбцов - переменных
+                    k++;
+                }
+                if (v==0) v=n;
             }
             catch (NumberFormatException e){
                 throw new InvalidDataFileFormat(
                         //String.format("The string '%s' cannot be parsed as an array of numbers", s),
-                        String.format("Incorrect data file format, '%s' cannot be parsed as number", lines.get(0)),
+                        String.format("Incorrect data file format, '%s' cannot be parsed as two numbers", lines.get(0)),
                         e);
             }
             lines.remove(0);
@@ -42,28 +50,28 @@ public class Main {
             }
             System.out.println("Start solving the equation.\n" +
                     "Rows manipulation:");
-            Matrix m = new Matrix(n);
+            Matrix m = new Matrix(n,v);
             for (String line : lines) {
                 m.addRow(lines.indexOf(line), line);
             }
-            //m.print();
+            m.print();
             String manipulation;
-            for (int i = 0; i < m.N; i++) {
+            for (int i = 0; i < m.M; i++) {
                 manipulation = m.rows[i].transform1(i);
                 if (!manipulation.equals("")) System.out.println(manipulation);
-                //m.print();
+                m.print();
                 for (int j = i+1; j < m.N; j++) {
                     manipulation = m.rows[j].transform0(i, m.rows[i]);
                     if (!manipulation.equals("")) System.out.println(manipulation);
-                    //m.print();
+                    m.print();
                 }
             }
-            //System.out.println("-------");
+            /*System.out.println("-------");
             for (int i = m.N-1; i >= 0; i--) {
                 for (int j = i-1; j >= 0; j--) {
                     manipulation = m.rows[j].transform0(i, m.rows[i]);
                     if (!manipulation.equals("")) System.out.println(manipulation);
-                    //m.print();
+                    m.print();
                 }
             }
             String result = m.printSolution();
@@ -75,6 +83,7 @@ public class Main {
             } catch (IOException e) {
                 System.out.printf("File writing error %s", e.getMessage());
             }
+            */
         }
         catch (IOException e){
             System.out.println("File reading error: " + inFile);
