@@ -10,6 +10,9 @@ class Pos{
         this.x = x;
         this.y = y;
     }
+    public String asString(){
+        return this.x+","+this.y;
+    }
 }
 
 public class Matrix {
@@ -17,6 +20,7 @@ public class Matrix {
     int M;//количество столбцов
     Row[] rows;
     int[] colMove;
+    public boolean otladka = false;
 
     public Matrix(int n, int m) {
         N = n;
@@ -33,6 +37,7 @@ public class Matrix {
     }
 
     public void print(){
+        if (!otladka) return;
         for (Row r:this.rows) {
             System.out.println(r.asString());
         }
@@ -97,5 +102,33 @@ public class Matrix {
             }
         }
         return null;
+    }
+
+    public Pos getNumberOfZeroRows(){
+        //в ч запишем количество нулевых строк,
+        //в y количество нулевых строк с ненулевой правой частью
+        Pos result= new Pos(0,0);
+        int cnt0 =0, cnt1 =0;
+        for (Row r:this.rows) {
+            cnt0=0;
+            for (int i = 0; i < M+1; i++) {
+                if (r.getCol(i)!=0) {
+                    if (i==M) result.y++;
+                    break;
+                }
+                cnt0++;
+            }
+            if (cnt0==M) result.x++;
+        }
+        return result;
+    }
+
+    public int checkSolution(){
+        Pos zeroRowsCnt = this.getNumberOfZeroRows();
+        if (zeroRowsCnt.y>0) return -1;//no solutions
+        int cntEq = this.N-zeroRowsCnt.y;//количество ненулевых уравнений
+        if (cntEq==this.M) return 1;//one solution
+        if (cntEq<this.M) return 0;//Infinite solutions
+            return -1;
     }
 }

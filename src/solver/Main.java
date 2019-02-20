@@ -55,26 +55,50 @@ public class Main {
                 m.addRow(lines.indexOf(line), line);
             }
             String manipulation;
+            m.otladka = false;
             for (int i = 0; i < m.M; i++) {
                 manipulation = m.rows[i].transform1(i);
-                if (!manipulation.equals("")) System.out.println(manipulation);
-                m.print();
+                if (!manipulation.equals("")) {
+                    System.out.println(manipulation);
+                    m.print();
+                }
                 for (int j = i+1; j < m.N; j++) {
                     manipulation = m.rows[j].transform0(i, m.rows[i]);
-                    if (!manipulation.equals("")) System.out.println(manipulation);
-                    m.print();
+                    if (!manipulation.equals("")) {
+                        System.out.println(manipulation);
+                        m.print();
+                    }
                 }
             }
-            /*System.out.println("-------");
-            for (int i = m.N-1; i >= 0; i--) {
-                for (int j = i-1; j >= 0; j--) {
-                    manipulation = m.rows[j].transform0(i, m.rows[i]);
-                    if (!manipulation.equals("")) System.out.println(manipulation);
-                    m.print();
+            int check = m.checkSolution();
+            String result="";
+            switch (check) {
+                case 0: {
+                    result = "Infinite solutions";
+                    System.out.println(result);
+                    break;
                 }
+                case -1: {
+                    result = "No solutions";
+                    System.out.println(result);
+                    break;
+                }
+                case 1: {
+                    System.out.println("-------");
+                    for (int i = m.N - 1; i >= 0; i--) {
+                        for (int j = i - 1; j >= 0; j--) {
+                            manipulation = m.rows[j].transform0(i, m.rows[i]);
+                            if (!manipulation.equals("")) {
+                                System.out.println(manipulation);
+                                m.print();
+                            }
+                        }
+                    }
+                    result = m.printSolution();
+                    break;
+                }
+                default:break;
             }
-            String result = m.printSolution();
-
             File file = new File(outFile);
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(result);
@@ -82,7 +106,7 @@ public class Main {
             } catch (IOException e) {
                 System.out.printf("File writing error %s", e.getMessage());
             }
-            */
+
         }
         catch (IOException e){
             System.out.println("File reading error: " + inFile);
