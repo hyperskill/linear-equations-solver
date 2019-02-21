@@ -46,7 +46,7 @@ public class Main {
             }
             lines.remove(0);
             if (lines.size() != n) {
-                throw new InvalidDataFileFormat("Incorrect data file format", null);
+                throw new InvalidDataFileFormat("Incorrect data file format, count of data rows isn't equal n", null);
             }
             System.out.println("Start solving the equation.\n" +
                     "Rows manipulation:");
@@ -55,13 +55,19 @@ public class Main {
                 m.addRow(lines.indexOf(line), line);
             }
             String manipulation;
-            m.otladka = false;
+            //m.otladka = true;
+            m.print();
             for (int i = 0; i < m.M; i++) {
-                manipulation = m.rows[i].transform1(i);
-                if (!manipulation.equals("")) {
-                    System.out.println(manipulation);
-                    m.print();
-                }
+                while (true)
+                {
+                    manipulation = m.rows[i].transform1(i);
+                    if (!manipulation.equals("")) {
+                        System.out.println(manipulation);
+                        m.print();
+                        if (!manipulation.contains("<->")) break;
+                    } else break;
+                };
+
                 for (int j = i+1; j < m.N; j++) {
                     manipulation = m.rows[j].transform0(i, m.rows[i]);
                     if (!manipulation.equals("")) {
@@ -71,6 +77,7 @@ public class Main {
                 }
             }
             int check = m.checkSolution();
+
             String result="";
             switch (check) {
                 case 0: {
