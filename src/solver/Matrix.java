@@ -1,7 +1,5 @@
 package solver;
 
-import java.util.Arrays;
-
 //import java.util.Arrays;
 class Pos{
     int x;
@@ -11,7 +9,7 @@ class Pos{
         this.x = x;
         this.y = y;
     }
-    public String asString(){
+    public String toString(){
         return this.x+","+this.y;
     }
 }
@@ -23,7 +21,9 @@ public class Matrix {
     Row[] rows;
     int[] colMove;
     int iteration = 0;
-    private boolean colsSwaped = false;
+    protected boolean isComplex = false;
+
+    protected boolean colsSwaped = false;
 
     public boolean otladka = false;
 
@@ -48,7 +48,7 @@ public class Matrix {
     public void print(){
         if (!otladka) return;
         for (Row r:this.rows) {
-            System.out.println(r.asString());
+            System.out.println(r);
         }
     }
 
@@ -56,9 +56,9 @@ public class Matrix {
         if (colsSwaped) return printSolution1();
         String sOut = "The solution is: (";
         String result="";
-        double s;
+        String s;
         for (Row r:this.rows) {
-            s =r.getCol(this.M);
+            s =r.getColStr(this.M);
             result+=s+"\n";
             sOut += s+", ";
         }
@@ -68,10 +68,10 @@ public class Matrix {
 
     private String printSolution1(){
         String sOut = "The solution is: (";
-        double[] d= new double[colMove.length];
+        String[] d= new String[colMove.length];
         String result="";
         for (int i = 0; i < colMove.length; i++) {
-            d[colMove[i]]=this.rows[i].getCol(this.M);
+            d[colMove[i]]=this.rows[i].getColStr(this.M);
         }
         for (int i = 0; i < colMove.length; i++) {
             result+=d[i]+"\n";
@@ -166,7 +166,7 @@ public class Matrix {
     public int checkSolution(){
         Pos zeroRowsCnt = this.getNumberOfZeroRows();
         if (otladka)
-            System.out.println(zeroRowsCnt.asString());
+            System.out.println(zeroRowsCnt);
         if (zeroRowsCnt.y>0) return -1;//no solutions
         int cntEq = this.N-zeroRowsCnt.x;//количество ненулевых уравнений
         if (cntEq==this.M) return 1;//one solution

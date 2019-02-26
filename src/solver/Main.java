@@ -50,7 +50,12 @@ public class Main {
             }
             System.out.println("Start solving the equation.\n" +
                     "Rows manipulation:");
-            Matrix m = new Matrix(n,v);
+            Matrix m;
+            if (lines.contains("i"))
+                m = new iMatrix(n,v);
+            else
+                m = new Matrix(n,v);
+
             for (String line : lines) {
                 m.addRow(lines.indexOf(line), line);
             }

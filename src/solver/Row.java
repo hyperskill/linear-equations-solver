@@ -1,22 +1,27 @@
 package solver;
 
 public class Row {
-    private int rowNum;
-    private int colCnt;
+    protected int rowNum;
+    protected int colCnt;
+    protected boolean isComplex = false;
 
     private int oldRowNum;
 
     private double[] data;
     private boolean isMoved;
     private Matrix owner;
+
     public Row(int rowNum, int colCnt, Matrix owner/*double[] data*/){
         this.rowNum = rowNum;
         this.oldRowNum = rowNum;
-        this.data = new double[colCnt];
         this.colCnt = colCnt;
         this.isMoved = false;
         this.owner = owner;
+        this.isComplex = false;//owner.isComplex;
+        if (!isComplex)
+        this.data = new double[colCnt];
     }
+
     public int getRowNum() {
         return rowNum;
     }
@@ -28,23 +33,25 @@ public class Row {
     public String getName() {
         return "R"+rowNum;
     }
+
     public void mult(double koef){
         for (int i = 0; i < data.length; i++) {
             data[i]*=koef;
         }
     }
 
-    public void add(Row r){
-        for (int i = 0; i < data.length; i++) {
-            data[i]+=r.data[i];
+    /*public void mult(ComplexNumber koef){
+        for (int i = 0; i < iData.length; i++) {
+            iData[i].mult(koef);
         }
-    }
+    }*/
 
-    public void add1(Row r, double koef){
+    public void add(Row r, double koef){
         for (int i = 0; i < data.length; i++) {
             data[i]+=koef*r.data[i];
         }
     }
+
     //преобразуем строку, чтобы элемент с индексом index стал = 1
     //возвращаем строку с манипуляцией
     public String transform1(int index){
@@ -74,7 +81,7 @@ public class Row {
     public String transform0(int index, Row r){
         if (Matrix.compareDouble(this.data[index],0)) return "";//"already transformed0";
         double koef = -1 * this.data[index];
-        this.add1(r,koef);
+        this.add(r,koef);
         this.data[index] = 0;
         this.owner.iteration++;
 //        return koef + " * "+ r.getName() + " + "+ this.getName()+" -> "+this.getName();
@@ -82,7 +89,11 @@ public class Row {
     }
 
     public double getCol(int index){
-        return this.data[index];
+        return (double) this.data[index];
+    }
+
+    public String getColStr(int index){
+        return Double.toString(this.data[index]);
     }
 
     public void fillRow(String s) throws ParsingArrayException {
@@ -93,7 +104,10 @@ public class Row {
                     String.format("The string '%s' cannot be parsed correctly. It has to contain %d numbers", s, this.colCnt+1),
                     null);
             for (int i = 0; i < str.length; i++) {
-                this.data[i] = Double.parseDouble(str[i]);
+                if (!isComplex)
+                    this.data[i] = Double.parseDouble(str[i]);
+                /*else
+                    this.iData[i] = new ComplexNumber(str[i]);*/
             }
         } catch(NumberFormatException e){
             throw new ParsingArrayException(
@@ -107,12 +121,18 @@ public class Row {
         }
     }
 
-    public String asString() {
+    public String toString() {
         String s="";
-        for (double d:this.data) {
-            s +=String.format("%-10.3f ",d);
-            //s +=String.format("%.3f ",d);
-        };
+        if (!isComplex)
+            for (double d:this.data) {
+                s +=String.format("%-10.3f ",d);
+                //s +=String.format("%.3f ",d);
+            };
+        /*else {
+            for (ComplexNumber iDat : iData) {
+                s +=iDat.toString();
+            }
+        }*/
         return this.getName()+((this.getOldRowNum()!=this.getRowNum())?String.format("(%d)",this.getOldRowNum()):"")+": "+ s.trim();
     }
 
@@ -130,10 +150,18 @@ public class Row {
         }
         if (this.rowNum == this.oldRowNum) isMoved = false;
     }
+
     public void swapCells(int src, int dest){
-        double tmp;
-        tmp = this.data[dest];
-        this.data[dest] = this.data[src];
-        this.data[src] = tmp;
+      if (!isComplex) {
+          double tmp;
+          tmp = this.data[dest];
+          this.data[dest] = this.data[src];
+          this.data[src] = tmp;
+      } /*else {
+          ComplexNumber tmp;
+          tmp = this.iData[dest];
+          this.iData[dest] = this.iData[src];
+          this.iData[src] = tmp;
+      }*/
     }
 }
