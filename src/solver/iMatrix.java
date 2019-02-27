@@ -6,6 +6,24 @@ public class iMatrix extends Matrix {
     public iMatrix(int n, int m) {
         super(n,m);
         this.isComplex = true;
+        isComplx = true;
+        rows = new iRow[n];
+    }
+
+    public iRow getRows(int index) {
+        return this.rows[index];
+    }
+
+    /*public void print(){
+        if (!otladka) return;
+        for (iRow r:this.rows) {
+            System.out.println(r);
+        }
+    }*/
+
+    public void addRow(int index, String str) throws ParsingArrayException {
+        this.rows[index] = new iRow(index+1, M+1, this);
+        this.rows[index].fillRow(str);
     }
 
     public int findNonZeroBelow(int col, iRow rowBelow){
@@ -46,7 +64,7 @@ public class iMatrix extends Matrix {
                     if (i==M) result.y++;
                     break;
                 }
-                cnt0++;
+                  cnt0++;
             }
             if (cnt0==M+1) result.x++;
         }

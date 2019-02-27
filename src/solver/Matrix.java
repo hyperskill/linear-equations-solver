@@ -1,6 +1,5 @@
 package solver;
 
-//import java.util.Arrays;
 class Pos{
     int x;
     int y;
@@ -15,14 +14,16 @@ class Pos{
 }
 
 public class Matrix {
+    public static boolean isComplx = false;
     public static final double threshold = 0.000001;
     int N;//количество строк
     int M;//количество столбцов
+
     Row[] rows;
+
     int[] colMove;
     int iteration = 0;
     protected boolean isComplex = false;
-
     protected boolean colsSwaped = false;
 
     public boolean otladka = false;
@@ -34,10 +35,15 @@ public class Matrix {
     public Matrix(int n, int m) {
         N = n;
         M = m;
-        rows = new Row[n];
+        if (!isComplx)
+            rows = new Row[n];
         colMove = new int[m];//сюда будем записывать перемещения столбов
         for (int i = 0; i < M; i++)
             this.colMove[i] = i;
+    }
+
+    public Row getRows(int index) {
+        return this.rows[index];
     }
 
     public void addRow(int index, String str) throws ParsingArrayException {
@@ -47,8 +53,11 @@ public class Matrix {
 
     public void print(){
         if (!otladka) return;
-        for (Row r:this.rows) {
+        /*for (Row r:this.rows) {
             System.out.println(r);
+        }*/
+        for (int i = 0; i < this.N; i++) {
+            System.out.println(this.getRows(i));
         }
     }
 
@@ -57,8 +66,13 @@ public class Matrix {
         String sOut = "The solution is: (";
         String result="";
         String s;
-        for (Row r:this.rows) {
+        /*for (Row r:this.rows) {
             s =r.getColStr(this.M);
+            result+=s+"\n";
+            sOut += s+", ";
+        }*/
+        for (int i = 0; i < this.N; i++) {
+            s= this.getRows(i).getColStr(this.M);
             result+=s+"\n";
             sOut += s+", ";
         }

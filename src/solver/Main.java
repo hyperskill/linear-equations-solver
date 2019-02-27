@@ -51,8 +51,17 @@ public class Main {
             System.out.println("Start solving the equation.\n" +
                     "Rows manipulation:");
             Matrix m;
-            if (lines.contains("i"))
-                m = new iMatrix(n,v);
+            boolean isComplex = false;
+            for (String s : lines) {
+                if (s.contains("i")){
+                    isComplex = true;
+                    break;
+                }
+            }
+            if (isComplex) {
+                Matrix.isComplx = true;
+                m = new iMatrix(n, v);
+            }
             else
                 m = new Matrix(n,v);
 
@@ -60,12 +69,13 @@ public class Main {
                 m.addRow(lines.indexOf(line), line);
             }
             String manipulation;
-            //m.otladka = true;
+//            m.otladka = true;
             m.print();
             for (int i = 0; i < m.M; i++) {
                 while (true)
                 {
-                    manipulation = m.rows[i].transform1(i);
+                    //manipulation = m.rows[i].transform1(i);
+                    manipulation = m.getRows(i).transform1(i);
                     if (!manipulation.equals("")) {
                         System.out.println(manipulation);
                         m.print();
@@ -74,7 +84,8 @@ public class Main {
                 };
 
                 for (int j = i+1; j < m.N; j++) {
-                    manipulation = m.rows[j].transform0(i, m.rows[i]);
+//                    manipulation = m.rows[j].transform0(i, m.rows[i]);
+                    manipulation = m.getRows(j). transform0(i, m.getRows(i));
                     if (!manipulation.equals("")) {
                         System.out.println(manipulation);
                         m.print();
@@ -99,7 +110,8 @@ public class Main {
                     System.out.println("-------");
                     for (int i = m.N - 1; i >= 0; i--) {
                         for (int j = i - 1; j >= 0; j--) {
-                            manipulation = m.rows[j].transform0(i, m.rows[i]);
+//                            manipulation = m.rows[j].transform0(i, m.rows[i]);
+                            manipulation = m.getRows(j).transform0(i, m.getRows(i));
                             if (!manipulation.equals("")) {
                                 System.out.println(manipulation);
                                 m.print();

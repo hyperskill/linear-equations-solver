@@ -2,7 +2,7 @@ package solver;
 
 public class iRow extends Row {
     private ComplexNumber[] iData;
-    private iMatrix owner;
+    //private iMatrix owner;
 
     public iRow(int rowNum, int colCnt, iMatrix owner) {
         super(rowNum, colCnt, owner);
@@ -15,6 +15,13 @@ public class iRow extends Row {
             iData[i].mult(koef);
         }
     }
+
+    public void div(ComplexNumber koef){
+        for (int i = 0; i < iData.length; i++) {
+            iData[i].div(koef);
+        }
+    }
+
 
     public void add(iRow r, ComplexNumber koef){
         for (int i = 0; i < iData.length; i++) {
@@ -64,22 +71,25 @@ public class iRow extends Row {
                     this.owner.swapRows(this.rowNum-1, pos.x);
         }
         //ComplexNumber koef = 1/this.iData[index];
-        ComplexNumber koef = ComplexNumber.div(new ComplexNumber(1,0),this.iData[index]);
-        this.mult(koef);
+        //ComplexNumber koef = ComplexNumber.div(new ComplexNumber(1,0),this.iData[index]);
+        ComplexNumber koef = new ComplexNumber(this.iData[index]);
+        String koefStr = koef.toString();
+//        this.mult(koef);
+        this.div(koef);
         this.iData[index].set(1,0);
 //        return String.format("%-8.2f %n",koef)  +" * "+this.getName()+" -> "+this.getName();
-        return String.format("%d: %.2f * %s -> %s",++this.owner.iteration, koef,this.getName(),this.getName());
+        return String.format("%d: %s / %s -> %s",++this.owner.iteration, this.getName(), koefStr,this.getName());
     }
 
-    public String transform0(int index, iRow r){
+    public String transform0(int index, Row r){
         if (ComplexNumber.compareComplexToDouble(this.iData[index],0)) return "";//"already transformed0";
         //double koef = -1 * this.iData[index];
-        ComplexNumber koef = ComplexNumber.div(new ComplexNumber(-1,0),this.iData[index]);
-        this.add(r,koef);
+        ComplexNumber koef = ComplexNumber.mult(new ComplexNumber(-1,0),this.iData[index]);
+        String koefStr = koef.toString();
+        this.add((iRow)r,koef);
         this.iData[index].set(0,0);
         this.owner.iteration++;
-//        return koef + " * "+ r.getName() + " + "+ this.getName()+" -> "+this.getName();
-        return String.format("%d: %.3f * %s -> %s",this.owner.iteration, koef,r.getName(),this.getName());
+        return String.format("%d: %s* %s + %s -> %s",this.owner.iteration, koefStr,r.getName(),this.getName(),this.getName());
     }
 
     public String toString() {
@@ -91,9 +101,9 @@ public class iRow extends Row {
             };
         else {*/
             for (ComplexNumber iDat : iData) {
-                s +=iDat.toString();
+                s +=iDat.toString()+" ";
             }
-        return this.getName()+((this.getOldRowNum()!=this.getRowNum())?String.format("(%d)",this.getOldRowNum()):"")+": "+ s.trim();
+        return "  "+this.getName()+((this.getOldRowNum()!=this.getRowNum())?String.format("(%d)",this.getOldRowNum()):"")+": "+ s.trim();
     }
 
     public String getColStr(int index){

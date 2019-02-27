@@ -23,6 +23,11 @@ public class ComplexNumber {
         this.im = im;
     }
 
+    public ComplexNumber(ComplexNumber n){
+        this.re = n.re;
+        this.im = n.im;
+    }
+
     public ComplexNumber(String number) throws ParsingArrayException {
         try {
             if (number==null) {
@@ -101,7 +106,7 @@ public class ComplexNumber {
         double c= n.re;
         double d= n.im;
         this.re = (a*c+b*d)/(c*c+d*d);
-        this.im = (b*c-a*d)/((c*c+d*d));
+        this.im = (b*c-a*d)/(c*c+d*d);
     }
 
     public static ComplexNumber div(ComplexNumber n1,ComplexNumber n2){
@@ -110,14 +115,14 @@ public class ComplexNumber {
         double b =n1.im;
         double c= n2.re;
         double d= n2.im;
-        double re = (a*c+b*d)/(a*a+d*d);
-        double im = (b*c-a*d)/((a*a+d*d));
+        double re = (a*c+b*d)/(c*c+d*d);
+        double im = (b*c-a*d)/((c*c+d*d));
         return new ComplexNumber(re, im);
     }
 
     @Override
     public String toString() {
-        return (re==0?"":String.format("%-5.3f ",re))+((im>0&&re!=0)?"+":"")+(im==0?"":String.format("%-5.3fi ",im));
+        return (re==0&&im==0)?"0":(re==0?"":String.format("%-5.3f",re))+((im>0&&re!=0)?"+":"")+(im==0?"":String.format("%-5.3fi ",im));
     }
 
     public static boolean compareComplex(ComplexNumber n1, ComplexNumber n2){

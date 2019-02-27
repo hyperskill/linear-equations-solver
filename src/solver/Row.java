@@ -5,11 +5,11 @@ public class Row {
     protected int colCnt;
     protected boolean isComplex = false;
 
-    private int oldRowNum;
+    protected int oldRowNum;
 
     private double[] data;
-    private boolean isMoved;
-    private Matrix owner;
+    protected boolean isMoved;
+    protected Matrix owner;
 
     public Row(int rowNum, int colCnt, Matrix owner/*double[] data*/){
         this.rowNum = rowNum;
@@ -17,7 +17,7 @@ public class Row {
         this.colCnt = colCnt;
         this.isMoved = false;
         this.owner = owner;
-        this.isComplex = false;//owner.isComplex;
+        this.isComplex = owner.isComplex;
         if (!isComplex)
         this.data = new double[colCnt];
     }
@@ -85,7 +85,7 @@ public class Row {
         this.data[index] = 0;
         this.owner.iteration++;
 //        return koef + " * "+ r.getName() + " + "+ this.getName()+" -> "+this.getName();
-        return String.format("%d: %.3f * %s -> %s",this.owner.iteration, koef,r.getName(),this.getName());
+        return String.format("%d: %.3f * %s + %s -> %s",this.owner.iteration, koef,r.getName(),this.getName(),this.getName());
     }
 
     public double getCol(int index){
@@ -133,7 +133,7 @@ public class Row {
                 s +=iDat.toString();
             }
         }*/
-        return this.getName()+((this.getOldRowNum()!=this.getRowNum())?String.format("(%d)",this.getOldRowNum()):"")+": "+ s.trim();
+        return "  "+this.getName()+((this.getOldRowNum()!=this.getRowNum())?String.format("(%d)",this.getOldRowNum()):"")+": "+ s.trim();
     }
 
     public boolean isMoved() {
